@@ -1,0 +1,24 @@
+#ifndef PA4_SHAPE_H
+#define PA4_SHAPE_H
+
+#include <glad/glad.h>
+#include <glm/glm.hpp>
+
+
+// An abstract class to represent generic shapes,
+// just consider it a Java interface if you are new to C++ polymorphism.
+// An "= 0;" says that the function is pure virtual and there will be no definition
+// (just like APIs in Java interfaces).
+class Shape
+{
+public:
+    [[nodiscard]] virtual GLint getNumVertices() const = 0;
+
+    [[nodiscard]] virtual const glm::vec3 * getVertexData() const = 0;
+
+    [[nodiscard]] virtual const glm::vec3 * getNormalData() const = 0;
+};
+
+
+
+#endif  // PA4_SHAPE_H
