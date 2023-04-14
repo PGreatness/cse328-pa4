@@ -36,3 +36,6 @@
 
 # Meta files
 *._*
+
+# Build folder
+/build
