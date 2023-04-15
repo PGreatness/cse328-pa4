@@ -105,9 +105,15 @@ public:
 
 
     // render the cube
-    void render(GLuint cubeArray, GLuint cubeBuffer) const {
+    void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID) const {
         // initialize the cube renders
         initializeRender(&cubeArray, &cubeBuffer);
+
+        // give the color to the shader
+        GLuint colorLocation = glGetUniformLocation(shaderID, "cubeColor");
+
+        // set the color
+        glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
 
         // draw the cube
         glDrawArrays(GL_TRIANGLES, 0, NUM_VERTICES);
@@ -319,11 +325,6 @@ private:
         // specify the layout of the vertex data
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-        // enable the vertex attribute array for color
-        glEnableVertexAttribArray(1);
-
-        // specify the layout of the color data
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*) (NUM_VERTICES * sizeof(glm::vec3)));
     }
 };
 

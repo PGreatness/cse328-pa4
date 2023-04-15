@@ -112,7 +112,9 @@ void displayCube()
     Context::cubeShader->setMat4("view", view);
     Context::cubeShader->setMat4("model", glm::mat4(1.0f));
 
-    cube.render(Primitive::cubeVertexArray, Primitive::cubeVertexBuffer);
+    cube.render(Primitive::cubeVertexArray,
+                Primitive::cubeVertexBuffer,
+                Context::cubeShader->getShaderProgramHandle());
 }
 
 // TODO: Add display functions for other primitives
@@ -162,6 +164,8 @@ int main()
 
     // TODO: Add more contents to fit your own ideas
 
+    Context::cubeShader = std::make_shared<Shader>("src/shader/Cube/vert.glsl",
+                                                    "src/shader/Cube/frag.glsl");
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);
@@ -178,6 +182,8 @@ int main()
         Context::displayAxis();
 
         // TODO: Render
+
+        Context::displayCube();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
