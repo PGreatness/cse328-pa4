@@ -16,6 +16,19 @@ public:
         return NUM_VERTICES;
     }
 
+    virtual const glm::vec3 * getVertexData() const override {
+        return vertexData;
+    }
+
+    virtual const glm::vec3 * getNormalData() const override {
+        // normalize the vertex data
+        glm::vec3 *normalData = new glm::vec3[NUM_VERTICES];
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            normalData[i] = glm::normalize(glm::vec3(vertexData[i]));
+        }
+        return normalData;
+    }
+
 private:
     static constexpr GLint NUM_FACETS = 6 * 2;  // 6 square faces, each composed of 2 triangular facets
     static constexpr GLint NUM_VERTICES = NUM_FACETS * 3;
