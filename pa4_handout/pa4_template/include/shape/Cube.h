@@ -114,10 +114,10 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, cubeBuffer);
 
         // get the vertex data
-        glm::vec3 *data = getVertexData();
+        const glm::vec3 *data = getVertexData();
 
         // copy the vertex data to the buffer object
-        glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(NUM_VERTICES * sizeof(glm::vec3)), data.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(NUM_VERTICES * sizeof(glm::vec3)), data->data(), GL_STATIC_DRAW);
 
         // enable the vertex attribute array
         glEnableVertexAttribArray(0);
