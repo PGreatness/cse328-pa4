@@ -10,6 +10,10 @@ public:
     Cube()
     {
         // TODO
+        
+    }
+    virtual GLint getNumVertices() const override {
+        return NUM_VERTICES;
     }
 
 private:
