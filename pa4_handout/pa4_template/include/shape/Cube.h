@@ -36,6 +36,12 @@ public:
     }
 
     virtual const glm::vec3 * getVertexData() const override {
+        glm::vec3 *vertexData = new glm::vec3[NUM_VERTICES];
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            vertexData[i] = glm::vec3(this->vertexData[i][0],
+                                      this->vertexData[i][1],
+                                      this->vertexData[i][2]);
+        }
         return vertexData;
     }
 
@@ -43,7 +49,9 @@ public:
         // normalize the vertex data
         glm::vec3 *normalData = new glm::vec3[NUM_VERTICES];
         for (int i = 0; i < NUM_VERTICES; i++) {
-            normalData[i] = glm::normalize(glm::vec3(vertexData[i]));
+            normalData[i] = glm::normalize(glm::vec3(this->vertexData[i][0],
+                                                     this->vertexData[i][1],
+                                                     this->vertexData[i][2]));
         }
         return normalData;
     }
@@ -119,7 +127,7 @@ private:
     // Each line represents a 3D vertex,
     // Each 3 lines represents a triangle in 3D space,
     // Each 2x3 lines represents a quad facet (composed of 2 triangles) of this cube.
-    static constexpr GLfloat vertexData[NUM_VERTICES][3] =
+    GLfloat vertexData[NUM_VERTICES][3] =
             {
                     -0.5f, -0.5f, -0.5f,
                     0.5f, -0.5f, -0.5f,
