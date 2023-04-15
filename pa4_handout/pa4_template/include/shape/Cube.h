@@ -103,29 +103,16 @@ public:
         updateCubeOrientation(angle, axis);
     }
 
+
     // render the cube
     void render(GLuint cubeArray, GLuint cubeBuffer) const {
-        // generate the array and buffer objects
-        glGenVertexArrays(1, &cubeArray);
-        glGenBuffers(1, &cubeBuffer);
+        // initialize the cube renders
+        initializeRender(cubeArray, cubeBuffer);
 
-        // bind the array and buffer objects
-        glBindVertexArray(cubeArray);
-        glBindBuffer(GL_ARRAY_BUFFER, cubeBuffer);
+        // draw the cube
+        glDrawArrays(GL_TRIANGLES, 0, NUM_VERTICES);
 
-        // get the vertex data
-        const glm::vec3 *dataStart = getVertexData();
-
-        // copy the vertex data to the buffer object
-        glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), dataStart, GL_STATIC_DRAW);
-
-        // enable the vertex attribute array
-        glEnableVertexAttribArray(0);
-
-        // specify the layout of the vertex data
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-
-        // unbind the array and buffer objects
+        // unbind the cube array and buffer
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -310,6 +297,34 @@ private:
         }
     }
 
+    void initializeRender(GLuint * cubeArray, GLuint * cubeBuffer) const
+    {
+        // generate the array and buffer objects
+        glGenVertexArrays(1, cubeArray);
+        glGenBuffers(1, cubeBuffer);
+
+        // bind the array and buffer objects
+        glBindVertexArray(*cubeArray);
+        glBindBuffer(GL_ARRAY_BUFFER, *cubeBuffer);
+
+        // get the vertex data
+        const glm::vec3 *dataStart = getVertexData();
+
+        // copy the vertex data to the buffer object
+        glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), dataStart, GL_STATIC_DRAW);
+
+        // enable the vertex attribute array for position
+        glEnableVertexAttribArray(0);
+
+        // specify the layout of the vertex data
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+        // enable the vertex attribute array for color
+        glEnableVertexAttribArray(1);
+
+        // specify the layout of the color data
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*) (NUM_VERTICES * sizeof(glm::vec3)));
+    }
 };
 
 

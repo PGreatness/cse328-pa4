@@ -29,6 +29,8 @@ void perFrameTimeLogic();
 
 void initializeContext();
 
+void initializeCubes();
+
 
 namespace Context
 {
@@ -56,6 +58,8 @@ float lastFrame = 0.0f;
 std::shared_ptr<Shader> axisShader;       // shader for x, y, z axis
 
 // TODO: Add other context configurations
+std::shared_ptr<Shader> cubeShader;       // shader for cubes
+Cube cube;                               // default cube object
 
 }  // namespace Context
 
@@ -67,6 +71,8 @@ GLuint axisVertexArray;
 GLuint axisVertexBuffer;
 
 // TODO: Add other OpenGL objects for other primitives
+GLuint cubeVertexArray;
+GLuint cubeVertexBuffer;
 
 }  // namespace Primitive
 
@@ -91,6 +97,22 @@ void displayAxis()
     glBindVertexArray(Primitive::axisVertexArray);
     glDrawArrays(GL_LINES, 0, 6);  // 3 axis to show (x, y, z), each has 2 vertices
     glBindVertexArray(0);
+}
+
+void displayCube()
+{
+    Context::cubeShader->use();
+    glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
+                                            static_cast<GLfloat>(Context::kWindowWidth) /
+                                            static_cast<GLfloat>(Context::kWindowHeight),
+                                            0.01f,
+                                            100.0f);
+    Context::cubeShader->setMat4("projection", projection);
+    glm::mat4 view = Context::camera.getViewMatrix();
+    Context::cubeShader->setMat4("view", view);
+    Context::cubeShader->setMat4("model", glm::mat4(1.0f));
+
+    cube.render();
 }
 
 // TODO: Add display functions for other primitives
