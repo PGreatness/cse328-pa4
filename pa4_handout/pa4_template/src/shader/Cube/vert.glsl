@@ -2,7 +2,7 @@
 
 layout (location = 0) in vec3 aPos;
 
-out vec3 ourFragColor;
+out vec4 ourFragColor;
 
 uniform mat4 model;
 uniform mat4 view;
