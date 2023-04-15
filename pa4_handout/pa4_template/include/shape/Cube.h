@@ -9,9 +9,28 @@ class Cube : public Shape
 public:
     Cube()
     {
-        // TODO
-        
+        // create a default cube
+        this->center = {DEFAULT_CENTER_X, DEFAULT_CENTER_Y, DEFAULT_CENTER_Z};
+        this->size = DEFAULT_SIZE;
+        this->color = {DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B};
     }
+
+    Cube(glm::vec3 center, float size)
+    {
+        // user defined center and size
+        this->center = center;
+        this->size = size;
+        this->color = {DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B};
+    }
+
+    Cube(glm::vec3 center, float size, glm::vec3 color)
+    {
+        // user defined center, size, and color
+        this->center = center;
+        this->size = size;
+        this->color = color;
+    }
+
     virtual GLint getNumVertices() const override {
         return NUM_VERTICES;
     }
@@ -29,7 +48,71 @@ public:
         return normalData;
     }
 
+    // getters
+    glm::vec3 getCenter() const {
+        return center;
+    }
+
+    float getSize() const {
+        return size;
+    }
+
+    glm::vec3 getColor() const {
+        return color;
+    }
+
+    // setters
+    void setCenter(glm::vec3 center) {
+        this->center = center;
+    }
+
+    void setSize(float size) {
+        this->size = size;
+    }
+
+    void setColor(glm::vec3 color) {
+        this->color = color;
+    }
+
+    // scale the cube
+    void scale(float scaleFactor) {
+        this->size *= scaleFactor;
+        // size changed, so we need to update the vertex data
+        updateCubeSize(scaleFactor);
+    }
+
+    // translate the cube
+    void translate(glm::vec3 translation) {
+        this->center += translation;
+        // center changed, so we need to update the vertex data
+        updateCubeLocation(translation);
+    }
+
+    // rotate the cube. angle is in degrees, axis is the rotation axis
+    // given as a vector. non-zero components of the axis vector
+    // indicate the axes of rotation.
+    void rotate(float angle, glm::vec3 axis) {
+        updateCubeOrientation(angle, axis);
+    }
+
+
 private:
+
+    // the default cube is centered at the origin and has a side length of 1
+    static constexpr GLfloat DEFAULT_CENTER_X = 0.0f;
+    static constexpr GLfloat DEFAULT_CENTER_Y = 0.0f;
+    static constexpr GLfloat DEFAULT_CENTER_Z = 0.0f;
+    static constexpr GLfloat DEFAULT_SIZE = 1.0f;
+    // the deffault color is white
+    static constexpr GLfloat DEFAULT_COLOR_R = 1.0f;
+    static constexpr GLfloat DEFAULT_COLOR_G = 1.0f;
+    static constexpr GLfloat DEFAULT_COLOR_B = 1.0f;
+
+    // user-defined center, size, and color
+    glm::vec3 center;
+    GLfloat size;
+    glm::vec3 color;
+
     static constexpr GLint NUM_FACETS = 6 * 2;  // 6 square faces, each composed of 2 triangular facets
     static constexpr GLint NUM_VERTICES = NUM_FACETS * 3;
 
@@ -80,6 +163,118 @@ private:
                     -0.5f,  0.5f,  0.5f,
                     -0.5f,  0.5f, -0.5f,
             };
+
+    // updates the vertex data when the size of the cube changes
+    void updateCubeSize(float scale) {
+        // update the vertex data
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            vertexData[i][0] *= scale;
+            vertexData[i][1] *= scale;
+            vertexData[i][2] *= scale;
+        }
+    }
+
+    // updates the vertex data when the center of the cube changes
+    void updateCubeLocation(glm::vec3 translation) {
+        // update the vertex data
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            vertexData[i][0] += translation[0];
+            vertexData[i][1] += translation[1];
+            vertexData[i][2] += translation[2];
+        }
+    }
+
+    void rotateX(float angle) {
+        // Convert angle to radians
+        float angle_rad = glm::radians(angle);
+
+        // Create rotation matrix for x-axis
+        glm::mat4 rotation_mat = glm::mat4(1.0f);
+        rotation_mat[1][1] = cos(angle_rad);
+        rotation_mat[1][2] = -sin(angle_rad);
+        rotation_mat[2][1] = sin(angle_rad);
+        rotation_mat[2][2] = cos(angle_rad);
+
+        // Multiply rotation matrix with each vertex of the cube
+        for (int i = 0; i < NUM_VERTICES; i++)
+        {
+            glm::vec4 vertex = glm::vec4(vertexData[i][0], vertexData[i][1], vertexData[i][2], 1.0f);
+            vertex = rotation_mat * vertex;
+            vertexData[i][0] = vertex.x;
+            vertexData[i][1] = vertex.y;
+            vertexData[i][2] = vertex.z;
+        }
+    }
+
+    // rotate the cube around the y-axis given an angle in degrees
+    void rotateY(float angle) {
+        // convert the angle to radians
+        angle = glm::radians(angle);
+
+        // calculate the sine and cosine of the angle
+        float c = cos(angle);
+        float s = sin(angle);
+
+        // create the rotation matrix
+        glm::mat4 rotation = {
+            c, 0, s, 0,
+            0, 1, 0, 0,
+            -s, 0, c, 0,
+            0, 0, 0, 1
+        };
+
+        // translate to the origin
+        glm::mat4 translation1 = glm::translate(glm::mat4(1.0f), -center);
+
+        // translate back to the original position
+        glm::mat4 translation2 = glm::translate(glm::mat4(1.0f), center);
+
+        // apply the transformations to each vertex
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 vertex = glm::vec4(vertexData[i][0], vertexData[i][1], vertexData[i][2], 1.0f);
+            vertex = translation1 * vertex;
+            vertex = rotation * vertex;
+            vertex = translation2 * vertex;
+            vertexData[i][0] = vertex.x;
+            vertexData[i][1] = vertex.y;
+            vertexData[i][2] = vertex.z;
+        }
+    }
+
+    void rotateZ(float angle) {
+        // Convert angle to radians
+        float angle_rad = glm::radians(angle);
+
+        // Create rotation matrix for z-axis
+        glm::mat4 rotation_mat = glm::mat4(1.0f);
+        rotation_mat[0][0] = cos(angle_rad);
+        rotation_mat[0][1] = sin(angle_rad);
+        rotation_mat[1][0] = -sin(angle_rad);
+        rotation_mat[1][1] = cos(angle_rad);
+
+        // Multiply rotation matrix with each vertex of the cube
+        for (int i = 0; i < NUM_VERTICES; i++)
+        {
+            glm::vec4 vertex = glm::vec4(vertexData[i][0], vertexData[i][1], vertexData[i][2], 1.0f);
+            vertex = rotation_mat * vertex;
+            vertexData[i][0] = vertex.x;
+            vertexData[i][1] = vertex.y;
+            vertexData[i][2] = vertex.z;
+        }
+    }
+
+    void updateCubeOrientation(float angle, glm::vec3 axes) {
+        if (axes[0] != 0) {
+            rotateX(angle);
+        }
+        if (axes[1] != 0) {
+            rotateY(angle);
+        }
+        if (axes[2] != 0) {
+            rotateZ(angle);
+        }
+    }
+
 };
 
 
