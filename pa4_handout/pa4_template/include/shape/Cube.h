@@ -103,6 +103,33 @@ public:
         updateCubeOrientation(angle, axis);
     }
 
+    // render the cube
+    void render(GLuint cubeArray, GLuint cubeBuffer) const {
+        // generate the array and buffer objects
+        glGenVertexArrays(1, &cubeArray);
+        glGenBuffers(1, &cubeBuffer);
+
+        // bind the array and buffer objects
+        glBindVertexArray(cubeArray);
+        glBindBuffer(GL_ARRAY_BUFFER, cubeBuffer);
+
+        // get the vertex data
+        glm::vec3 *data = getVertexData();
+
+        // copy the vertex data to the buffer object
+        glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(NUM_VERTICES * sizeof(glm::vec3)), data.data(), GL_STATIC_DRAW);
+
+        // enable the vertex attribute array
+        glEnableVertexAttribArray(0);
+
+        // specify the layout of the vertex data
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+        // unbind the array and buffer objects
+        glBindVertexArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+
 
 private:
 
