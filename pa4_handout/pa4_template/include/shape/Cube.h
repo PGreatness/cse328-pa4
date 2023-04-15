@@ -107,7 +107,7 @@ public:
     // render the cube
     void render(GLuint cubeArray, GLuint cubeBuffer) const {
         // initialize the cube renders
-        initializeRender(cubeArray, cubeBuffer);
+        initializeRender(&cubeArray, &cubeBuffer);
 
         // draw the cube
         glDrawArrays(GL_TRIANGLES, 0, NUM_VERTICES);

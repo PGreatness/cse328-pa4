@@ -112,7 +112,7 @@ void displayCube()
     Context::cubeShader->setMat4("view", view);
     Context::cubeShader->setMat4("model", glm::mat4(1.0f));
 
-    cube.render();
+    cube.render(Primitive::cubeVertexArray, Primitive::cubeVertexBuffer);
 }
 
 // TODO: Add display functions for other primitives
