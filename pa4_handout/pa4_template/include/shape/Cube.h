@@ -156,7 +156,7 @@ public:
         // draw the cube
         if (options & Options::WIREFRAME) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-            glDrawArrays(GL_POINTS, 0, NUM_VERTICES);
+            glDrawArrays(GL_LINE_STRIP, 0, NUM_VERTICES);
         } else {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             glDrawArrays(GL_TRIANGLES, 0, NUM_VERTICES);
