@@ -13,7 +13,7 @@ private:
         static const uint DEFAULT = 0;
         static const uint WIREFRAME = 1;
         static const uint SOLID = 0;
-    };
+    } options;
 
 public:
 
@@ -81,7 +81,7 @@ public:
     }
 
     struct Options getOptions() const {
-        return Options;
+        return options;
     }
 
     // setters
