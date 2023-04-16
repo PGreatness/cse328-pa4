@@ -7,6 +7,8 @@
 class Cube : public Shape
 {
 public:
+
+    // default constructor
     Cube()
     {
         // create a default cube
@@ -69,6 +71,10 @@ public:
         return color;
     }
 
+    struct cubeOptions getOptions() const {
+        return options;
+    }
+
     // setters
     void setCenter(glm::vec3 center) {
         this->center = center;
@@ -106,6 +112,24 @@ public:
 
     // render the cube
     void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID) const {
+        // initialize the cube renders
+        initializeRender(&cubeArray, &cubeBuffer);
+
+        // give the color to the shader
+        GLuint colorLocation = glGetUniformLocation(shaderID, "cubeColor");
+
+        // set the color
+        glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
+
+        // draw the cube
+        glDrawArrays(GL_TRIANGLES, 0, NUM_VERTICES);
+
+        // unbind the cube array and buffer
+        glBindVertexArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+
+    void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID, uint options) {
         // initialize the cube renders
         initializeRender(&cubeArray, &cubeBuffer);
 
@@ -191,6 +215,13 @@ private:
                     -0.5f,  0.5f,  0.5f,
                     -0.5f,  0.5f, -0.5f,
             };
+
+    struct Options
+    {
+        uint DEFAULT = 0;
+        uint WIREFRAME = 1;
+        uint SOLID = 0;
+    };
 
     // updates the vertex data when the size of the cube changes
     void updateCubeSize(float scale) {

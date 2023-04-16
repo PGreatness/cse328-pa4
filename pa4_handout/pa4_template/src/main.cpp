@@ -60,6 +60,7 @@ std::shared_ptr<Shader> axisShader;       // shader for x, y, z axis
 // TODO: Add other context configurations
 std::shared_ptr<Shader> cubeShader;       // shader for cubes
 Cube cube;                               // default cube object
+struct cubeOptions = cube.getOptions();  // default cube options
 
 }  // namespace Context
 
