@@ -71,7 +71,7 @@ public:
         return color;
     }
 
-    struct cubeOptions getOptions() const {
+    cubeOptions getOptions() const {
         struct cubeOptions options;
         options.center = this->center;
         options.size = this->size;
