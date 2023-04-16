@@ -67,6 +67,13 @@ struct cubeOptions
     static const uint SOLID = 0;
 }; // cube options
 
+uint options = 0;
+
+void setOptions(uint newOptions)
+{
+    options = newOptions;
+}
+
 }  // namespace Context
 
 
@@ -120,7 +127,8 @@ void displayCube()
 
     cube.render(Primitive::cubeVertexArray,
                 Primitive::cubeVertexBuffer,
-                Context::cubeShader->getShaderProgramHandle());
+                Context::cubeShader->getShaderProgramHandle(),
+                options);
 }
 
 // TODO: Add display functions for other primitives
@@ -236,6 +244,11 @@ void framebufferSizeCallback(GLFWwindow * window, int width, int height)
 void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
     // TODO: Modify this function to fit your own ideas
+    // check if key pressed is 1
+    if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+    {
+        Context::setOptions(Context::cubeOptions::WIREFRAME);
+    }
 }
 
 

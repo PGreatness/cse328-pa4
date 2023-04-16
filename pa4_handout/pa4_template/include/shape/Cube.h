@@ -119,21 +119,7 @@ public:
 
     // render the cube
     void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID) const {
-        // initialize the cube renders
-        initializeRender(&cubeArray, &cubeBuffer);
-
-        // give the color to the shader
-        GLuint colorLocation = glGetUniformLocation(shaderID, "cubeColor");
-
-        // set the color
-        glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
-
-        // draw the cube
-        glDrawArrays(GL_TRIANGLES, 0, NUM_VERTICES);
-
-        // unbind the cube array and buffer
-        glBindVertexArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        render(cubeArray, cubeBuffer, shaderID, Options::DEFAULT);
     }
 
     void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID, uint options) {
