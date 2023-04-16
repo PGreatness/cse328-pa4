@@ -149,12 +149,12 @@ private:
     // Each 2x3 lines represents a quad facet (composed of 2 triangles) of this cube.
     GLfloat vertexData[NUM_VERTICES][3] =
             {
-                    -0.5f, -0.5f, -0.5f,
-                    0.5f, -0.5f, -0.5f,
-                    0.5f,  0.5f, -0.5f,
-                    0.5f,  0.5f, -0.5f,
-                    -0.5f,  0.5f, -0.5f,
-                    -0.5f, -0.5f, -0.5f,
+                    // -0.5f, -0.5f, -0.5f,
+                    // 0.5f, -0.5f, -0.5f,
+                    // 0.5f,  0.5f, -0.5f,
+                    // 0.5f,  0.5f, -0.5f,
+                    // -0.5f,  0.5f, -0.5f,
+                    // -0.5f, -0.5f, -0.5f,
 
                     -0.5f, -0.5f,  0.5f,
                     0.5f, -0.5f,  0.5f,
