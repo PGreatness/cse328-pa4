@@ -8,7 +8,7 @@ class Cube : public Shape
 {
 
 private:
-    struct Options
+    const struct Options
     {
         static const uint DEFAULT = 0;
         static const uint WIREFRAME = 1;
