@@ -71,7 +71,7 @@ public:
         return color;
     }
 
-    cubeOptions getOptions() const {
+    Options getOptions() const {
         return *Options;
     }
 
@@ -216,11 +216,11 @@ private:
                     -0.5f,  0.5f, -0.5f,
             };
 
-    static const struct Options
+    struct Options
     {
-        uint DEFAULT = 0;
-        uint WIREFRAME = 1;
-        uint SOLID = 0;
+        static const uint DEFAULT = 0;
+        static const uint WIREFRAME = 1;
+        static const uint SOLID = 0;
     };
 
     // updates the vertex data when the size of the cube changes
