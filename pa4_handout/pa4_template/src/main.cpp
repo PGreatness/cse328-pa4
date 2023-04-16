@@ -63,8 +63,9 @@ Cube cube;                               // default cube object
 struct cubeOptions
 {
     static const uint DEFAULT = 0;
-    static const uint WIREFRAME = 1;
     static const uint SOLID = 0;
+    static const uint WIREFRAME = 1;
+    static const uint FLAT = 2;
 }; // cube options
 
 uint options = 0;

@@ -11,8 +11,9 @@ private:
     struct Options
     {
         static const uint DEFAULT = 0;
-        static const uint WIREFRAME = 1;
         static const uint SOLID = 0;
+        static const uint WIREFRAME = 1;
+        static const uint FLAT = 2;
     };
 
     static const Options options;
@@ -146,6 +147,12 @@ public:
         // set the color
         glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
 
+        // check for lighting
+        if (options & Options::FLAT) {
+            // flat shading
+            glEnable(GL_LIGHTING);
+            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, glm::value_ptr(this->color));
+        }
         // draw the cube
         if (options & Options::WIREFRAME) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -187,12 +194,12 @@ private:
     GLfloat vertexData[NUM_VERTICES][3] =
             {
                     // front
-                    // -0.5f, -0.5f, -0.5f,
-                    // 0.5f, -0.5f, -0.5f,
-                    // 0.5f,  0.5f, -0.5f,
-                    // 0.5f,  0.5f, -0.5f,
-                    // -0.5f,  0.5f, -0.5f,
-                    // -0.5f, -0.5f, -0.5f,
+                    -0.5f, -0.5f, -0.5f,
+                    0.5f, -0.5f, -0.5f,
+                    0.5f,  0.5f, -0.5f,
+                    0.5f,  0.5f, -0.5f,
+                    -0.5f,  0.5f, -0.5f,
+                    -0.5f, -0.5f, -0.5f,
 
                     // back
                     -0.5f, -0.5f,  0.5f,
