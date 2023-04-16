@@ -82,8 +82,7 @@ public:
         return color;
     }
 
-    struct Options getOptions(struct Options a) const {
-        memcpy(&a, &options, sizeof(options));
+    struct Options getOptions() const {
         return a;
     }
 
