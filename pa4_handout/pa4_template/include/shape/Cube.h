@@ -72,7 +72,7 @@ public:
     }
 
     struct Options getOptions() const {
-        return options;
+        return Options;
     }
 
     // setters
@@ -221,7 +221,7 @@ private:
         static const uint DEFAULT = 0;
         static const uint WIREFRAME = 1;
         static const uint SOLID = 0;
-    } options;
+    };
 
     // updates the vertex data when the size of the cube changes
     void updateCubeSize(float scale) {
