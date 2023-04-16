@@ -13,7 +13,9 @@ private:
         static const uint DEFAULT = 0;
         static const uint WIREFRAME = 1;
         static const uint SOLID = 0;
-    } options;
+    };
+
+    static Options options;
 
 public:
 
