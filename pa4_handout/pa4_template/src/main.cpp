@@ -249,6 +249,10 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     {
         Context::setOptions(Context::cubeOptions::WIREFRAME);
     }
+    if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+    {
+        Context::setOptions(Context::cubeOptions::SOLID);
+    }
 }
 
 
