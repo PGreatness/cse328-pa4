@@ -148,7 +148,7 @@ public:
 
         // draw the cube
         if (options & Options::WIREFRAME) {
-            glDrawArrays(GL_LINES, 0, NUM_VERTICES);
+            glDrawArrays(GL_LINE_LOOP, 0, NUM_VERTICES);
         }
         else {
             glDrawArrays(GL_TRIANGLES, 0, NUM_VERTICES);
