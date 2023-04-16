@@ -71,12 +71,8 @@ public:
         return color;
     }
 
-    cubeOptions getOptions() const {
-        struct cubeOptions options;
-        options.center = this->center;
-        options.size = this->size;
-        options.color = this->color;
-        return options;
+    struct Options getOptions() const {
+        return Options;
     }
 
     // setters
@@ -220,12 +216,12 @@ private:
                     -0.5f,  0.5f, -0.5f,
             };
 
-    struct Options
+    struct options
     {
         static const uint DEFAULT = 0;
         static const uint WIREFRAME = 1;
         static const uint SOLID = 0;
-    };
+    } Options;
 
     // updates the vertex data when the size of the cube changes
     void updateCubeSize(float scale) {
