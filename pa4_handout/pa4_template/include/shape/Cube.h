@@ -15,10 +15,10 @@ private:
         static const uint SOLID = 0;
     };
 
-    static Options options;
 
 public:
 
+    static Options options;
     // default constructor
     Cube()
     {
