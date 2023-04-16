@@ -147,7 +147,11 @@ public:
 
     void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID, uint options) {
         // initialize the cube renders
-        initializeRender(&cubeArray, &cubeBuffer, 0);
+        if (options & Options::FLAT) {
+            initializeRender(&cubeArray, &cubeBuffer, 1);
+        } else {
+            initializeRender(&cubeArray, &cubeBuffer, 0);
+        }
 
         // give the color to the shader
         GLuint colorLocation = glGetUniformLocation(shaderID, "cubeColor");
