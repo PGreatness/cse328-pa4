@@ -82,8 +82,9 @@ public:
         return color;
     }
 
-    struct Options getOptions() const {
-        return options;
+    struct Options getOptions(struct Options a) const {
+        memcpy(&a, &options, sizeof(options));
+        return a;
     }
 
     // setters
