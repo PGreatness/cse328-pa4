@@ -71,8 +71,12 @@ public:
         return color;
     }
 
-    Options getOptions() const {
-        return *Options;
+    struct cubeOptions getOptions() const {
+        struct cubeOptions options;
+        options.center = this->center;
+        options.size = this->size;
+        options.color = this->color;
+        return options;
     }
 
     // setters
