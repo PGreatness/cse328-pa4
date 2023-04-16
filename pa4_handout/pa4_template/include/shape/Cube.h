@@ -71,8 +71,8 @@ public:
         return color;
     }
 
-    struct cubeOptions getOptions() const {
-        return Options;
+    cubeOptions getOptions() const {
+        return *Options;
     }
 
     // setters
@@ -216,7 +216,7 @@ private:
                     -0.5f,  0.5f, -0.5f,
             };
 
-    struct Options
+    static const struct Options
     {
         uint DEFAULT = 0;
         uint WIREFRAME = 1;
