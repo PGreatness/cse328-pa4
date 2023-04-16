@@ -119,7 +119,7 @@ public:
 
     // render the cube
     void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID) const {
-        render(cubeArray, cubeBuffer, shaderID, Options::DEFAULT);
+        render(cubeArray, cubeBuffer, shaderID, this->options.DEFAULT);
     }
 
     void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID, uint options) {
