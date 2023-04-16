@@ -148,7 +148,7 @@ public:
 
         // draw the cube
         if (options & Options::WIREFRAME) {
-            glDrawArrays(GL_LINE_LOOP, 0, NUM_VERTICES);
+            glDrawArrays(GL_LINES, 0, NUM_VERTICES);
         }
         else {
             glDrawArrays(GL_TRIANGLES, 0, NUM_VERTICES);
@@ -185,12 +185,12 @@ private:
     // Each 2x3 lines represents a quad facet (composed of 2 triangles) of this cube.
     GLfloat vertexData[NUM_VERTICES][3] =
             {
-                    // -0.5f, -0.5f, -0.5f,
-                    // 0.5f, -0.5f, -0.5f,
-                    // 0.5f,  0.5f, -0.5f,
-                    // 0.5f,  0.5f, -0.5f,
-                    // -0.5f,  0.5f, -0.5f,
-                    // -0.5f, -0.5f, -0.5f,
+                    -0.5f, -0.5f, -0.5f,
+                    0.5f, -0.5f, -0.5f,
+                    0.5f,  0.5f, -0.5f,
+                    0.5f,  0.5f, -0.5f,
+                    -0.5f,  0.5f, -0.5f,
+                    -0.5f, -0.5f, -0.5f,
 
                     -0.5f, -0.5f,  0.5f,
                     0.5f, -0.5f,  0.5f,
