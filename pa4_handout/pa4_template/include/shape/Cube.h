@@ -62,10 +62,18 @@ public:
     virtual const glm::vec3 * getNormalData() const override {
         // normalize the vertex data
         glm::vec3 *normalData = new glm::vec3[NUM_VERTICES];
-        for (int i = 0; i < NUM_VERTICES; i++) {
-            normalData[i] = glm::normalize(glm::vec3(this->vertexData[i][0],
-                                                        this->vertexData[i][1],
-                                                        this->vertexData[i][2]));
+        for (int i = 0; i < NUM_VERTICES; i += 3) {
+            glm::vec3 v1 = glm::vec3(this->vertexData[i][0],
+                                        this->vertexData[i][1],
+                                        this->vertexData[i][2]);
+            glm::vec3 v2 = glm::vec3(this->vertexData[i + 1][0],
+                                        this->vertexData[i + 1][1],
+                                        this->vertexData[i + 1][2]);
+            glm::vec3 v3 = glm::vec3(this->vertexData[i + 2][0],
+                                        this->vertexData[i + 2][1],
+                                        this->vertexData[i + 2][2]);
+            glm::vec3 normal = glm::normalize(glm::cross(v2 - v1, v3 - v1));
+            normalData[i] = normal;
         }
         return normalData;
     }
@@ -121,7 +129,7 @@ public:
     // render the cube
     void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID) const {
         // initialize the cube renders
-        initializeRender(&cubeArray, &cubeBuffer);
+        initializeRender(&cubeArray, &cubeBuffer, 0);
 
         // give the color to the shader
         GLuint colorLocation = glGetUniformLocation(shaderID, "cubeColor");
@@ -139,7 +147,7 @@ public:
 
     void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID, uint options) {
         // initialize the cube renders
-        initializeRender(&cubeArray, &cubeBuffer);
+        initializeRender(&cubeArray, &cubeBuffer, 0);
 
         // give the color to the shader
         GLuint colorLocation = glGetUniformLocation(shaderID, "cubeColor");
@@ -354,7 +362,9 @@ private:
         }
     }
 
-    void initializeRender(GLuint * cubeArray, GLuint * cubeBuffer) const
+    // initialize the render data for the cube
+    // use 0 for no lighting, 1 for ambient lighting, 2 for diffuse lighting, 3 for specular lighting
+    void initializeRender(GLuint * cubeArray, GLuint * cubeBuffer, uint lighting) const
     {
         // generate the array and buffer objects
         glGenVertexArrays(1, cubeArray);
@@ -376,6 +386,22 @@ private:
         // specify the layout of the vertex data
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
+        const glm::vec3 *normals;
+        if (lighting != 0) {
+            glEnable(GL_LIGHTING);
+            glEnable(GL_LIGHT0);
+
+            normals = getNormalData();
+            glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), normals, GL_STATIC_DRAW);
+
+            glEnableVertexAttribArray(1);
+        }
+        if (lighting == 1) { // ambient lighting
+            GLfloat ambient[] = {0.2f, 0.2f, 0.2f, 1.0f};
+            glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+
+            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+        }
     }
 };
 
