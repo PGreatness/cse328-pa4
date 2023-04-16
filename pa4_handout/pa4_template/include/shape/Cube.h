@@ -82,10 +82,6 @@ public:
         return color;
     }
 
-    struct Options getOptions() const {
-        return a;
-    }
-
     // setters
     void setCenter(glm::vec3 center) {
         this->center = center;
