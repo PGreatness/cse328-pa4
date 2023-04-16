@@ -72,7 +72,7 @@ public:
     }
 
     struct cubeOptions getOptions() const {
-        return options;
+        return Options;
     }
 
     // setters
