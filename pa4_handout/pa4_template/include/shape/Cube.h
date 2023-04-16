@@ -6,6 +6,15 @@
 
 class Cube : public Shape
 {
+
+private:
+    struct Options
+    {
+        static const uint DEFAULT = 0;
+        static const uint WIREFRAME = 1;
+        static const uint SOLID = 0;
+    };
+
 public:
 
     // default constructor
@@ -216,12 +225,6 @@ private:
                     -0.5f,  0.5f, -0.5f,
             };
 
-    struct Options
-    {
-        static const uint DEFAULT = 0;
-        static const uint WIREFRAME = 1;
-        static const uint SOLID = 0;
-    };
 
     // updates the vertex data when the size of the cube changes
     void updateCubeSize(float scale) {
