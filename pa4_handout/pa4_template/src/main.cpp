@@ -59,7 +59,7 @@ std::shared_ptr<Shader> axisShader;       // shader for x, y, z axis
 
 // TODO: Add other context configurations
 std::shared_ptr<Shader> cubeShader;       // shader for cubes
-Cube cube;                               // default cube object
+Cube cube(glm::vec3(0.0f,0.0f,0.0f), 3f, glm::vec3(1.0f, 0.5f, 0.31f));                               // default cube object
 struct cubeOptions
 {
     static const uint DEFAULT = 0;
@@ -185,7 +185,7 @@ int main()
     // set lighting uniforms
     Context::cubeShader->setVec3("lightPos", Context::lightPos);
     Context::cubeShader->setVec3("viewPos", Context::camera.position);
-    Context::cubeShader->setVec3("lightColor", 0.5f, 0.5f, 0.5f);
+    Context::cubeShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);
