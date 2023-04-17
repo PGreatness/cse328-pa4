@@ -2,8 +2,6 @@
 
 in vec3 ourFragColor;
 
-uniform vec3 lightPos;
-
 out vec4 fragColor;
 
 void main()
