@@ -128,7 +128,7 @@ void displayCube()
 
     cube.render(Primitive::cubeVertexArray,
                 Primitive::cubeVertexBuffer,
-                Context::cubeShader->getShaderProgramHandle(),
+                Context::cubeShader,
                 options);
 }
 
@@ -183,7 +183,7 @@ int main()
                                                     "src/shader/Cube/frag.glsl");
 
     // set lighting uniforms
-    cubeShader->setVec3("lightPos", Context::lightPos);
+    Context::cubeShader->setVec3("lightPos", Context::lightPos);
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);

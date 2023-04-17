@@ -162,7 +162,6 @@ public:
         } else {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             glDrawArrays(GL_TRIANGLES, 0, NUM_VERTICES);
-            std::cout << "drawing filled" << std::endl;
         }
 
         // unbind the cube array and buffer
