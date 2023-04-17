@@ -181,6 +181,9 @@ int main()
 
     Context::cubeShader = std::make_shared<Shader>("src/shader/Cube/vert.glsl",
                                                     "src/shader/Cube/frag.glsl");
+
+    // set lighting uniforms
+    cubeShader->setVec3("lightPos", Context::lightPos);
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);

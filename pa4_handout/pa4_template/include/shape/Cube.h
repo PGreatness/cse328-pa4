@@ -390,13 +390,9 @@ private:
         // specify the layout of the vertex data
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-        const glm::vec3 *normals;
         if (lighting != 0) {
             glEnable(GL_LIGHTING);
             glEnable(GL_LIGHT0);
-
-            normals = getNormalData();
-            glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), normals, GL_STATIC_DRAW);
 
             glEnableVertexAttribArray(1);
         }
