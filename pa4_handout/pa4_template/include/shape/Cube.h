@@ -129,7 +129,7 @@ public:
     // render the cube
     void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID) const {
         // initialize the cube renders
-        initializeRender(&cubeArray, &cubeBuffer, 0);
+        initializeRender(&cubeArray, &cubeBuffer);
 
         // give the color to the shader
         GLuint colorLocation = glGetUniformLocation(shaderID, "cubeColor");
@@ -147,11 +147,7 @@ public:
 
     void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID, uint options) {
         // initialize the cube renders
-        if (options & Options::FLAT) {
-            initializeRender(&cubeArray, &cubeBuffer, 1);
-        } else {
-            initializeRender(&cubeArray, &cubeBuffer, 0);
-        }
+        initializeRender(&cubeArray, &cubeBuffer);
 
         // give the color to the shader
         GLuint colorLocation = glGetUniformLocation(shaderID, "cubeColor");
@@ -159,12 +155,6 @@ public:
         // set the color
         glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
 
-        // check for lighting
-        if (options & Options::FLAT) {
-            // flat shading
-            glEnable(GL_LIGHTING);
-            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, glm::value_ptr(this->color));
-        }
         // draw the cube
         if (options & Options::WIREFRAME) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -368,7 +358,7 @@ private:
 
     // initialize the render data for the cube
     // use 0 for no lighting, 1 for ambient lighting, 2 for diffuse lighting, 3 for specular lighting
-    void initializeRender(GLuint * cubeArray, GLuint * cubeBuffer, uint lighting) const
+    void initializeRender(GLuint * cubeArray, GLuint * cubeBuffer) const
     {
         // generate the array and buffer objects
         glGenVertexArrays(1, cubeArray);
@@ -390,18 +380,6 @@ private:
         // specify the layout of the vertex data
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-        if (lighting != 0) {
-            glEnable(GL_LIGHTING);
-            glEnable(GL_LIGHT0);
-
-            glEnableVertexAttribArray(1);
-        }
-        if (lighting == 1) { // ambient lighting
-            GLfloat ambient[] = {0.2f, 0.2f, 0.2f, 1.0f};
-            glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-
-            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-        }
     }
 };
 
