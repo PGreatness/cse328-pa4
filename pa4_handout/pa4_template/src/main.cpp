@@ -184,6 +184,9 @@ int main()
 
     // set lighting uniforms
     Context::cubeShader->setVec3("lightPos", Context::lightPos);
+    Context::cubeShader->setVec3("viewPos", Context::camera.position);
+    Context::cubeShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+    Context::cubeShader->setVec3("objectColor", 1.0f, 0.5f, 0.31f);
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);
