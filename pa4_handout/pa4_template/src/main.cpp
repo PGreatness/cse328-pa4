@@ -128,7 +128,7 @@ void displayCube()
 
     cube.render(Primitive::cubeVertexArray,
                 Primitive::cubeVertexBuffer,
-                Context::cubeShader,
+                Context::cubeShader->getShaderProgramHandle(),
                 options);
 }
 
