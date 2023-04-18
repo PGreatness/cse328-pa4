@@ -326,11 +326,7 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     // check if pressing both the T key and the W key simultaneously
     if (key == GLFW_KEY_T && action == GLFW_PRESS)
     {
-        Context::modificationKeyPressed = true;
-    }
-    if (key == GLFW_KEY_T && action == GLFW_RELEASE)
-    {
-        Context::modificationKeyPressed = false;
+        Context::modificationKeyPressed = !Context::modificationKeyPressed;
     }
     if (key == GLFW_KEY_W && action == GLFW_PRESS && Context::modificationKeyPressed)
     {
