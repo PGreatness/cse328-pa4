@@ -267,17 +267,17 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
     {
         Context::cube.setColor(Colors::WIREFRAME);
-        Color::currentColor = Colors::WIREFRAME;
+        Colors::currentColor = Colors::WIREFRAME;
         Context::setOptions(Context::cubeOptions::WIREFRAME);
     }
     if (key == GLFW_KEY_2 && action == GLFW_PRESS)
     {
-        Color::currentColor = Colors::FLAT;
+        Colors::currentColor = Colors::FLAT;
         Context::setOptions(Context::cubeOptions::FLAT);
     }
     if (key == GLFW_KEY_4 && action == GLFW_PRESS)
     {
-        Color::currentColor = Colors::SMOOTH;
+        Colors::currentColor = Colors::SMOOTH;
         Context::setOptions(Context::cubeOptions::SMOOTH);
     }
 }
