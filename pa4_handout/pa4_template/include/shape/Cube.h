@@ -73,7 +73,7 @@ public:
                                         this->tetraData[i][2]);
         }
         return tetraData;
-        return vertexData;
+        // return vertexData;
     }
 
     virtual const glm::vec3 * getNormalData() const override {
