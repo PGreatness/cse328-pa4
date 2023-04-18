@@ -109,7 +109,6 @@ public:
     }
 
     virtual const glm::vec3 * getVertexData() const override {
-        std::cout<<"tetra size: "<<vertex.size()<<std::endl;
         return vertex.data();
     }
 
