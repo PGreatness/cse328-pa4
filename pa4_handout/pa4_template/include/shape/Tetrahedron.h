@@ -136,13 +136,13 @@ public:
 
     // scale the tetrahedron
     void scale(float scaleFactor) {
-        this->size *= scaleFactor;
+        this->size = scaleFactor;
         // size changed, so we need to update the vertex data
         updateTetrahedronSize(scaleFactor);
     }
 
     void translate(glm::vec3 translation) {
-        this->baseCenter += translation;
+        this->baseCenter = translation;
         // baseCenter changed, so we need to update the vertex data
         updateTetrahedronLocation(translation);
     }
