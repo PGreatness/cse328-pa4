@@ -374,7 +374,20 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
 
 void perFrameKeyInput(GLFWwindow * window)
 {
-    if (Context::modificationKeyPressed) return; // do not process keyboard input when modifying
+    // move the shapes depending on the key pressed so it can be done smoothly
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed)
+    {
+        float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
+        glm::vec3 newCenter = Context::cube.getCenter();
+        // normalize the front vector
+        glm::vec3 front = glm::normalize(Context::camera.front);
+        // find the vector perpendicular to the front vector heading towards the left
+        glm::vec3 left = glm::normalize(glm::cross(front, Context::camera.up));
+        // move the center of the cube to the left
+        newCenter -= left * displacement;
+        Context::cube.setCenter(newCenter);
+        return;
+    }
     // camera control
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {
@@ -404,20 +417,6 @@ void perFrameKeyInput(GLFWwindow * window)
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
     {
         Context::camera.processKeyboard(Camera::kDown, Context::deltaTime);
-    }
-
-    // move the shapes depending on the key pressed so it can be done smoothly
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed)
-    {
-        float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
-        glm::vec3 newCenter = Context::cube.getCenter();
-        // normalize the front vector
-        glm::vec3 front = glm::normalize(Context::camera.front);
-        // find the vector perpendicular to the front vector heading towards the left
-        glm::vec3 left = glm::normalize(glm::cross(front, Context::camera.up));
-        // move the center of the cube to the left
-        newCenter -= left * displacement;
-        Context::cube.setCenter(newCenter);
     }
 }
 
