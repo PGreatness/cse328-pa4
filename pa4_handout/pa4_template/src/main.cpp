@@ -387,10 +387,10 @@ void perFrameKeyInput(GLFWwindow * window)
         glm::vec3 newCenter = Context::cube.getCenter();
         // normalize the front vector
         glm::vec3 front = glm::normalize(Context::camera.front);
+        // find the vector perpendicular to the front vector heading towards the left
+        glm::vec3 left = glm::normalize(glm::cross(front, Context::camera.up));
         // move the center of the cube to the left
-        newCenter.x -= displacement * front.x;
-        newCenter.y -= displacement * front.y;
-        newCenter.z -= displacement * front.z;
+        newCenter -= left * displacement;
         Context::cube.setCenter(newCenter);
     }
 
