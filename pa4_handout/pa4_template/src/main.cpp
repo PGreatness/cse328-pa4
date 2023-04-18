@@ -312,7 +312,6 @@ void cursorPosCallback(GLFWwindow * window, double xpos, double ypos)
     glm::mat4 inverseModel = glm::inverse(model);
     glm::mat4 inverseMVP = inverseProjection * inverseView * inverseModel;
     glm::vec4 mouseCoords = inverseMVP * glm::vec4(mouseCoordX, mouseCoordY, 0.0f, 1.0f);
-    mouseCoords /= mouseCoords.w;
 
 
     Context::mouseLocalPos = glm::vec3(mouseCoords);
