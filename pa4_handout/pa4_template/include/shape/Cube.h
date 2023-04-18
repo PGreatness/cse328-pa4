@@ -60,16 +60,12 @@ public:
     }
 
     virtual const glm::vec3 * getVertexData() const override {
-        glm::vec3 *vertexData = new glm::vec3[NUM_VERTICES];
+        /* glm::vec3 *vertexData = new glm::vec3[NUM_VERTICES];
         for (int i = 0; i < NUM_VERTICES; i++) {
             vertexData[i] = glm::vec3(this->vertexData[i][0],
                                         this->vertexData[i][1],
                                         this->vertexData[i][2]);
-        }
-        return vertexData;
-    }
-
-    const glm::vec3 * getTetraData() {
+        } */
         glm::vec3 *tetraData = new glm::vec3[4];
         for (int i = 0; i < 4; i++) {
             tetraData[i] = glm::vec3(this->tetraData[i][0],
@@ -77,6 +73,7 @@ public:
                                         this->tetraData[i][2]);
         }
         return tetraData;
+        return vertexData;
     }
 
     virtual const glm::vec3 * getNormalData() const override {
@@ -408,7 +405,7 @@ private:
         // const glm::vec3 *tetraStart = getTetraData();
 
         // copy the vertex data to the buffer object
-        glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), tetraStart, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), dataStart, GL_STATIC_DRAW);
 
         // enable the vertex attribute array for position
         glEnableVertexAttribArray(0);
