@@ -297,18 +297,15 @@ void cursorPosCallback(GLFWwindow * window, double xpos, double ypos)
         Context::camera.processMouseMovement(xoffset, yoffset);
     }
 
-    // normalize the mouse position
-    Context::mouseCoordX = (2.0f * Context::lastX) / Context::kWindowWidth - 1.0f;
-    Context::mouseCoordY = 1.0f - (2.0f * Context::lastY) / Context::kWindowHeight;
-    glm::mat4 invProj = glm::inverse(glm::perspective(glm::radians(Context::camera.zoom),
-                                                        static_cast<GLfloat>(Context::kWindowWidth) /
-                                                        static_cast<GLfloat>(Context::kWindowHeight),
-                                                        0.01f,
-                                                        100.0f));
-    glm::vec4 screenPos = glm::vec4(Context::mouseCoordX, Context::mouseCoordY, 0.0f, 1.0f);
-    glm::vec4 localPos = invProj * screenPos;
-    glm::vec3 finalPos = Context::camera.front;
-    Context::mouseLocalPos = finalPos;
+    // normalize the mouse position to [-1, 1]
+    Context::mouseCoordX = static_cast<float>(xpos) / Context::kWindowWidth * 2.0f - 1.0f;
+    Context::mouseCoordY = static_cast<float>(ypos) / Context::kWindowHeight * 2.0f - 1.0f;
+    // take into account the camera's locaton in the world
+    Context::mouseCoordX += Context::camera.position.x;
+    Context::mouseCoordY += Context::camera.position.y;
+
+    // set mouseLocalPos to mouseCoords
+    Context::mouseLocalPos = glm::vec3(Context::mouseCoordX, Context::mouseCoordY, 0.0f);
 }
 
 
