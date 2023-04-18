@@ -383,6 +383,7 @@ void perFrameKeyInput(GLFWwindow * window)
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {
         Context::camera.processKeyboard(Camera::kLeft, Context::deltaTime);
+        Context::cube.setCenter(Context::camera.position);
     }
 
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
