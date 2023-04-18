@@ -47,20 +47,13 @@ public:
     }
 
     Tetrahedron(glm::vec3 baseCenter, GLfloat size) {
-        std::cout<<"1"<<std::endl;
         this->baseCenter = glm::vec3(DEFAULT_BASE_CENTER_X, DEFAULT_BASE_CENTER_Y, DEFAULT_BASE_CENTER_Z);
-        std::cout<<"2"<<std::endl;
         this->size = DEFAULT_SIZE;
-        std::cout<<"3"<<std::endl;
 
         translate(baseCenter);
-        std::cout<<"4"<<std::endl;
         scale(size);
-        std::cout<<"5"<<std::endl;
         this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
-        std::cout<<"6"<<std::endl;
         this->oldColor = this->color;
-        std::cout<<"7"<<std::endl;
 
         vertex.reserve(NUM_VERTICES);
 
@@ -82,11 +75,16 @@ public:
     }
 
     Tetrahedron(glm::vec3 baseCenter, GLfloat size, glm::vec3 color) {
+        std::cout<<"1"<<std::endl;
         this->baseCenter = glm::vec3(DEFAULT_BASE_CENTER_X, DEFAULT_BASE_CENTER_Y, DEFAULT_BASE_CENTER_Z);
+        std::cout<<"2"<<std::endl;
         this->size = DEFAULT_SIZE;
+        std::cout<<"3"<<std::endl;
 
         translate(baseCenter);
+        std::cout<<"4"<<std::endl;
         scale(size);
+        std::cout<<"5"<<std::endl;
         this->color = color;
         this->oldColor = this->color;
 

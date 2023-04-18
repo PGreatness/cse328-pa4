@@ -3,7 +3,6 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
 
 #include "shape/Cube.h"
 #include "shape/Dodecahedron.h"
@@ -69,7 +68,6 @@ std::shared_ptr<Shader> cubeShader;       // shader for cubes
 Cube cube(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default cube object
 
 std::shared_ptr<Shader> tetrahedronShader;       // shader for tetrahedron
-std::cout << "Tetrahedron" << std::endl;
 Tetrahedron tetrahedron(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default tetrahedron object
 struct cubeOptions
 {
