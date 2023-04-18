@@ -33,16 +33,16 @@ public:
     Cube(glm::vec3 center, float size)
     {
         // user defined center and size
-        this->center = center;
-        this->size = size;
+        this->translate(center);
+        this->scale(size);
         this->color = {DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B};
     }
 
     Cube(glm::vec3 center, float size, glm::vec3 color)
     {
         // user defined center, size, and color
-        this->center = center;
-        this->size = size;
+        this->translate(center);
+        this->scale(size);
         this->color = color;
     }
 
