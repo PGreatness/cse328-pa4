@@ -190,8 +190,10 @@ public:
             mouseX <= this->center[0] + this->size / 2 &&
             mouseY >= this->center[1] - this->size / 2 &&
             mouseY <= this->center[1] + this->size / 2) {
-            return true;
+                std::cout << "Mouse is over cube" << std::endl;
+                return true;
         }
+        std::cout << "Mouse is not over cube" << std::endl;
         return false;
     }
 
