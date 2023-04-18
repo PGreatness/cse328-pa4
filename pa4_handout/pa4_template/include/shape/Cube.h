@@ -60,20 +60,20 @@ public:
     }
 
     virtual const glm::vec3 * getVertexData() const override {
-        /* glm::vec3 *vertexData = new glm::vec3[NUM_VERTICES];
+        glm::vec3 *vertexData = new glm::vec3[NUM_VERTICES];
         for (int i = 0; i < NUM_VERTICES; i++) {
             vertexData[i] = glm::vec3(this->vertexData[i][0],
                                         this->vertexData[i][1],
                                         this->vertexData[i][2]);
-        } */
-        glm::vec3 *tetraData = new glm::vec3[4];
+        }
+        /* glm::vec3 *tetraData = new glm::vec3[4];
         for (int i = 0; i < 4; i++) {
             tetraData[i] = glm::vec3(this->tetraData[i][0],
                                         this->tetraData[i][1],
                                         this->tetraData[i][2]);
-        }
-        return tetraData;
-        // return vertexData;
+        } */
+        // return tetraData;
+        return vertexData;
     }
 
     virtual const glm::vec3 * getNormalData() const override {
