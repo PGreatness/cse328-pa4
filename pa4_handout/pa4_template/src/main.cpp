@@ -298,12 +298,12 @@ void cursorPosCallback(GLFWwindow * window, double xpos, double ypos)
     // make the mouse coordinates from the window coordinates
     // into the coordinates of the axis
     glm::vec4 mouseCoords = glm::vec4(xpos, Context::kWindowHeight - ypos, 0.0f, 1.0f);
-    glm::mat4 projectionMatrx = glm::perspective(glm::radians(Context::camera.zoom),
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(Context::camera.zoom),
                                                  static_cast<GLfloat>(Context::kWindowWidth) /
                                                  static_cast<GLfloat>(Context::kWindowHeight),
                                                  0.01f,
                                                  100.0f);
-    glm::vec4 viewMatrix = Context::camera.getViewMatrix();
+    glm::mat4 viewMatrix = Context::camera.getViewMatrix();
     mouseCoords = projectionMatrix * viewMatrix * mouseCoords;
 
     Context::mouseLocalPos = glm::vec3(mouseCoords);
