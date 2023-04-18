@@ -127,7 +127,7 @@ public:
     }
 
     // getters
-    glm::vec3 getBaseCenter() const { return baseCenter; }
+    glm::vec3 getCenter() const { return baseCenter; }
     GLfloat getSize() const { return size; }
     glm::vec3 getColor() const { return color; }
     glm::vec3 getOldColor() const { return oldColor; }

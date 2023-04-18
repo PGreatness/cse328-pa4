@@ -417,6 +417,8 @@ void perFrameKeyInput(GLFWwindow * window)
     {
         Context::camera.processKeyboard(Camera::kDown, Context::deltaTime);
     }
+
+    // move the shapes depending on the key pressed
 }
 
 
