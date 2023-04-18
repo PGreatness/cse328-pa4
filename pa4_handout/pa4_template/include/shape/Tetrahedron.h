@@ -14,9 +14,10 @@ private:
         static const uint WIREFRAME = 1;
         static const uint FLAT = 2;
         static const uint SMOOTH = 4;
-    }
+    };
 
     static const Options options;
+
 public:
     Tetrahedron()
     {
