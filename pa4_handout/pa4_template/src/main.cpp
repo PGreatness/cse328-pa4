@@ -307,7 +307,7 @@ void cursorPosCallback(GLFWwindow * window, double xpos, double ypos)
                                                         100.0f));
     glm::vec4 screenPos = glm::vec4(Context::mouseCoordX, Context::mouseCoordY, 0.0f, 1.0f);
     glm::vec4 localPos = invProj * screenPos;
-    glm::vec3 finalPos = glm::vec3(localPos) * 10.0f;
+    glm::vec3 finalPos = Context::camera.front;
     Context::mouseLocalPos = finalPos;
 }
 
