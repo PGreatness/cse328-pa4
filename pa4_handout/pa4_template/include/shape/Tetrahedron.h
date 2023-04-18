@@ -96,7 +96,7 @@ public:
         vertex.emplace_back(V2);
     }
 
-    virtual GLuint getNumVertices() const override {
+    virtual GLint getNumVertices() const override {
         return NUM_VERTICES;
     }
 
