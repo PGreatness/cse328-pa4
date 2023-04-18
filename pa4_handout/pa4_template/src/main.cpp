@@ -132,6 +132,7 @@ void displayCube()
     Context::cubeShader->setMat4("view", view);
     Context::cubeShader->setMat4("model", glm::mat4(1.0f));
 
+    cube.setColor(glm::vec3(1.0f, 0.5f, 0.31f));
     cube.render(Primitive::cubeVertexArray,
                 Primitive::cubeVertexBuffer,
                 Context::cubeShader->getShaderProgramHandle(),
