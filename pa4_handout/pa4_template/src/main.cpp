@@ -87,6 +87,8 @@ void setOptions(uint newOptions)
     options = newOptions;
 }
 
+Shape * selectedShape = nullptr;
+
 }  // namespace Context
 
 
@@ -334,6 +336,18 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     {
         Context::cube.translate(glm::vec3(0.0f, 0.0f, -0.1f));
     }
+    if (key == GLFW_KEY_S && action == GLFW_PRESS && Context::modificationKeyPressed)
+    {
+        Context::cube.translate(glm::vec3(0.0f, 0.0f, 0.1f));
+    }
+    if (key == GLFW_KEY_A && action == GLFW_PRESS && Context::modificationKeyPressed)
+    {
+        Context::cube.translate(glm::vec3(-0.1f, 0.0f, 0.0f));
+    }
+    if (key == GLFW_KEY_D && action == GLFW_PRESS && Context::modificationKeyPressed)
+    {
+        Context::cube.translate(glm::vec3(0.1f, 0.0f, 0.0f));
+    }
 }
 
 
@@ -342,6 +356,11 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
         Context::mousePressed = true;
+        // check if the mouse is pressed on the cube
+        if (Context::cube.isMouseOver(Context::lastX, Context::lastY)) {
+            Context::selectedShape = &Context::cube;
+            Context.cube.setColor(Colors::WIREFRAME);
+        }
     }
 
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
@@ -359,6 +378,7 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
 
 void perFrameKeyInput(GLFWwindow * window)
 {
+    if (Context::modificationKeyPressed) return; // do not process keyboard input when modifying
     // camera control
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {

@@ -184,6 +184,17 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
+    // returns true if the mouse is over the cube
+    bool isMouseOver(float mouseX, float mouseY) {
+        if (mouseX >= this->center[0] - this->size / 2 &&
+            mouseX <= this->center[0] + this->size / 2 &&
+            mouseY >= this->center[1] - this->size / 2 &&
+            mouseY <= this->center[1] + this->size / 2) {
+            return true;
+        }
+        return false;
+    }
+
 
 private:
 
