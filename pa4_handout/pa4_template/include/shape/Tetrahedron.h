@@ -142,9 +142,12 @@ public:
     }
 
     void translate(glm::vec3 translation) {
+        std::cout<<"a"<<std::endl;
         this->baseCenter = translation;
+        std::cout<<"b"<<std::endl;
         // baseCenter changed, so we need to update the vertex data
         updateTetrahedronLocation(translation);
+        std::cout<<"c"<<std::endl;
     }
 
     void rotate(float angle, glm::vec3 axis) {
