@@ -3,6 +3,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
 
 #include "shape/Cube.h"
 #include "shape/Dodecahedron.h"
