@@ -385,14 +385,7 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::camera.processKeyboard(Camera::kLeft, Context::deltaTime);
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
         glm::vec3 newCenter = Context::cube.getCenter();
-        // make a ray from newCenter to the camera position
-        glm::vec3 ray = Context::camera.position - newCenter;
-        // find the ray that is perpendicular to the camera's right vector
-        glm::vec3 perp = glm::cross(ray, Context::camera.right);
-        // normalize the perpendicular vector
-        perp = glm::normalize(perp);
-        // move the center of the cube in the direction of the perpendicular vector
-        newCenter += perp * displacement;
+        newCenter.x -= displacement;
         Context::cube.setCenter(newCenter);
     }
 
