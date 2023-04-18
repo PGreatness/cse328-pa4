@@ -81,7 +81,6 @@ public:
         this->size = DEFAULT_SIZE;
         std::cout<<"3"<<std::endl;
 
-        std::cout << "baseCenter: " << baseCenter.x << ", " << baseCenter.y << ", " << baseCenter.z << std::endl;
         translate(baseCenter);
         std::cout<<"4"<<std::endl;
         scale(size);
@@ -232,9 +231,9 @@ private:
 
     void updateTetrahedronLocation(glm::vec3 translation) {
         std::cout<<"d"<<std::endl;
-        std::cout<<translation[0]<<std::endl;
-        std::cout<<translation[1]<<std::endl;
-        std::cout<<translation[2]<<std::endl;
+        std::cout<<vertex[0][0]<<std::endl;
+        std::cout<<vertex[0][1]<<std::endl;
+        std::cout<<vertex[0][2]<<std::endl;
         for (int i = 0; i < NUM_VERTICES; i++) {
             vertex[i][0] = translation[0];
             vertex[i][1] = translation[1];
