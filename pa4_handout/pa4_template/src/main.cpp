@@ -154,7 +154,7 @@ void displayCube()
                 options);
 }
 
-/* void displayTetrahedron()
+void displayTetrahedron()
 {
     Context::tetrahedronShader->use();
 
@@ -181,7 +181,6 @@ void displayCube()
                         Context::tetrahedronShader->getShaderProgramHandle(),
                         options);
 }
- */
 // TODO: Add display functions for other primitives
 
 }  // namespace Context
