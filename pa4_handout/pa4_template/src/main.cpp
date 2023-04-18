@@ -252,7 +252,7 @@ int main()
 
         // TODO: Render
 
-        Context::displayCube();
+        // Context::displayCube();
 
         // Context::displayTetrahedron();
 
