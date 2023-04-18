@@ -340,18 +340,6 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     {
         Context::cube.translate(glm::vec3(0.0f, 0.0f, 0.1f));
     }
-    if (key == GLFW_KEY_A && action == GLFW_PRESS && Context::modificationKeyPressed)
-    {
-        float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
-        glm::vec3 newCenter = Context::cube.getCenter();
-        // normalize the front vector
-        glm::vec3 front = glm::normalize(Context::camera.front);
-        // find the vector perpendicular to the front vector heading towards the left
-        glm::vec3 left = glm::normalize(glm::cross(front, Context::camera.up));
-        // move the center of the cube to the left
-        newCenter -= left * displacement;
-        Context::cube.setCenter(newCenter);
-    }
     if (key == GLFW_KEY_D && action == GLFW_PRESS && Context::modificationKeyPressed)
     {
         Context::cube.translate(glm::vec3(0.1f, 0.0f, 0.0f));
@@ -418,7 +406,19 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::camera.processKeyboard(Camera::kDown, Context::deltaTime);
     }
 
-    // move the shapes depending on the key pressed
+    // move the shapes depending on the key pressed so it can be done smoothly
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed)
+    {
+        float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
+        glm::vec3 newCenter = Context::cube.getCenter();
+        // normalize the front vector
+        glm::vec3 front = glm::normalize(Context::camera.front);
+        // find the vector perpendicular to the front vector heading towards the left
+        glm::vec3 left = glm::normalize(glm::cross(front, Context::camera.up));
+        // move the center of the cube to the left
+        newCenter -= left * displacement;
+        Context::cube.setCenter(newCenter);
+    }
 }
 
 
