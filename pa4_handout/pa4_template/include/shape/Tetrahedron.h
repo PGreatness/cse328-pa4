@@ -289,7 +289,7 @@ private:
         glGenBuffers(1, tetBuffer);
         glBindBuffer(GL_ARRAY_BUFFER, *tetBuffer);
 
-        glm::vec3 * vertexData = getVertexData();
+        const glm::vec3 * vertexData = getVertexData();
         glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), vertexData, GL_STATIC_DRAW);
 
         glEnableVertexAttribArray(0);
