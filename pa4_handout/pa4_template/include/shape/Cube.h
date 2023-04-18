@@ -193,6 +193,7 @@ public:
             mouseY >= this->center[1] - this->size / 2 &&
             mouseY <= this->center[1] + this->size / 2) {
                 std::cout << "Mouse is over cube" << std::endl;
+                std::cout << "mouse: " << mouseX << ", " << mouseY << std::endl;
                 return true;
         }
         std::cout << "Mouse is not over cube" << std::endl;
