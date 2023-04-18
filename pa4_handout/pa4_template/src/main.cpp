@@ -251,9 +251,9 @@ int main()
 
         // TODO: Render
 
-        // Context::displayCube();
+        Context::displayCube();
 
-        Context::displayTetrahedron();
+        // Context::displayTetrahedron();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -319,9 +319,13 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
         Colors::currentColor = Colors::SMOOTH;
         Context::setOptions(Context::cubeOptions::SMOOTH);
     }
-    if (key == GLFW_KEY_5 && action == GLFW_PRESS)
+    // check if pressing both the T key and the W key simultaneously
+    if (key == GLFW_KEY_T && action == GLFW_PRESS)
     {
-        Context::setOptions(5); // testing
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        {
+            Context::cube.translate(glm::vec3(0.0f, 0.0f, 0.1f));
+        }
     }
 }
 
