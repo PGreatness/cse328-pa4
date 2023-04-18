@@ -359,7 +359,7 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
         // check if the mouse is pressed on the cube
         if (Context::cube.isMouseOver(Context::lastX, Context::lastY)) {
             Context::selectedShape = &Context::cube;
-            Context.cube.setColor(Colors::WIREFRAME);
+            Context::cube.setColor(Colors::WIREFRAME);
         }
     }
 
