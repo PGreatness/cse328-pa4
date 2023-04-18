@@ -57,8 +57,6 @@ bool firstMouse = true;
 float lastX = kWindowWidth / 2.0f;
 float lastY = kWindowHeight / 2.0f;
 
-float mouseCoordX = 0.0f;
-float mouseCoordY = 0.0f;
 glm::vec3 mouseLocalPos;
 
 // timing
@@ -298,11 +296,24 @@ void cursorPosCallback(GLFWwindow * window, double xpos, double ypos)
     }
 
     // normalize the mouse position to [-1, 1]
-    // Context::mouseCoordX = static_cast<float>(xpos) / Context::kWindowWidth * 2.0f - 1.0f;
-    // Context::mouseCoordY = static_cast<float>(ypos) / Context::kWindowHeight * 2.0f - 1.0f;
-    // take into account the camera's locaton in the world
-    Context::mouseCoordX = Context::camera.position.x;
-    Context::mouseCoordY = Context::camera.position.y;
+    float mouseCoordX = static_cast<float>(xpos) / Context::kWindowWidth * 2.0f - 1.0f;
+    float mouseCoordY = static_cast<float>(ypos) / Context::kWindowHeight * 2.0f - 1.0f;
+    // the projection matrix that we use is a perspective projection matrix so we can get the right mouse position
+    // by using the inverse of the projection matrix
+    glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
+                                            static_cast<GLfloat>(Context::kWindowWidth) /
+                                            static_cast<GLfloat>(Context::kWindowHeight),
+                                            0.01f,
+                                            100.0f);
+    glm::mat4 view = Context::camera.getViewMatrix();
+    glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 inverseProjection = glm::inverse(projection);
+    glm::mat4 inverseView = glm::inverse(view);
+    glm::mat4 inverseModel = glm::inverse(model);
+    glm::mat4 inverseMVP = inverseProjection * inverseView * inverseModel;
+    glm::vec4 mouseCoords = inverseMVP * glm::vec4(mouseCoordX, mouseCoordY, 0.0f, 1.0f);
+    mouseCoords /= mouseCoords.w;
+    Context::mouseLocalPos = glm::vec3(mouseCoords);
 
     // set mouseLocalPos to mouseCoords
     Context::mouseLocalPos = glm::vec3(Context::mouseCoordX, Context::mouseCoordY, 0.0f);
