@@ -371,7 +371,7 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
 void perFrameKeyInput(GLFWwindow * window)
 {
     // move the shapes depending on the key pressed so it can be done smoothly
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed)
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && Context::modificationKeyPressed)
     {
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
         glm::vec3 newCenter = Context::cube.getCenter();
