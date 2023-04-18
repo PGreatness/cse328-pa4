@@ -69,6 +69,16 @@ public:
         return vertexData;
     }
 
+    const glm::vec3 * getTetraData() const {
+        glm::vec3 *tetraData = new glm::vec3[4];
+        for (int i = 0; i < 4; i++) {
+            tetraData[i] = glm::vec3(this->tetraData[i][0],
+                                        this->tetraData[i][1],
+                                        this->tetraData[i][2]);
+        }
+        return tetraData;
+    }
+
     virtual const glm::vec3 * getNormalData() const override {
         // normalize the vertex data
         glm::vec3 *normalData = new glm::vec3[NUM_VERTICES];
@@ -206,6 +216,8 @@ private:
     static constexpr GLint NUM_FACETS = 6 * 2;  // 6 square faces, each composed of 2 triangular facets
     static constexpr GLint NUM_VERTICES = NUM_FACETS * 3;
 
+    static constexpr GLfloat RADIUS = 0.5773502691896258f;
+
     // Each line represents a 3D vertex,
     // Each 3 lines represents a triangle in 3D space,
     // Each 2x3 lines represents a quad facet (composed of 2 triangles) of this cube.
@@ -260,6 +272,13 @@ private:
                     -0.5f,  0.5f, -0.5f,
             };
 
+    GLfloat tetraData[4][3] =
+    {
+        RADIUS, RADIUS, RADIUS,
+        -RADIUS, -RADIUS, RADIUS,
+        -RADIUS, RADIUS, -RADIUS,
+        RADIUS, -RADIUS, -RADIUS
+    }
 
     // updates the vertex data when the size of the cube changes
     void updateCubeSize(float scale) {
@@ -385,10 +404,11 @@ private:
         glBindBuffer(GL_ARRAY_BUFFER, *cubeBuffer);
 
         // get the vertex data
-        const glm::vec3 *dataStart = getVertexData();
+        // const glm::vec3 *dataStart = getVertexData();
+        const glm::vec3 *tetraStart = getTetraData();
 
         // copy the vertex data to the buffer object
-        glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), dataStart, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), tetraStart, GL_STATIC_DRAW);
 
         // enable the vertex attribute array for position
         glEnableVertexAttribArray(0);
