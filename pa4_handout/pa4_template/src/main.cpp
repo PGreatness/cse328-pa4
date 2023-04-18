@@ -318,6 +318,10 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
         Colors::currentColor = Colors::SMOOTH;
         Context::setOptions(Context::cubeOptions::SMOOTH);
     }
+    if (key == GLFW_KEY_5 && action == GLFW_PRESS)
+    {
+        Context::setOptions(5); // testing
+    }
 }
 
 

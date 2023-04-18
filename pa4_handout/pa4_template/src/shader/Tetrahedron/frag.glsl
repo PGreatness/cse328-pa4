@@ -45,6 +45,7 @@ void main()
             break;
         case 5:
             result = (ambient) * ourFragColor;
+            break;
     }
     fragColor = vec4(result, 1.0);
 }
