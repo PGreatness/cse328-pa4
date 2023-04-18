@@ -253,7 +253,7 @@ int main()
 
         // Context::displayCube();
 
-        // Context::displayTetrahedron();
+        Context::displayTetrahedron();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
