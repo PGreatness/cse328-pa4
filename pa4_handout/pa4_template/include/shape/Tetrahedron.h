@@ -230,9 +230,11 @@ private:
     }
 
     void updateTetrahedronLocation(glm::vec3 translation) {
+        std::cout<<"d"<<std::endl;
         for (int i = 0; i < NUM_VERTICES; i++) {
             vertex[i] += translation;
         }
+        std::cout<<"e"<<std::endl;
     }
 
     void updateTetrahedronOrientation(float angle, glm::vec3 axis) {
