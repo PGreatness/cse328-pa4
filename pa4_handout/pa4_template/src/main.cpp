@@ -302,6 +302,7 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     // TODO: Modify this function to fit your own ideas
     // check if key pressed is 1
     Context::cube.setColor(Colors::currentColor);
+    Context::tetrahedron.setColor(Colors::currentColor);
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
     {
         Context::cube.setColor(Colors::WIREFRAME);
