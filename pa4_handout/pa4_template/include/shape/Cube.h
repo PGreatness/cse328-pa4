@@ -275,7 +275,7 @@ private:
         -RADIUS, -RADIUS, RADIUS,
         -RADIUS, RADIUS, -RADIUS,
         RADIUS, -RADIUS, -RADIUS
-    }
+    };
 
     // updates the vertex data when the size of the cube changes
     void updateCubeSize(float scale) {
