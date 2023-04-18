@@ -109,6 +109,7 @@ public:
     }
 
     virtual const glm::vec3 * getVertexData() const override {
+        std::cout<<"tetra size: "<<vertex.size()<<std::endl;
         return vertex.data();
     }
 
@@ -164,8 +165,8 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    void render(GLuint tetArray, GLuint tetBuffer, GLuint shaderID, uint options) const {
-        initializeRender(&tetArray, &tetBuffer);
+    void render(GLuint tetraArray, GLuint tetraBuffer, GLuint shaderID, uint options) const {
+        initializeRender(&tetraArray, &tetraBuffer);
 
         // set the color
         GLuint colorLocation = glGetUniformLocation(shaderID, "tetraColor");
