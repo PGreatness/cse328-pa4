@@ -43,6 +43,8 @@ void main()
         case 3: // phong
             result = (ambient + diffuse + specular) * ourFragColor;
             break;
+        case 5:
+            result = (ambient) * ourFragColor;
     }
     fragColor = vec4(result, 1.0);
 }
