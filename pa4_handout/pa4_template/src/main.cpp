@@ -68,7 +68,7 @@ std::shared_ptr<Shader> cubeShader;       // shader for cubes
 Cube cube(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default cube object
 
 std::shared_ptr<Shader> tetrahedronShader;       // shader for tetrahedron
-Tetrahedron tetrahedron(glm::vec3(-0.5f,-0.5f,-0.5f), 1.0f, Colors::currentColor); // default tetrahedron object
+Tetrahedron tetrahedron(glm::vec3(-0.0f,-0.0f,-0.0f), 1.0f, Colors::currentColor); // default tetrahedron object
 struct cubeOptions
 {
     static const uint DEFAULT = 0;
@@ -251,7 +251,7 @@ int main()
 
         // TODO: Render
 
-        Context::displayCube();
+        // Context::displayCube();
 
         Context::displayTetrahedron();
 
