@@ -231,6 +231,9 @@ private:
 
     void updateTetrahedronLocation(glm::vec3 translation) {
         std::cout<<"d"<<std::endl;
+        std::cout<<translation[0]<<std::endl;
+        std::cout<<translation[1]<<std::endl;
+        std::cout<<translation[2]<<std::endl;
         for (int i = 0; i < NUM_VERTICES; i++) {
             vertex[i][0] = translation[0];
             vertex[i][1] = translation[1];
