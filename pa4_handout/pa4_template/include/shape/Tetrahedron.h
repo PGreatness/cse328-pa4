@@ -179,7 +179,6 @@ public:
         } else {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             glDrawArrays(GL_TRIANGLES, 0, NUM_VERTICES);
-            std::cout << "rendering filled" << std::endl;
         }
 
         // unbind the buffer and array
@@ -289,7 +288,9 @@ private:
 
         glGenBuffers(1, tetBuffer);
         glBindBuffer(GL_ARRAY_BUFFER, *tetBuffer);
-        glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), getVertexData(), GL_STATIC_DRAW);
+
+        glm::vec3 * vertexData = getVertexData();
+        glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), vertexData, GL_STATIC_DRAW);
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
