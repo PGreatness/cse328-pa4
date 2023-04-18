@@ -298,11 +298,11 @@ void cursorPosCallback(GLFWwindow * window, double xpos, double ypos)
     }
 
     // normalize the mouse position to [-1, 1]
-    Context::mouseCoordX = static_cast<float>(xpos) / Context::kWindowWidth * 2.0f - 1.0f;
-    Context::mouseCoordY = static_cast<float>(ypos) / Context::kWindowHeight * 2.0f - 1.0f;
+    // Context::mouseCoordX = static_cast<float>(xpos) / Context::kWindowWidth * 2.0f - 1.0f;
+    // Context::mouseCoordY = static_cast<float>(ypos) / Context::kWindowHeight * 2.0f - 1.0f;
     // take into account the camera's locaton in the world
-    Context::mouseCoordX += Context::camera.position.x;
-    Context::mouseCoordY += Context::camera.position.y;
+    Context::mouseCoordX = Context::camera.position.x;
+    Context::mouseCoordY = Context::camera.position.y;
 
     // set mouseLocalPos to mouseCoords
     Context::mouseLocalPos = glm::vec3(Context::mouseCoordX, Context::mouseCoordY, 0.0f);
