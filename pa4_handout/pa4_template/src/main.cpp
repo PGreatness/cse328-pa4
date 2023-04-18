@@ -116,6 +116,12 @@ void displayAxis()
 void displayCube()
 {
     Context::cubeShader->use();
+
+    // set lighting uniforms
+    Context::cubeShader->setVec3("lightPos", Context::lightPos);
+    Context::cubeShader->setVec3("viewPos", Context::camera.position);
+    Context::cubeShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+
     glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
                                             static_cast<GLfloat>(Context::kWindowWidth) /
                                             static_cast<GLfloat>(Context::kWindowHeight),
@@ -182,10 +188,6 @@ int main()
     Context::cubeShader = std::make_shared<Shader>("src/shader/Cube/vert.glsl",
                                                     "src/shader/Cube/frag.glsl");
 
-    // set lighting uniforms
-    Context::cubeShader->setVec3("lightPos", Context::lightPos);
-    Context::cubeShader->setVec3("viewPos", Context::camera.position);
-    Context::cubeShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);
