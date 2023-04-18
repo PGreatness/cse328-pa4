@@ -66,6 +66,9 @@ std::shared_ptr<Shader> axisShader;       // shader for x, y, z axis
 // TODO: Add other context configurations
 std::shared_ptr<Shader> cubeShader;       // shader for cubes
 Cube cube(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default cube object
+
+std::shared_ptr<Shader> tetrahedronShader;       // shader for tetrahedron
+Tetrahedron tetrahedron(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default tetrahedron object
 struct cubeOptions
 {
     static const uint DEFAULT = 0;
@@ -94,6 +97,9 @@ GLuint axisVertexBuffer;
 // TODO: Add other OpenGL objects for other primitives
 GLuint cubeVertexArray;
 GLuint cubeVertexBuffer;
+
+GLuint tetrahedronVertexArray;
+GLuint tetrahedronVertexBuffer;
 
 }  // namespace Primitive
 
@@ -148,6 +154,34 @@ void displayCube()
                 options);
 }
 
+void displayTetrahedron()
+{
+    Context::tetrahedronShader->use();
+
+    // set lighting uniforms
+    Context::tetrahedronShader->setVec3("lightPos", Context::lightPos);
+    Context::tetrahedronShader->setVec3("viewPos", Context::camera.position);
+    Context::tetrahedronShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+
+    // set options
+    Context::tetrahedronShader->setInt("options", options);
+
+    glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
+                                            static_cast<GLfloat>(Context::kWindowWidth) /
+                                            static_cast<GLfloat>(Context::kWindowHeight),
+                                            0.01f,
+                                            100.0f);
+    Context::tetrahedronShader->setMat4("projection", projection);
+    glm::mat4 view = Context::camera.getViewMatrix();
+    Context::tetrahedronShader->setMat4("view", view);
+    Context::tetrahedronShader->setMat4("model", glm::mat4(1.0f));
+
+    tetrahedron.render(Primitive::tetrahedronVertexArray,
+                        Primitive::tetrahedronVertexBuffer,
+                        Context::tetrahedronShader->getShaderProgramHandle(),
+                        options);
+}
+
 // TODO: Add display functions for other primitives
 
 }  // namespace Context
@@ -198,6 +232,9 @@ int main()
     Context::cubeShader = std::make_shared<Shader>("src/shader/Cube/vert.glsl",
                                                     "src/shader/Cube/frag.glsl");
 
+    Context::tetrahedronShader = std::make_shared<Shader>("src/shader/Tetrahedron/vert.glsl",
+                                                            "src/shader/Tetrahedron/frag.glsl");
+
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);
@@ -216,6 +253,8 @@ int main()
         // TODO: Render
 
         Context::displayCube();
+
+        Context::displayTetrahedron();
 
         glfwSwapBuffers(window);
         glfwPollEvents();

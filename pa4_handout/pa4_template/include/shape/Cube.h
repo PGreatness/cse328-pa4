@@ -28,6 +28,7 @@ public:
         this->center = {DEFAULT_CENTER_X, DEFAULT_CENTER_Y, DEFAULT_CENTER_Z};
         this->size = DEFAULT_SIZE;
         this->color = {DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B};
+        this->oldColor = this->color;
     }
 
     Cube(glm::vec3 center, float size)
@@ -36,6 +37,7 @@ public:
         this->translate(center);
         this->scale(size);
         this->color = {DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B};
+        this->oldColor = this->color;
     }
 
     Cube(glm::vec3 center, float size, glm::vec3 color)
@@ -44,6 +46,7 @@ public:
         this->translate(center);
         this->scale(size);
         this->color = color;
+        this->oldColor = {DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B};
     }
 
     virtual GLint getNumVertices() const override {
@@ -98,11 +101,11 @@ public:
 
     // setters
     void setCenter(glm::vec3 center) {
-        this->center = center;
+        this->translate(center - this->center);
     }
 
     void setSize(float size) {
-        this->size = size;
+        this->scale(size / this->size);
     }
 
     void setColor(glm::vec3 color) {

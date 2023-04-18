@@ -6,9 +6,25 @@
 
 class Tetrahedron : public Shape
 {
+private:
+    struct Options
+    {
+        static const uint DEFAULT = 0;
+        static const uint SOLID = 0;
+        static const uint WIREFRAME = 1;
+        static const uint FLAT = 2;
+        static const uint SMOOTH = 4;
+    }
+
+    static const Options options;
 public:
     Tetrahedron()
     {
+        this->baseCenter = glm::vec3(DEFAULT_BASE_CENTER_X, DEFAULT_BASE_CENTER_Y, DEFAULT_BASE_CENTER_Z);
+        this->size = DEFAULT_SIZE;
+        this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
+        this->oldColor = this->color;
+
         vertex.reserve(NUM_VERTICES);
 
         vertex.emplace_back(V3);
@@ -27,8 +43,140 @@ public:
         vertex.emplace_back(V4);
         vertex.emplace_back(V2);
 
-        // TODO
     }
+
+    Tetrahedron(glm::vec3 baseCenter, GLfloat size) {
+        translate(baseCenter);
+        scale(size);
+        this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
+        this->oldColor = this->color;
+
+        vertex.reserve(NUM_VERTICES);
+
+        vertex.emplace_back(V3);
+        vertex.emplace_back(V1);
+        vertex.emplace_back(V4);
+
+        vertex.emplace_back(V3);
+        vertex.emplace_back(V2);
+        vertex.emplace_back(V1);
+
+        vertex.emplace_back(V1);
+        vertex.emplace_back(V2);
+        vertex.emplace_back(V4);
+
+        vertex.emplace_back(V3);
+        vertex.emplace_back(V4);
+        vertex.emplace_back(V2);
+    }
+
+    Tetrahedron(glm::vec3 baseCenter, GLfloat size, glm::vec3 color) {
+        translate(baseCenter);
+        scale(size);
+        this->color = color;
+        this->oldColor = this->color;
+
+        vertex.reserve(NUM_VERTICES);
+
+        vertex.emplace_back(V3);
+        vertex.emplace_back(V1);
+        vertex.emplace_back(V4);
+
+        vertex.emplace_back(V3);
+        vertex.emplace_back(V2);
+        vertex.emplace_back(V1);
+
+        vertex.emplace_back(V1);
+        vertex.emplace_back(V2);
+        vertex.emplace_back(V4);
+
+        vertex.emplace_back(V3);
+        vertex.emplace_back(V4);
+        vertex.emplace_back(V2);
+    }
+
+    virtual GLuint getNumVertices() const override {
+        return NUM_VERTICES;
+    }
+
+    virtual const glm::vec3 * getVertexData() const override {
+        return vertex.data();
+    }
+
+    virtual const glm::vec3 * getNormalData() const override {
+        glm::vec3 *normalData = new glm::vec3[NUM_VERTICES];
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            normalData[i] = glm::normalize(vertex[i]);
+        }
+        return normalData;
+    }
+
+    // getters
+    glm::vec3 getBaseCenter() const { return baseCenter; }
+    GLfloat getSize() const { return size; }
+    glm::vec3 getColor() const { return color; }
+    glm::vec3 getOldColor() const { return oldColor; }
+
+    // setters
+    void setBaseCenter(glm::vec3 baseCenter) { this->translate(baseCenter - this->baseCenter); }
+    void setSize(GLfloat size) { this->scale(size / this->size); }
+    void setColor(glm::vec3 color) { this->oldColor = this->color; this->color = color; }
+
+    // scale the tetrahedron
+    void scale(float scaleFactor) {
+        this->size *= scaleFactor;
+        // size changed, so we need to update the vertex data
+        updateTetrahedronSize(scaleFactor);
+    }
+
+    void translate(glm::vec3 translation) {
+        this->baseCenter += translation;
+        // baseCenter changed, so we need to update the vertex data
+        updateTetrahedronLocation(translation);
+    }
+
+    void rotate(float angle, glm::vec3 axis) {
+        updateTetrahedronOrientation(angle, axis);
+    }
+
+    void render(GLuint tetArray, GLuint tetBuffer, GLuint shaderID) const {
+        initializeRender(&tetArray, &tetBuffer);
+
+        // set the color
+        GLuint colorLocation = glGetUniformLocation(shaderID, "tetraColor");
+
+        glUniform3f(colorLocation, color[0], color[1], color[2]);
+
+        // draw the tetrahedron
+        glDrawArrays(GL_TRIANGLES, 0, NUM_VERTICES);
+
+        // unbind the buffer and array
+        glBindVertexArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+
+    void render(GLuint tetArray, GLuint tetBuffer, GLuint shaderID, uint options) const {
+        initializeRender(&tetArray, &tetBuffer);
+
+        // set the color
+        GLuint colorLocation = glGetUniformLocation(shaderID, "tetraColor");
+
+        glUniform3f(colorLocation, color[0], color[1], color[2]);
+
+        // draw the tetrahedron
+        if (options & Options::WIREFRAME) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            glDrawArrays(GL_LINE_STRIP, 0, NUM_VERTICES);
+        } else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            glDrawArrays(GL_TRIANGLES, 0, NUM_VERTICES);
+        }
+
+        // unbind the buffer and array
+        glBindVertexArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+
 
 private:
     // 4 triangular facets
@@ -44,6 +192,96 @@ private:
 
     // vertices organized into triangular facets
     std::vector<glm::vec3> vertex;
+
+    // defaults
+    static constexpr GLfloat DEFAULT_BASE_CENTER_X = 0.0f;
+    static constexpr GLfloat DEFAULT_BASE_CENTER_Y = 0.0f;
+    static constexpr GLfloat DEFAULT_BASE_CENTER_Z = 0.0f;
+    static constexpr GLfloat DEFAULT_SIZE = 1.0f;
+    // default color
+    static constexpr GLfloat DEFAULT_COLOR_R = 1.0f;
+    static constexpr GLfloat DEFAULT_COLOR_G = 1.0f;
+    static constexpr GLfloat DEFAULT_COLOR_B = 1.0f;
+    // user defined center, size, and color
+    glm::vec3 baseCenter;
+    GLfloat size;
+    glm::vec3 color;
+    glm::vec3 oldColor;
+
+    void updateTetrahedronSize(float scaleFactor) {
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            vertex[i] *= scaleFactor;
+        }
+    }
+
+    void updateTetrahedronLocation(glm::vec3 translation) {
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            vertex[i] += translation;
+        }
+    }
+
+    void updateTetrahedronOrientation(float angle, glm::vec3 axis) {
+        if (axis[0] != 0) { rotateX(angle); }
+        if (axis[1] != 0) { rotateY(angle); }
+        if (axis[2] != 0) { rotateZ(angle); }
+    }
+
+    void rotateX(float angle) {
+        float angle_rad = glm::radians(angle);
+
+        glm::mat4 rotationMatrix = glm::mat4(1.0f);
+        rotationMatrix[1][1] = cos(angle_rad);
+        rotationMatrix[1][2] = -sin(angle_rad);
+        rotationMatrix[2][1] = sin(angle_rad);
+        rotationMatrix[2][2] = cos(angle_rad);
+
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 rotatedVertex = rotationMatrix * glm::vec4(vertex[i], 1.0f);
+            vertex[i] = glm::vec3(rotatedVertex);
+        }
+    }
+
+    void rotateY(float angle) {
+        float angle_rad = glm::radians(angle);
+
+        glm::mat4 rotationMatrix = glm::mat4(1.0f);
+        rotationMatrix[0][0] = cos(angle_rad);
+        rotationMatrix[0][2] = sin(angle_rad);
+        rotationMatrix[2][0] = -sin(angle_rad);
+        rotationMatrix[2][2] = cos(angle_rad);
+
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 rotatedVertex = rotationMatrix * glm::vec4(vertex[i], 1.0f);
+            vertex[i] = glm::vec3(rotatedVertex);
+        }
+    }
+
+    void rotateZ(float angle) {
+        float angle_rad = glm::radians(angle);
+
+        glm::mat4 rotationMatrix = glm::mat4(1.0f);
+        rotationMatrix[0][0] = cos(angle_rad);
+        rotationMatrix[0][1] = -sin(angle_rad);
+        rotationMatrix[1][0] = sin(angle_rad);
+        rotationMatrix[1][1] = cos(angle_rad);
+
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 rotatedVertex = rotationMatrix * glm::vec4(vertex[i], 1.0f);
+            vertex[i] = glm::vec3(rotatedVertex);
+        }
+    }
+
+    void initializeRender(GLuint * tetArray, GLuint * tetBuffer) const {
+        glGenVertexArrays(1, tetArray);
+        glBindVertexArray(*tetArray);
+
+        glGenBuffers(1, tetBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, *tetBuffer);
+        glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), getVertexData(), GL_STATIC_DRAW);
+
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
+    }
 };
 
 
