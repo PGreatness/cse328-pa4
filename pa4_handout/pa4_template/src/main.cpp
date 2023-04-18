@@ -328,7 +328,7 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
         auto currentTime = static_cast<float>(glfwGetTime());
         Context::lastPressedDeltaTime = currentTime - Context::lastPressedTime;
     }
-    if (key == GLFWW_KEY_W && action == GLFW_PRESS && Context::lastPressedDeltaTime < 0.5)
+    if (key == GLFW_KEY_W && action == GLFW_PRESS && Context::lastPressedDeltaTime < 0.5)
     {
         Context::cube.translate(glm::vec3(0.0f, 0.0f, 0.1f));
     }
