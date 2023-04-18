@@ -371,7 +371,7 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
         Context::mousePressed = true;
         if (Context::cube.isMouseOver(Context::mouseLocalPos))
         {
-            Context::cube.setColor(Colors::HIGHLIGHT);
+            Context::cube.setColor(Colors::WIREFRAME);
         }
         else
         {
