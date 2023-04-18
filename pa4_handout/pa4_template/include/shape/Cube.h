@@ -69,7 +69,7 @@ public:
         return vertexData;
     }
 
-    const glm::vec3 * getTetraData() const {
+    const glm::vec3 * getTetraData() {
         glm::vec3 *tetraData = new glm::vec3[4];
         for (int i = 0; i < 4; i++) {
             tetraData[i] = glm::vec3(this->tetraData[i][0],
