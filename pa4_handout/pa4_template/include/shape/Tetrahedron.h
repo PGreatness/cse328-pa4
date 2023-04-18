@@ -50,8 +50,6 @@ public:
         this->baseCenter = glm::vec3(DEFAULT_BASE_CENTER_X, DEFAULT_BASE_CENTER_Y, DEFAULT_BASE_CENTER_Z);
         this->size = DEFAULT_SIZE;
 
-        translate(baseCenter);
-        scale(size);
         this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
         this->oldColor = this->color;
 
@@ -72,19 +70,15 @@ public:
         vertex.emplace_back(V3);
         vertex.emplace_back(V4);
         vertex.emplace_back(V2);
+
+        translate(baseCenter);
+        scale(size);
     }
 
     Tetrahedron(glm::vec3 baseCenter, GLfloat size, glm::vec3 color) {
-        std::cout<<"1"<<std::endl;
         this->baseCenter = glm::vec3(DEFAULT_BASE_CENTER_X, DEFAULT_BASE_CENTER_Y, DEFAULT_BASE_CENTER_Z);
-        std::cout<<"2"<<std::endl;
         this->size = DEFAULT_SIZE;
-        std::cout<<"3"<<std::endl;
 
-        translate(baseCenter);
-        std::cout<<"4"<<std::endl;
-        scale(size);
-        std::cout<<"5"<<std::endl;
         this->color = color;
         this->oldColor = this->color;
 
@@ -105,6 +99,9 @@ public:
         vertex.emplace_back(V3);
         vertex.emplace_back(V4);
         vertex.emplace_back(V2);
+
+        translate(baseCenter);
+        scale(size);
     }
 
     virtual GLint getNumVertices() const override {
@@ -142,12 +139,9 @@ public:
     }
 
     void translate(glm::vec3 translation) {
-        std::cout<<"a"<<std::endl;
         this->baseCenter = translation;
-        std::cout<<"b"<<std::endl;
         // baseCenter changed, so we need to update the vertex data
         updateTetrahedronLocation(translation);
-        std::cout<<"c"<<std::endl;
     }
 
     void rotate(float angle, glm::vec3 axis) {
@@ -230,14 +224,11 @@ private:
     }
 
     void updateTetrahedronLocation(glm::vec3 translation) {
-        std::cout<<"d"<<std::endl;
-        std::cout<<vertex.size()<<std::endl;
         for (int i = 0; i < NUM_VERTICES; i++) {
             vertex[i][0] = translation[0];
             vertex[i][1] = translation[1];
             vertex[i][2] = translation[2];
         }
-        std::cout<<"e"<<std::endl;
     }
 
     void updateTetrahedronOrientation(float angle, glm::vec3 axis) {
