@@ -404,8 +404,8 @@ private:
         glBindBuffer(GL_ARRAY_BUFFER, *cubeBuffer);
 
         // get the vertex data
-        // const glm::vec3 *dataStart = getVertexData();
-        const glm::vec3 *tetraStart = getTetraData();
+        const glm::vec3 *dataStart = getVertexData();
+        // const glm::vec3 *tetraStart = getTetraData();
 
         // copy the vertex data to the buffer object
         glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), tetraStart, GL_STATIC_DRAW);
