@@ -9,6 +9,7 @@ out vec4 fragColor;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 uniform vec3 lightColor;
+uniform int options;
 
 void main()
 {
@@ -30,7 +31,19 @@ void main()
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
     vec3 specular = specularStrength * spec * lightColor;
 
-    result = (ambient + diffuse + specular) * ourFragColor;
+    switch (options) {
+        case 1: // wireframe
+        case 0: // default
+            result = ourFragColor;
+            break;
+        case 2: // flat
+            result = (ambient + diffuse) * ourFragColor;
+            break;
+        default: // phong shading
+        case 3: // phong
+            result = (ambient + diffuse + specular) * ourFragColor;
+            break;
+    }
     fragColor = vec4(result, 1.0);
 }
 

@@ -31,7 +31,11 @@ void initializeContext();
 
 void initializeCubes();
 
-
+namespace Colors
+{
+    const glm::vec3 WIREFRAME = glm::vec3(1.0f, 1.0f, 1.0f);
+    const glm::vec3 FLAT = glm::vec3(1.0f, 0.5f, 0.31f);
+} // namespace Colors
 namespace Context
 {
 
@@ -122,6 +126,9 @@ void displayCube()
     Context::cubeShader->setVec3("viewPos", Context::camera.position);
     Context::cubeShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
+    // set options
+    Context::cubeShader->setInt("options", options);
+
     glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
                                             static_cast<GLfloat>(Context::kWindowWidth) /
                                             static_cast<GLfloat>(Context::kWindowHeight),
@@ -132,7 +139,6 @@ void displayCube()
     Context::cubeShader->setMat4("view", view);
     Context::cubeShader->setMat4("model", glm::mat4(1.0f));
 
-    cube.setColor(glm::vec3(1.0f, 0.5f, 0.31f));
     cube.render(Primitive::cubeVertexArray,
                 Primitive::cubeVertexBuffer,
                 Context::cubeShader->getShaderProgramHandle(),
@@ -256,11 +262,13 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     // check if key pressed is 1
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
     {
+        Context::cube.setColor(Colors::WIREFRAME);
         Context::setOptions(Context::cubeOptions::WIREFRAME);
     }
     if (key == GLFW_KEY_2 && action == GLFW_PRESS)
     {
-        Context::setOptions(Context::cubeOptions::SOLID);
+        Context::cube.setColor(Colors::FLAT);
+        Context::setOptions(Context::cubeOptions::FLAT);
     }
 }
 

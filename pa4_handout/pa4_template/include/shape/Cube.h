@@ -91,6 +91,10 @@ public:
         return color;
     }
 
+    glm::vec3 getOldColor() const {
+        return oldColor;
+    }
+
     // setters
     void setCenter(glm::vec3 center) {
         this->center = center;
@@ -101,6 +105,7 @@ public:
     }
 
     void setColor(glm::vec3 color) {
+        this->oldColor = this->color;
         this->color = color;
     }
 
@@ -186,6 +191,7 @@ private:
     glm::vec3 center;
     GLfloat size;
     glm::vec3 color;
+    glm::vec3 oldColor;
 
     static constexpr GLint NUM_FACETS = 6 * 2;  // 6 square faces, each composed of 2 triangular facets
     static constexpr GLint NUM_VERTICES = NUM_FACETS * 3;
