@@ -37,7 +37,49 @@ public:
         vertex.emplace_back(V6); vertex.emplace_back(V4); vertex.emplace_back(V2);
         vertex.emplace_back(V6); vertex.emplace_back(V1); vertex.emplace_back(V4);
 
-        // TODO
+    }
+
+    Octahedron(glm::vec3 center, GLfloat size) {
+        this->center = glm::vec3(DEFAULT_CENTER_X, DEFAULT_CENTER_Y, DEFAULT_CENTER_Z);
+        this->size = DEFAULT_SIZE;
+        this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
+        this->oldColor = this->color;
+
+        vertex.reserve(NUM_VERTICES);
+
+        vertex.emplace_back(V3); vertex.emplace_back(V5); vertex.emplace_back(V1);
+        vertex.emplace_back(V3); vertex.emplace_back(V2); vertex.emplace_back(V5);
+        vertex.emplace_back(V2); vertex.emplace_back(V4); vertex.emplace_back(V5);
+        vertex.emplace_back(V5); vertex.emplace_back(V4); vertex.emplace_back(V1);
+        vertex.emplace_back(V3); vertex.emplace_back(V1); vertex.emplace_back(V6);
+        vertex.emplace_back(V3); vertex.emplace_back(V6); vertex.emplace_back(V2);
+        vertex.emplace_back(V6); vertex.emplace_back(V4); vertex.emplace_back(V2);
+        vertex.emplace_back(V6); vertex.emplace_back(V1); vertex.emplace_back(V4);
+
+        this->translate(center);
+        this->scale(size);
+    }
+
+    Octahedron(glm::vec3 center, GLfloat size, glm::vec3 color)
+    {
+        this->center = glm::vec3(DEFAULT_CENTER_X, DEFAULT_CENTER_Y, DEFAULT_CENTER_Z);
+        this->size = DEFAULT_SIZE;
+        this->color = color;
+        this->oldColor = this->color;
+
+        vertex.reserve(NUM_VERTICES);
+
+        vertex.emplace_back(V3); vertex.emplace_back(V5); vertex.emplace_back(V1);
+        vertex.emplace_back(V3); vertex.emplace_back(V2); vertex.emplace_back(V5);
+        vertex.emplace_back(V2); vertex.emplace_back(V4); vertex.emplace_back(V5);
+        vertex.emplace_back(V5); vertex.emplace_back(V4); vertex.emplace_back(V1);
+        vertex.emplace_back(V3); vertex.emplace_back(V1); vertex.emplace_back(V6);
+        vertex.emplace_back(V3); vertex.emplace_back(V6); vertex.emplace_back(V2);
+        vertex.emplace_back(V6); vertex.emplace_back(V4); vertex.emplace_back(V2);
+        vertex.emplace_back(V6); vertex.emplace_back(V1); vertex.emplace_back(V4);
+
+        this->translate(center);
+        this->scale(size);
     }
 
     // getters
