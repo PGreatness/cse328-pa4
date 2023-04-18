@@ -61,6 +61,9 @@ float lastY = kWindowHeight / 2.0f;
 float deltaTime = 0.0f;     // time between current frame and last frame
 float lastFrame = 0.0f;
 
+float lastPressedTime = 0.0f;
+float lastPressedDeltaTime = 0.0f;
+
 std::shared_ptr<Shader> axisShader;       // shader for x, y, z axis
 
 // TODO: Add other context configurations
@@ -322,10 +325,12 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     // check if pressing both the T key and the W key simultaneously
     if (key == GLFW_KEY_T && action == GLFW_PRESS)
     {
-        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        {
-            Context::cube.translate(glm::vec3(0.0f, 0.0f, 0.1f));
-        }
+        auto currentTime = static_cast<float>(glfwGetTime());
+        Context::lastPressedDeltaTime = currentTime - Context::lastPressedTime;
+    }
+    if (key == GLFWW_KEY_W && action == GLFW_PRESS && Context::lastPressedDeltaTime < 0.5)
+    {
+        Context::cube.translate(glm::vec3(0.0f, 0.0f, 0.1f));
     }
 }
 
