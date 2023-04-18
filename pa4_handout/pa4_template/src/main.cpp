@@ -59,7 +59,7 @@ std::shared_ptr<Shader> axisShader;       // shader for x, y, z axis
 
 // TODO: Add other context configurations
 std::shared_ptr<Shader> cubeShader;       // shader for cubes
-Cube cube(glm::vec3(0.0f,0.0f,0.0f), 3.0f, glm::vec3(1.0f, 0.5f, 0.31f));                               // default cube object
+Cube cube;                               // default cube object
 struct cubeOptions
 {
     static const uint DEFAULT = 0;
