@@ -385,8 +385,13 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::camera.processKeyboard(Camera::kLeft, Context::deltaTime);
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
         glm::vec3 newCenter = Context::cube.getCenter();
-        Context::cube.translate(Context::camera.front);
-        // Context::cube.setCenter(newCenter);
+        // normalize the front vector
+        glm::vec3 front = glm::normalize(Context::camera.front);
+        // move the center of the cube to the left
+        newCenter.x -= displacement * front.x;
+        newCenter.y -= displacement * front.y;
+        newCenter.z -= displacement * front.z;
+        Context::cube.setCenter(newCenter);
     }
 
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
