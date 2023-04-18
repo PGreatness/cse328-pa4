@@ -36,6 +36,7 @@ namespace Colors
     const glm::vec3 WIREFRAME = glm::vec3(1.0f, 1.0f, 1.0f);
     const glm::vec3 FLAT = glm::vec3(1.0f, 0.5f, 0.31f);
     const glm::vec3 SMOOTH = glm::vec3(1.0f, 0.5f, 0.31f);
+    glm::vec3 currentColor = WIREFRAME;
 } // namespace Colors
 namespace Context
 {
@@ -64,7 +65,7 @@ std::shared_ptr<Shader> axisShader;       // shader for x, y, z axis
 
 // TODO: Add other context configurations
 std::shared_ptr<Shader> cubeShader;       // shader for cubes
-Cube cube(glm::vec3(0.0f,0.0f,0.0f), 2.5f, Colors::FLAT); // default cube object
+Cube cube(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::FLAT); // default cube object
 struct cubeOptions
 {
     static const uint DEFAULT = 0;
@@ -262,18 +263,21 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
 {
     // TODO: Modify this function to fit your own ideas
     // check if key pressed is 1
-    Context::cube.setColor(Colors::FLAT);
+    Context::cube.setColor(Colors::currentColor);
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
     {
         Context::cube.setColor(Colors::WIREFRAME);
+        Color::currentColor = Colors::WIREFRAME;
         Context::setOptions(Context::cubeOptions::WIREFRAME);
     }
     if (key == GLFW_KEY_2 && action == GLFW_PRESS)
     {
+        Color::currentColor = Colors::FLAT;
         Context::setOptions(Context::cubeOptions::FLAT);
     }
     if (key == GLFW_KEY_4 && action == GLFW_PRESS)
     {
+        Color::currentColor = Colors::SMOOTH;
         Context::setOptions(Context::cubeOptions::SMOOTH);
     }
 }
