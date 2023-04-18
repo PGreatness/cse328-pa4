@@ -47,8 +47,8 @@ public:
     }
 
     Tetrahedron(glm::vec3 baseCenter, GLfloat size) {
-        this->baseCenter = baseCenter;
-        this->size = size;
+        this->baseCenter = glm::vec3(DEFAULT_BASE_CENTER_X, DEFAULT_BASE_CENTER_Y, DEFAULT_BASE_CENTER_Z);
+        this->size = DEFAULT_SIZE;
 
         translate(baseCenter);
         scale(size);
@@ -75,8 +75,8 @@ public:
     }
 
     Tetrahedron(glm::vec3 baseCenter, GLfloat size, glm::vec3 color) {
-        this->baseCenter = baseCenter;
-        this->size = size;
+        this->baseCenter = glm::vec3(DEFAULT_BASE_CENTER_X, DEFAULT_BASE_CENTER_Y, DEFAULT_BASE_CENTER_Z);
+        this->size = DEFAULT_SIZE;
 
         translate(baseCenter);
         scale(size);
