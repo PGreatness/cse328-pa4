@@ -109,7 +109,13 @@ public:
     }
 
     virtual const glm::vec3 * getVertexData() const override {
-        return vertex.data();
+        glm::vec3 *vertexData = new glm::vec3[NUM_VERTICES];
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            vertexData[i] = glm::vec3(this->vertex[i][0],
+                                        this->vertex[i][1],
+                                        this->vertex[i][2]);
+        }
+        return vertexData;
     }
 
     virtual const glm::vec3 * getNormalData() const override {
