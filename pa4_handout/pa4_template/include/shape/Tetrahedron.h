@@ -81,6 +81,7 @@ public:
         this->size = DEFAULT_SIZE;
         std::cout<<"3"<<std::endl;
 
+        std::cout << "baseCenter: " << baseCenter.x << ", " << baseCenter.y << ", " << baseCenter.z << std::endl;
         translate(baseCenter);
         std::cout<<"4"<<std::endl;
         scale(size);
