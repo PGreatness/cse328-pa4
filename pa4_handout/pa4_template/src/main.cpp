@@ -501,16 +501,7 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
         glm::vec3 front = glm::normalize(Context::camera.front);
         // make it so that the rotation is always perpendicular to the front and the shapes spin in place
         // get the minimum of the x, y, and z components of the front vector
-        float min = std::min(std::min(front.x, front.y), front.z);
-        if (front.x == min) {
-            front.x = 0.0f;
-        }
-        else if (front.y == min) {
-            front.y = 0.0f;
-        }
-        else {
-            front.z = 0.0f;
-        }
+
         Context::tetrahedron.rotate(static_cast<float>(yoffset), front);
         return;
     }
