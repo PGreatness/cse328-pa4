@@ -365,9 +365,9 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     // check if key pressed is 1
     Context::cube.setColor(Colors::currentColor);
     Context::tetrahedron.setColor(Colors::currentColor);
+    Context::octahedron.setColor(Colors::currentColor);
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
     {
-        Context::cube.setColor(Colors::WIREFRAME);
         Colors::currentColor = Colors::WIREFRAME;
         Context::setOptions(Context::cubeOptions::WIREFRAME);
     }
@@ -381,7 +381,7 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
         Colors::currentColor = Colors::SMOOTH;
         Context::setOptions(Context::cubeOptions::SMOOTH);
     }
-    // check if pressing both the T key and the W key simultaneously
+    // check if holding the T key
     if (key == GLFW_KEY_T && action == GLFW_PRESS)
     {
         Context::modificationKeyPressed = true;
@@ -389,18 +389,6 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     if (key == GLFW_KEY_T && action == GLFW_RELEASE)
     {
         Context::modificationKeyPressed = false;
-    }
-    if (key == GLFW_KEY_W && action == GLFW_PRESS && Context::modificationKeyPressed)
-    {
-        Context::cube.translate(glm::vec3(0.0f, 0.0f, -0.1f));
-    }
-    if (key == GLFW_KEY_S && action == GLFW_PRESS && Context::modificationKeyPressed)
-    {
-        Context::cube.translate(glm::vec3(0.0f, 0.0f, 0.1f));
-    }
-    if (key == GLFW_KEY_D && action == GLFW_PRESS && Context::modificationKeyPressed)
-    {
-        Context::cube.translate(glm::vec3(0.1f, 0.0f, 0.0f));
     }
 }
 
