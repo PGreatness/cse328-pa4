@@ -506,6 +506,15 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
         Context::dodecahedron.rotate(static_cast<float>(yoffset), up);
         return;
     }
+
+    if (Context::scaleKeyPressed) {
+        // scale the shapes given the scroll offset
+        Context::cube.scale(static_cast<float>(yoffset));
+        Context::tetrahedron.scale(static_cast<float>(yoffset));
+        Context::octahedron.scale(static_cast<float>(yoffset));
+        Context::dodecahedron.scale(static_cast<float>(yoffset));
+        return;
+    }
     Context::camera.processMouseScroll(static_cast<float>(yoffset));
 }
 
