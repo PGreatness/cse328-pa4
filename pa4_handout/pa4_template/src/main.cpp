@@ -653,13 +653,13 @@ void initializeContext()
             {
                     // x+ axis in red
                     {0, 0, 0}, {1, 0, 0},
-                    {3, 0, 0}, {1, 0, 0},
+                    {10, 0, 0}, {1, 0, 0},
                     // y+ axis in green
                     {0, 0, 0}, {0, 1, 0},
-                    {0, 3, 0}, {0, 1, 0},
+                    {0, 10, 0}, {0, 1, 0},
                     // z+ axis in green
                     {0, 0, 0}, {0, 0, 1},
-                    {0, 0, 3}, {0, 0, 1},
+                    {0, 0, 10}, {0, 0, 1},
             };
 
     glGenBuffers(1, &Primitive::axisVertexBuffer);
