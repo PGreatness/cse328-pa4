@@ -77,6 +77,7 @@ public:
                         glm::vec3 normal = glm::normalize(glm::cross(v2 - v1, v3 - v1));
                         normalData[i] = normal;
                 }
+                return normalData;
         }
 
         // setters
@@ -90,13 +91,13 @@ public:
                 this->center += translation;
         }
 
-        void rotate(glm::vec3 rotation, glm::vec3 axis) {
-                updateDodecahedronOrientation(rotation, axis);
+        void rotate(float angle, glm::vec3 axis) {
+                updateDodecahedronOrientation(angle, axis);
         }
 
         void scale(glm::vec3 scale) {
-                updateDodecahedronScale(scale);
-                this->scale *= scale;
+                updateDodecahedronSize(scale);
+                this->size *= scale;
         }
 
         void render(GLuint dodecaArray, GLuint dodecaBuffer, GLuint shaderID) const {
@@ -337,7 +338,7 @@ private:
             }
         }
 
-        void initializeRender(GLuint * dodecaArray, GLuint * dodecaBuffer) {
+        void initializeRender(GLuint * dodecaArray, GLuint * dodecaBuffer) const {
             glGenVertexArrays(1, dodecaArray);
             glBindVertexArray(*dodecaArray);
 
