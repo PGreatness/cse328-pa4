@@ -64,6 +64,9 @@ float deltaTime = 0.0f;     // time between current frame and last frame
 float lastFrame = 0.0f;
 
 bool modificationKeyPressed = false;
+bool rotationKeyPressed = false;
+bool scaleKeyPressed = false;
+bool shearKeyPressed = false;
 
 std::shared_ptr<Shader> axisShader;       // shader for x, y, z axis
 
@@ -433,6 +436,36 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     {
         Context::modificationKeyPressed = false;
     }
+
+    // check if holding the R key
+    if (key == GLFW_KEY_R && action == GLFW_PRESS)
+    {
+        Context::rotationKeyPressed = true;
+    }
+    if (key == GLFW_KEY_R && action == GLFW_RELEASE)
+    {
+        Context::rotationKeyPressed = false;
+    }
+
+    // check if holding the Y key
+    if (key == GLFW_KEY_Y && action == GLFW_PRESS)
+    {
+        Context::scalingKeyPressed = true;
+    }
+    if (key == GLFW_KEY_Y && action == GLFW_RELEASE)
+    {
+        Context::scalingKeyPressed = false;
+    }
+
+    // check if holding the U key
+    if (key == GLFW_KEY_U && action == GLFW_PRESS)
+    {
+        Context::shearKeyPressed = true;
+    }
+    if (key == GLFW_KEY_U && action == GLFW_RELEASE)
+    {
+        Context::shearKeyPressed = false;
+    }
 }
 
 
@@ -461,6 +494,12 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 
 void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
 {
+    if (Context::rotationKeyPressed) {
+        Context::cube.rotate(static_cast<float>(yoffset) * 0.1f);
+        Context::tetrahedron.rotate(static_cast<float>(yoffset) * 0.1f);
+        Context::octahedron.rotate(static_cast<float>(yoffset) * 0.1f);
+        Context::dodecahedron.rotate(static_cast<float>(yoffset) * 0.1f);
+    }
     Context::camera.processMouseScroll(static_cast<float>(yoffset));
 }
 
