@@ -53,7 +53,7 @@ public:
 
         virtual const glm::vec3 * getVertexData() const override {
                 glm::vec3 *vertexData = new glm::vec3[getNumVertices()];
-                for (int i = 0; i < vertexData.size(); i++) {
+                for (int i = 0; i < getNumVertices(); i++) {
                         glm::vec3 vertex = glm::vec3(this->vertex[i][0],
                                                     this->vertex[i][1],
                                                     this->vertex[i][2]);
@@ -64,16 +64,16 @@ public:
 
         virtual const glm::vec3 * getNormalData() const override {
                 glm::vec3 *normalData = new glm::vec3[getNumVertices()];
-                for (int i = 0; i < normalData.size(); i+=3) {
-                        glm::vec3 v1 = glm::vec3(this->normal[i][0],
-                                                    this->normal[i][1],
-                                                    this->normal[i][2]);
-                        glm::vec3 v2 = glm::vec3(this->normal[i+1][0],
-                                                    this->normal[i+1][1],
-                                                    this->normal[i+1][2]);
-                        glm::vec3 v3 = glm::vec3(this->normal[i+2][0],
-                                                    this->normal[i+2][1],
-                                                    this->normal[i+2][2]);
+                for (int i = 0; i < getNumVertices(); i+=3) {
+                        glm::vec3 v1 = glm::vec3(this->vertex[i][0],
+                                                    this->vertex[i][1],
+                                                    this->vertex[i][2]);
+                        glm::vec3 v2 = glm::vec3(this->vertex[i+1][0],
+                                                    this->vertex[i+1][1],
+                                                    this->vertex[i+1][2]);
+                        glm::vec3 v3 = glm::vec3(this->vertex[i+2][0],
+                                                    this->vertex[i+2][1],
+                                                    this->vertex[i+2][2]);
                         glm::vec3 normal = glm::normalize(glm::cross(v2 - v1, v3 - v1));
                         normalData[i] = normal;
                 }
@@ -90,9 +90,8 @@ public:
                 this->center += translation;
         }
 
-        void rotate(glm::vec3 rotation) {
-                updateDodecahedronRotation(rotation);
-                this->rotation += rotation;
+        void rotate(glm::vec3 rotation, glm::vec3 axis) {
+                updateDodecahedronOrientation(rotation, axis);
         }
 
         void scale(glm::vec3 scale) {
@@ -101,7 +100,7 @@ public:
         }
 
         void render(GLuint dodecaArray, GLuint dodecaBuffer, GLuint shaderID) const {
-                initializeRender(dodecaArray, dodecaBuffer);
+                initializeRender(&dodecaArray, &dodecaBuffer);
 
                 GLuint colorLocation = glGetUniformLocation(shaderID, "dodecaColor");
                 glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
@@ -113,7 +112,7 @@ public:
         }
 
         void render(GLuint dodecaArray, GLuint dodecaBuffer, GLuint shaderID, uint options) const {
-                initializeRender(dodecaArray, dodecaBuffer);
+                initializeRender(&dodecaArray, &dodecaBuffer);
 
                 GLuint colorLocation = glGetUniformLocation(shaderID, "dodecaColor");
                 glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
