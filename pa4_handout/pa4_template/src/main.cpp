@@ -77,6 +77,9 @@ Tetrahedron tetrahedron(glm::vec3(-0.0f,-0.0f,-0.0f), 1.0f, Colors::currentColor
 std::shared_ptr<Shader> octahedronShader;       // shader for octahedron
 Octahedron octahedron(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default octahedron object
 
+std::shared_ptr<Shader> dodecahedronShader;       // shader for dodecahedron
+Dodecahedron dodecahedron(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default dodecahedron object
+
 struct cubeOptions
 {
     static const uint DEFAULT = 0;
@@ -113,6 +116,10 @@ GLuint tetrahedronVertexBuffer;
 
 GLuint octahedronVertexArray;
 GLuint octahedronVertexBuffer;
+
+GLuint dodecahedronVertexArray;
+GLuint dodecahedronVertexBuffer;
+
 
 
 }  // namespace Primitive
@@ -223,6 +230,34 @@ void displayOctahedron()
                         Context::octahedronShader->getShaderProgramHandle(),
                         options);
 }
+
+void displayDodecahedron()
+{
+    Context::dodecahedronShader->use();
+
+    // set lighting uniforms
+    Context::dodecahedronShader->setVec3("lightPos", Context::lightPos);
+    Context::dodecahedronShader->setVec3("viewPos", Context::camera.position);
+    Context::dodecahedronShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+
+    // set options
+    Context::dodecahedronShader->setInt("options", options);
+
+    glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
+                                            static_cast<GLfloat>(Context::kWindowWidth) /
+                                            static_cast<GLfloat>(Context::kWindowHeight),
+                                            0.01f,
+                                            100.0f);
+    Context::dodecahedronShader->setMat4("projection", projection);
+    glm::mat4 view = Context::camera.getViewMatrix();
+    Context::dodecahedronShader->setMat4("view", view);
+    Context::dodecahedronShader->setMat4("model", glm::mat4(1.0f));
+
+    dodecahedron.render(Primitive::dodecahedronVertexArray,
+                        Primitive::dodecahedronVertexBuffer,
+                        Context::dodecahedronShader->getShaderProgramHandle(),
+                        options);
+}
 // TODO: Add display functions for other primitives
 
 }  // namespace Context
@@ -279,6 +314,9 @@ int main()
     Context::octahedronShader = std::make_shared<Shader>("src/shader/Octahedron/vert.glsl",
                                                             "src/shader/Octahedron/frag.glsl");
 
+    Context::dodecahedronShader = std::make_shared<Shader>("src/shader/Dodecahedron/vert.glsl",
+                                                            "src/shader/Dodecahedron/frag.glsl");
+
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);
@@ -300,7 +338,9 @@ int main()
 
         // Context::displayTetrahedron();
 
-        Context::displayOctahedron();
+        // Context::displayOctahedron();
+
+        Context::displayDodecahedron();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -362,10 +402,13 @@ void framebufferSizeCallback(GLFWwindow * window, int width, int height)
 void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
     // TODO: Modify this function to fit your own ideas
-    // check if key pressed is 1
+    // set the color of the shapes
     Context::cube.setColor(Colors::currentColor);
     Context::tetrahedron.setColor(Colors::currentColor);
     Context::octahedron.setColor(Colors::currentColor);
+    Context::dodecahedron.setColor(Colors::currentColor);
+
+    // check if key pressed is 1
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
     {
         Colors::currentColor = Colors::WIREFRAME;
@@ -398,6 +441,7 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
         Context::mousePressed = true;
+        // testing
         if (Context::cube.isMouseOver(Context::mouseLocalPos))
         {
             Context::cube.setColor(Colors::WIREFRAME);
@@ -435,6 +479,7 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::cube.translate(-left * displacement);
         Context::tetrahedron.translate(-left * displacement);
         Context::octahedron.translate(-left * displacement);
+        Context::dodecahedron.translate(-left * displacement);
         return;
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && Context::modificationKeyPressed)
@@ -448,6 +493,7 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::cube.translate(left * displacement);
         Context::tetrahedron.translate(left * displacement);
         Context::octahedron.translate(left * displacement);
+        Context::dodecahedron.translate(left * displacement);
         return;
     }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed)
@@ -459,6 +505,7 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::cube.translate(front * displacement);
         Context::tetrahedron.translate(front * displacement);
         Context::octahedron.translate(front * displacement);
+        Context::dodecahedron.translate(front * displacement);
         return;
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && Context::modificationKeyPressed)
@@ -470,6 +517,7 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::cube.translate(-front * displacement);
         Context::tetrahedron.translate(-front * displacement);
         Context::octahedron.translate(-front * displacement);
+        Context::dodecahedron.translate(-front * displacement);
         return;
     }
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && Context::modificationKeyPressed)
@@ -479,6 +527,7 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::cube.translate(glm::vec3(0.0f, displacement, 0.0f));
         Context::tetrahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
         Context::octahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
+        Context::dodecahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
         return;
     }
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS && Context::modificationKeyPressed)
@@ -488,6 +537,7 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::cube.translate(glm::vec3(0.0f, -displacement, 0.0f));
         Context::tetrahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
         Context::octahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
+        Context::dodecahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
         return;
     }
     // camera control

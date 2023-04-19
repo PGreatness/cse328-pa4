@@ -280,13 +280,6 @@ private:
                     -0.5f,  0.5f, -0.5f,
             };
 
-    GLfloat tetraData[4][3] =
-    {
-        RADIUS, RADIUS, RADIUS,
-        -RADIUS, -RADIUS, RADIUS,
-        -RADIUS, RADIUS, -RADIUS,
-        RADIUS, -RADIUS, -RADIUS
-    };
 
     // updates the vertex data when the size of the cube changes
     void updateCubeSize(float scale) {
