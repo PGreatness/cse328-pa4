@@ -95,7 +95,7 @@ public:
                 updateDodecahedronOrientation(angle, axis);
         }
 
-        void scale(glm::vec3 scale) {
+        void scale(GLfloat scale) {
                 updateDodecahedronSize(scale);
                 this->size *= scale;
         }
