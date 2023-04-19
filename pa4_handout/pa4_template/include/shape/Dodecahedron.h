@@ -66,125 +66,53 @@ private:
                 // 12 pentagon faces, each composed of 3 triangular facets.
                 vertex.reserve(INIT_NUM_VERTICES);
 
-                vertex.emplace_back(A[0]);
-                vertex.emplace_back(C[0]);
-                vertex.emplace_back(A[1]);
-                vertex.emplace_back(A[0]);
-                vertex.emplace_back(A[1]);
-                vertex.emplace_back(D[1]);
-                vertex.emplace_back(A[0]);
-                vertex.emplace_back(D[1]);
-                vertex.emplace_back(D[0]);
+                vertex.emplace_back(A[0]); vertex.emplace_back(C[0]); vertex.emplace_back(A[1]);
+                vertex.emplace_back(A[0]); vertex.emplace_back(A[1]); vertex.emplace_back(D[1]);
+                vertex.emplace_back(A[0]); vertex.emplace_back(D[1]); vertex.emplace_back(D[0]);
 
-                vertex.emplace_back(D[0]);
-                vertex.emplace_back(D[1]);
-                vertex.emplace_back(A[5]);
-                vertex.emplace_back(D[0]);
-                vertex.emplace_back(A[5]);
-                vertex.emplace_back(C[1]);
-                vertex.emplace_back(D[0]);
-                vertex.emplace_back(C[1]);
-                vertex.emplace_back(A[4]);
+                vertex.emplace_back(D[0]); vertex.emplace_back(D[1]); vertex.emplace_back(A[5]);
+                vertex.emplace_back(D[0]); vertex.emplace_back(A[5]); vertex.emplace_back(C[1]);
+                vertex.emplace_back(D[0]); vertex.emplace_back(C[1]); vertex.emplace_back(A[4]);
 
-                vertex.emplace_back(B[2]);
-                vertex.emplace_back(A[6]);
-                vertex.emplace_back(C[2]);
-                vertex.emplace_back(B[2]);
-                vertex.emplace_back(C[2]);
-                vertex.emplace_back(C[1]);
-                vertex.emplace_back(B[2]);
-                vertex.emplace_back(C[1]);
-                vertex.emplace_back(A[5]);
+                vertex.emplace_back(B[2]); vertex.emplace_back(A[6]); vertex.emplace_back(C[2]);
+                vertex.emplace_back(B[2]); vertex.emplace_back(C[2]); vertex.emplace_back(C[1]);
+                vertex.emplace_back(B[2]); vertex.emplace_back(C[1]); vertex.emplace_back(A[5]);
 
-                vertex.emplace_back(A[2]);
-                vertex.emplace_back(D[2]);
-                vertex.emplace_back(A[6]);
-                vertex.emplace_back(A[2]);
-                vertex.emplace_back(A[6]);
-                vertex.emplace_back(B[2]);
-                vertex.emplace_back(A[2]);
-                vertex.emplace_back(B[2]);
-                vertex.emplace_back(B[3]);
+                vertex.emplace_back(A[2]); vertex.emplace_back(D[2]); vertex.emplace_back(A[6]);
+                vertex.emplace_back(A[2]); vertex.emplace_back(A[6]); vertex.emplace_back(B[2]);
+                vertex.emplace_back(A[2]); vertex.emplace_back(B[2]); vertex.emplace_back(B[3]);
 
-                vertex.emplace_back(C[3]);
-                vertex.emplace_back(A[2]);
-                vertex.emplace_back(B[3]);
-                vertex.emplace_back(C[3]);
-                vertex.emplace_back(B[3]);
-                vertex.emplace_back(A[1]);
-                vertex.emplace_back(C[3]);
-                vertex.emplace_back(A[1]);
-                vertex.emplace_back(C[0]);
+                vertex.emplace_back(C[3]); vertex.emplace_back(A[2]); vertex.emplace_back(B[3]);
+                vertex.emplace_back(C[3]); vertex.emplace_back(B[3]); vertex.emplace_back(A[1]);
+                vertex.emplace_back(C[3]); vertex.emplace_back(A[1]); vertex.emplace_back(C[0]);
 
-                vertex.emplace_back(A[1]);
-                vertex.emplace_back(B[3]);
-                vertex.emplace_back(B[2]);
-                vertex.emplace_back(A[1]);
-                vertex.emplace_back(B[2]);
-                vertex.emplace_back(A[5]);
-                vertex.emplace_back(A[1]);
-                vertex.emplace_back(A[5]);
-                vertex.emplace_back(D[1]);
+                vertex.emplace_back(A[1]); vertex.emplace_back(B[3]); vertex.emplace_back(B[2]);
+                vertex.emplace_back(A[1]); vertex.emplace_back(B[2]); vertex.emplace_back(A[5]);
+                vertex.emplace_back(A[1]); vertex.emplace_back(A[5]); vertex.emplace_back(D[1]);
 
-                vertex.emplace_back(C[0]);
-                vertex.emplace_back(A[0]);
-                vertex.emplace_back(B[0]);
-                vertex.emplace_back(C[0]);
-                vertex.emplace_back(B[0]);
-                vertex.emplace_back(A[3]);
-                vertex.emplace_back(C[0]);
-                vertex.emplace_back(A[3]);
-                vertex.emplace_back(C[3]);
+                vertex.emplace_back(C[0]); vertex.emplace_back(A[0]); vertex.emplace_back(B[0]);
+                vertex.emplace_back(C[0]); vertex.emplace_back(B[0]); vertex.emplace_back(A[3]);
+                vertex.emplace_back(C[0]); vertex.emplace_back(A[3]); vertex.emplace_back(C[3]);
 
-                vertex.emplace_back(A[0]);
-                vertex.emplace_back(D[0]);
-                vertex.emplace_back(A[4]);
-                vertex.emplace_back(A[0]);
-                vertex.emplace_back(A[4]);
-                vertex.emplace_back(B[1]);
-                vertex.emplace_back(A[0]);
-                vertex.emplace_back(B[1]);
-                vertex.emplace_back(B[0]);
+                vertex.emplace_back(A[0]); vertex.emplace_back(D[0]); vertex.emplace_back(A[4]);
+                vertex.emplace_back(A[0]); vertex.emplace_back(A[4]); vertex.emplace_back(B[1]);
+                vertex.emplace_back(A[0]); vertex.emplace_back(B[1]); vertex.emplace_back(B[0]);
 
-                vertex.emplace_back(B[1]);
-                vertex.emplace_back(A[4]);
-                vertex.emplace_back(C[1]);
-                vertex.emplace_back(B[1]);
-                vertex.emplace_back(C[1]);
-                vertex.emplace_back(C[2]);
-                vertex.emplace_back(B[1]);
-                vertex.emplace_back(C[2]);
-                vertex.emplace_back(A[7]);
+                vertex.emplace_back(B[1]); vertex.emplace_back(A[4]); vertex.emplace_back(C[1]);
+                vertex.emplace_back(B[1]); vertex.emplace_back(C[1]); vertex.emplace_back(C[2]);
+                vertex.emplace_back(B[1]); vertex.emplace_back(C[2]); vertex.emplace_back(A[7]);
 
-                vertex.emplace_back(D[3]);
-                vertex.emplace_back(A[7]);
-                vertex.emplace_back(C[2]);
-                vertex.emplace_back(D[3]);
-                vertex.emplace_back(C[2]);
-                vertex.emplace_back(A[6]);
-                vertex.emplace_back(D[3]);
-                vertex.emplace_back(A[6]);
-                vertex.emplace_back(D[2]);
+                vertex.emplace_back(D[3]); vertex.emplace_back(A[7]); vertex.emplace_back(C[2]);
+                vertex.emplace_back(D[3]); vertex.emplace_back(C[2]); vertex.emplace_back(A[6]);
+                vertex.emplace_back(D[3]); vertex.emplace_back(A[6]); vertex.emplace_back(D[2]);
 
-                vertex.emplace_back(C[3]);
-                vertex.emplace_back(A[3]);
-                vertex.emplace_back(D[3]);
-                vertex.emplace_back(C[3]);
-                vertex.emplace_back(D[3]);
-                vertex.emplace_back(D[2]);
-                vertex.emplace_back(C[3]);
-                vertex.emplace_back(D[2]);
-                vertex.emplace_back(A[2]);
+                vertex.emplace_back(C[3]); vertex.emplace_back(A[3]); vertex.emplace_back(D[3]);
+                vertex.emplace_back(C[3]); vertex.emplace_back(D[3]); vertex.emplace_back(D[2]);
+                vertex.emplace_back(C[3]); vertex.emplace_back(D[2]); vertex.emplace_back(A[2]);
 
-                vertex.emplace_back(A[3]);
-                vertex.emplace_back(B[0]);
-                vertex.emplace_back(B[1]);
-                vertex.emplace_back(A[3]);
-                vertex.emplace_back(B[1]);
-                vertex.emplace_back(A[7]);
-                vertex.emplace_back(A[3]);
-                vertex.emplace_back(A[7]);
-                vertex.emplace_back(D[3]);
+                vertex.emplace_back(A[3]); vertex.emplace_back(B[0]); vertex.emplace_back(B[1]);
+                vertex.emplace_back(A[3]); vertex.emplace_back(B[1]); vertex.emplace_back(A[7]);
+                vertex.emplace_back(A[3]); vertex.emplace_back(A[7]); vertex.emplace_back(D[3]);
         }
 
         // 12 pentagon faces, each composed of 3 triangular facets.
