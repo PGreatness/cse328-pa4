@@ -139,7 +139,7 @@ public:
 
     // scale the tetrahedron
     void scale(float scaleFactor) {
-        this->size += scaleFactor;
+        this->size += 1.0f - scaleFactor;
         // size changed, so we need to update the vertex data
         std::cout << "scale factor: " << this->size << std::endl;
         updateTetrahedronSize(this->size);
