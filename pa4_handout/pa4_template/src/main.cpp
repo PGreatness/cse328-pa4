@@ -496,32 +496,11 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
 {
     if (Context::rotationKeyPressed) {
         // rotate the shapes clockwise given degree and axes of rotation based on the
-        // camera's front vector
-        // normalize the front vector
-        glm::vec3 front = glm::normalize(Context::camera.front);
-        // find minimum of the front vector
-        float min = std::min(std::min(front.x, front.y), front.z);
-        // find the vector perpendicular to the front vector heading towards the left
-        if (front.x == min) {
-            front.x = 0.0f;
-            auto tmp = front.z;
-            front.y = -front.z;
-            front.z = tmp;
-        }
-        else if (front.y == min) {
-            front.y = 0.0f;
-            auto tmp = front.x;
-            front.x = front.z;
-            front.z = -tmp;
-        }
-        else {
-            front.z = 0.0f;
-            auto tmp = front.x;
-            front.x = -front.y;
-            front.y = tmp;
-        }
+        // camera's up vector
+        // normalize the up vector
+        glm::vec3 up = glm::normalize(Context::camera.up);
         // rotate the shapes
-        Context::tetrahedron.rotate(static_cast<float>(yoffset), front);
+        Context::tetrahedron.rotate(static_cast<float>(yoffset), up);
         return;
     }
     Context::camera.processMouseScroll(static_cast<float>(yoffset));
