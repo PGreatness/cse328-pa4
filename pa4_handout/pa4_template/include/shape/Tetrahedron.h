@@ -142,7 +142,7 @@ public:
         this->size += scaleFactor;
         // size changed, so we need to update the vertex data
         std::cout << "scale factor: " << scaleFactor << std::endl;
-        updateTetrahedronSize(scaleFactor);
+        updateTetrahedronSize(this->size);
     }
 
     void translate(glm::vec3 translation) {
