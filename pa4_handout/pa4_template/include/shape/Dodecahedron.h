@@ -82,7 +82,7 @@ public:
 
         // setters
         void setCenter(glm::vec3 center) { translate(center - this->center); }
-        void setSize(GLfloat size) { scale(glm::vec3(size / this->size)); }
+        void setSize(GLfloat size) { scale(size / this->size); }
         void setColor(glm::vec3 color) { this->oldColor = this->color; this->color = color; }
 
         // methods
