@@ -38,7 +38,7 @@ public:
         this->size = size;
 
         this->translate(center);
-        this->scale(size / 2.0f);
+        this->scale(size - 1);
         this->color = {DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B};
         this->oldColor = this->color;
     }
@@ -50,7 +50,7 @@ public:
         this->size = size;
 
         this->translate(center);
-        this->scale(size / 2.0f);
+        this->scale(size - 1);
         this->color = color;
         this->oldColor = {DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B};
     }

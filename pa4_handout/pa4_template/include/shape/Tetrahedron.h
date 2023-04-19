@@ -72,7 +72,7 @@ public:
         vertex.emplace_back(V2);
 
         translate(baseCenter);
-        scale(size / 2.0f);
+        scale(size - 1);
     }
 
     Tetrahedron(glm::vec3 baseCenter, GLfloat size, glm::vec3 color) {
@@ -101,7 +101,7 @@ public:
         vertex.emplace_back(V2);
 
         translate(baseCenter);
-        scale(size / 2.0f);
+        scale(size - 1);
     }
 
     virtual GLint getNumVertices() const override {

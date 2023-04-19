@@ -57,7 +57,7 @@ public:
         vertex.emplace_back(V6); vertex.emplace_back(V1); vertex.emplace_back(V4);
 
         this->translate(center);
-        this->scale(size / 2.0f);
+        this->scale(size - 1);
     }
 
     Octahedron(glm::vec3 center, GLfloat size, glm::vec3 color)
@@ -79,7 +79,7 @@ public:
         vertex.emplace_back(V6); vertex.emplace_back(V1); vertex.emplace_back(V4);
 
         this->translate(center);
-        this->scale(size / 2.0f);
+        this->scale(size - 1);
     }
 
     // getters
