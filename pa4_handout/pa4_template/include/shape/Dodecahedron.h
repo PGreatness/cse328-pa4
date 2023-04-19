@@ -34,7 +34,7 @@ public:
                 this->oldColor = this->color;
 
                 setCenter(center);
-                setSize(size / 2.0f);
+                setSize(size - 1);
         }
         Dodecahedron(glm::vec3 center, GLfloat size, glm::vec3 color) {
                 initializeVertex();
@@ -44,7 +44,7 @@ public:
                 this->oldColor = this->color;
 
                 setCenter(center);
-                setSize(size / 2.0f);
+                setSize(size - 1);
                 setColor(color);
         }
 
@@ -103,8 +103,8 @@ public:
         }
 
         void scale(GLfloat scale) {
-                updateDodecahedronSize(scale);
                 this->size += scale;
+                updateDodecahedronSize(scale);
         }
 
         void render(GLuint dodecaArray, GLuint dodecaBuffer, GLuint shaderID) const {
