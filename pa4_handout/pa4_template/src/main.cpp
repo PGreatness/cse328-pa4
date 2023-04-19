@@ -72,10 +72,10 @@ std::shared_ptr<Shader> cubeShader;       // shader for cubes
 Cube cube(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default cube object
 
 std::shared_ptr<Shader> tetrahedronShader;       // shader for tetrahedron
-Tetrahedron tetrahedron(glm::vec3(-0.0f,-0.0f,-0.0f), 1.0f, Colors::currentColor); // default tetrahedron object
+Tetrahedron tetrahedron(glm::vec3(-2.0f,-0.0f,-0.0f), 1.0f, Colors::currentColor); // default tetrahedron object
 
 std::shared_ptr<Shader> octahedronShader;       // shader for octahedron
-Octahedron octahedron(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default octahedron object
+Octahedron octahedron(glm::vec3(2.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default octahedron object
 
 std::shared_ptr<Shader> dodecahedronShader;       // shader for dodecahedron
 Dodecahedron dodecahedron(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default dodecahedron object
@@ -336,9 +336,9 @@ int main()
 
         // Context::displayCube();
 
-        // Context::displayTetrahedron();
+        Context::displayTetrahedron();
 
-        // Context::displayOctahedron();
+        Context::displayOctahedron();
 
         Context::displayDodecahedron();
 
