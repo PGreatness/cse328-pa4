@@ -73,6 +73,10 @@ Cube cube(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default cub
 
 std::shared_ptr<Shader> tetrahedronShader;       // shader for tetrahedron
 Tetrahedron tetrahedron(glm::vec3(-0.0f,-0.0f,-0.0f), 1.0f, Colors::currentColor); // default tetrahedron object
+
+std::shared_ptr<Shader> octahedronShader;       // shader for octahedron
+Octahedron octahedron(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default octahedron object
+
 struct cubeOptions
 {
     static const uint DEFAULT = 0;
@@ -187,6 +191,34 @@ void displayTetrahedron()
                         Context::tetrahedronShader->getShaderProgramHandle(),
                         options);
 }
+
+void displayOctahedron()
+{
+    Context::octahedronShader->use();
+
+    // set lighting uniforms
+    Context::octahedronShader->setVec3("lightPos", Context::lightPos);
+    Context::octahedronShader->setVec3("viewPos", Context::camera.position);
+    Context::octahedronShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+
+    // set options
+    Context::octahedronShader->setInt("options", options);
+
+    glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
+                                            static_cast<GLfloat>(Context::kWindowWidth) /
+                                            static_cast<GLfloat>(Context::kWindowHeight),
+                                            0.01f,
+                                            100.0f);
+    Context::octahedronShader->setMat4("projection", projection);
+    glm::mat4 view = Context::camera.getViewMatrix();
+    Context::octahedronShader->setMat4("view", view);
+    Context::octahedronShader->setMat4("model", glm::mat4(1.0f));
+
+    octahedron.render(Primitive::octahedronVertexArray,
+                        Primitive::octahedronVertexBuffer,
+                        Context::octahedronShader->getShaderProgramHandle(),
+                        options);
+}
 // TODO: Add display functions for other primitives
 
 }  // namespace Context
@@ -240,6 +272,9 @@ int main()
     Context::tetrahedronShader = std::make_shared<Shader>("src/shader/Tetrahedron/vert.glsl",
                                                             "src/shader/Tetrahedron/frag.glsl");
 
+    Context::octahedronShader = std::make_shared<Shader>("src/shader/Octahedron/vert.glsl",
+                                                            "src/shader/Octahedron/frag.glsl");
+
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);
@@ -260,6 +295,8 @@ int main()
         Context::displayCube();
 
         // Context::displayTetrahedron();
+
+        Context::displayOctahedron();
 
         glfwSwapBuffers(window);
         glfwPollEvents();

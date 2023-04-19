@@ -192,13 +192,13 @@ public:
             mouseX <= this->center[0] + this->size / 2 &&
             mouseY >= this->center[1] - this->size / 2 &&
             mouseY <= this->center[1] + this->size / 2) {
-                std::cout << "Mouse is over cube" << std::endl;
-                std::cout << "mouse: " << mouseX << ", " << mouseY << std::endl;
+                // std::cout << "Mouse is over cube" << std::endl;
+                // std::cout << "mouse: " << mouseX << ", " << mouseY << std::endl;
                 return true;
         }
-        std::cout << "Mouse is not over cube" << std::endl;
-        std::cout << "center: " << this->center[0] << ", " << this->center[1] << std::endl;
-        std::cout << "mouse: " << mouseX << ", " << mouseY << std::endl;
+        // std::cout << "Mouse is not over cube" << std::endl;
+        // std::cout << "center: " << this->center[0] << ", " << this->center[1] << std::endl;
+        // std::cout << "mouse: " << mouseX << ", " << mouseY << std::endl;
         return false;
     }
 
