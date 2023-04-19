@@ -111,6 +111,10 @@ GLuint cubeVertexBuffer;
 GLuint tetrahedronVertexArray;
 GLuint tetrahedronVertexBuffer;
 
+GLuint octahedronVertexArray;
+GLuint octahedronVertexBuffer;
+
+
 }  // namespace Primitive
 
 
