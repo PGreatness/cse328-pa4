@@ -398,14 +398,60 @@ void perFrameKeyInput(GLFWwindow * window)
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && Context::modificationKeyPressed)
     {
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
-        glm::vec3 newCenter = Context::cube.getCenter();
         // normalize the front vector
         glm::vec3 front = glm::normalize(Context::camera.front);
         // find the vector perpendicular to the front vector heading towards the left
         glm::vec3 left = glm::normalize(glm::cross(front, Context::camera.up));
-        // move the center of the cube to the left
-        newCenter -= left * displacement;
-        Context::cube.setCenter(newCenter);
+        Context::cube.translate(-left * displacement);
+        Context::tetrahedron.translate(-left * displacement);
+        return;
+    }
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && Context::modificationKeyPressed)
+    {
+        float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
+        // normalize the front vector
+        glm::vec3 front = glm::normalize(Context::camera.front);
+        // find the vector perpendicular to the front vector heading towards the left
+        glm::vec3 left = glm::normalize(glm::cross(front, Context::camera.up));
+        // move the shapes to the left
+        Context::cube.translate(left * displacement);
+        Context::tetrahedron.translate(left * displacement);
+        return;
+    }
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed)
+    {
+        float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
+        // normalize the front vector
+        glm::vec3 front = glm::normalize(Context::camera.front);
+        // move the shapes closer to the camera
+        Context::cube.translate(front * displacement);
+        Context::tetrahedron.translate(front * displacement);
+        return;
+    }
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && Context::modificationKeyPressed)
+    {
+        float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
+        // normalize the front vector
+        glm::vec3 front = glm::normalize(Context::camera.front);
+        // move the shapes away from the camera
+        Context::cube.translate(-front * displacement);
+        Context::tetrahedron.translate(-front * displacement);
+        return;
+    }
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && Context::modificationKeyPressed)
+    {
+        float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
+        // move the shapes up
+        Context::cube.translate(glm::vec3(0.0f, displacement, 0.0f));
+        Context::tetrahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
+        return;
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS && Context::modificationKeyPressed)
+    {
+        float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
+        // move the shapes down
+        Context::cube.translate(glm::vec3(0.0f, -displacement, 0.0f));
+        Context::tetrahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
         return;
     }
     // camera control
