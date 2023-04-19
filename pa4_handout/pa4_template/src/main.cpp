@@ -450,11 +450,11 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     // check if holding the Y key
     if (key == GLFW_KEY_Y && action == GLFW_PRESS)
     {
-        Context::scalingKeyPressed = true;
+        Context::scaleKeyPressed = true;
     }
     if (key == GLFW_KEY_Y && action == GLFW_RELEASE)
     {
-        Context::scalingKeyPressed = false;
+        Context::scaleKeyPressed = false;
     }
 
     // check if holding the U key
@@ -495,10 +495,12 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
 {
     if (Context::rotationKeyPressed) {
-        Context::cube.rotate(static_cast<float>(yoffset) * 0.1f);
-        Context::tetrahedron.rotate(static_cast<float>(yoffset) * 0.1f);
-        Context::octahedron.rotate(static_cast<float>(yoffset) * 0.1f);
-        Context::dodecahedron.rotate(static_cast<float>(yoffset) * 0.1f);
+        // rotate the shapes given degree and axes of rotation based on the
+        // camera's front vector
+        Context::cube.rotate(static_cast<float>(yoffset), Context::camera.front);
+        Context::tetrahedron.rotate(static_cast<float>(yoffset), Context::camera.front);
+        Context::octahedron.rotate(static_cast<float>(yoffset), Context::camera.front);
+        Context::dodecahedron.rotate(static_cast<float>(yoffset), Context::camera.front);
     }
     Context::camera.processMouseScroll(static_cast<float>(yoffset));
 }
