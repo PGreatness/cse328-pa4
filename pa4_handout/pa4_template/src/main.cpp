@@ -443,8 +443,10 @@ void perFrameKeyInput(GLFWwindow * window)
         glm::vec3 front = glm::normalize(Context::camera.front);
         // find the vector perpendicular to the front vector heading towards the left
         glm::vec3 left = glm::normalize(glm::cross(front, Context::camera.up));
+        // move the shapes to the left
         Context::cube.translate(-left * displacement);
         Context::tetrahedron.translate(-left * displacement);
+        Context::octahedron.translate(-left * displacement);
         return;
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && Context::modificationKeyPressed)
@@ -457,6 +459,7 @@ void perFrameKeyInput(GLFWwindow * window)
         // move the shapes to the left
         Context::cube.translate(left * displacement);
         Context::tetrahedron.translate(left * displacement);
+        Context::octahedron.translate(left * displacement);
         return;
     }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed)
@@ -467,6 +470,7 @@ void perFrameKeyInput(GLFWwindow * window)
         // move the shapes closer to the camera
         Context::cube.translate(front * displacement);
         Context::tetrahedron.translate(front * displacement);
+        Context::octahedron.translate(front * displacement);
         return;
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && Context::modificationKeyPressed)
@@ -477,6 +481,7 @@ void perFrameKeyInput(GLFWwindow * window)
         // move the shapes away from the camera
         Context::cube.translate(-front * displacement);
         Context::tetrahedron.translate(-front * displacement);
+        Context::octahedron.translate(-front * displacement);
         return;
     }
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && Context::modificationKeyPressed)
@@ -485,6 +490,7 @@ void perFrameKeyInput(GLFWwindow * window)
         // move the shapes up
         Context::cube.translate(glm::vec3(0.0f, displacement, 0.0f));
         Context::tetrahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
+        Context::octahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
         return;
     }
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS && Context::modificationKeyPressed)
@@ -493,6 +499,7 @@ void perFrameKeyInput(GLFWwindow * window)
         // move the shapes down
         Context::cube.translate(glm::vec3(0.0f, -displacement, 0.0f));
         Context::tetrahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
+        Context::octahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
         return;
     }
     // camera control
