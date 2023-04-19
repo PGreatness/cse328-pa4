@@ -145,7 +145,7 @@ public:
     }
 
     void translate(glm::vec3 translation) {
-        this->baseCenter = translation;
+        this->baseCenter += translation;
         // baseCenter changed, so we need to update the vertex data
         updateTetrahedronLocation(translation);
     }
