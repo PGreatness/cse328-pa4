@@ -305,7 +305,7 @@ void cursorPosCallback(GLFWwindow * window, double xpos, double ypos)
     glm::mat4 view = Context::camera.getViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 mvp = projection * view * model;
-    glm::vec4 localPos = glm::inverse(mvp) * glm::vec4(xpos, ypos, 0.0f, 1.0f);
+    glm::vec4 localPos = glm::inverse(mvp) * glm::vec4(xpos, Context::kWindowHeight - ypos, 0.0f, 1.0f);
     Context::mouseLocalPos = glm::vec3(localPos) / localPos.w;
 }
 
