@@ -215,12 +215,15 @@ private:
     }
 
     void updateOctaSize(GLfloat scale) {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
         // update the vertex data
         for (int i = 0; i < NUM_VERTICES; i++) {
             vertex[i][0] *= scale;
             vertex[i][1] *= scale;
             vertex[i][2] *= scale;
         }
+        this->translate(tmp);
     }
 
     void rotateX(GLfloat angle) {

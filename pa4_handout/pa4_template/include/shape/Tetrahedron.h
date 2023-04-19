@@ -224,9 +224,14 @@ private:
     glm::vec3 oldColor;
 
     void updateTetrahedronSize(float scaleFactor) {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
         for (int i = 0; i < NUM_VERTICES; i++) {
-            vertex[i] *= scaleFactor;
+            vertex[i][0] *= scaleFactor;
+            vertex[i][1] *= scaleFactor;
+            vertex[i][2] *= scaleFactor;
         }
+        this->translate(tmp);
     }
 
     void updateTetrahedronLocation(glm::vec3 translation) {

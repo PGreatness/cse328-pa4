@@ -248,12 +248,15 @@ private:
         // updates the vertex data when the size of the dodecahedron is changed
         void updateDodecahedronSize(float scale)
         {
+                auto tmp = this->getCenter();
+                this->translate(-tmp);
                 for (int i = 0; i < INIT_NUM_VERTICES; i++)
                 {
                     vertex[i][0] *= scale;
                     vertex[i][1] *= scale;
                     vertex[i][2] *= scale;
                 }
+                this->translate(tmp);
         }
 
         // updates the vertex data when the location of the dodecahedron is changed

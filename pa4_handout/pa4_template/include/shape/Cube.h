@@ -283,12 +283,15 @@ private:
 
     // updates the vertex data when the size of the cube changes
     void updateCubeSize(float scale) {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
         // update the vertex data
         for (int i = 0; i < NUM_VERTICES; i++) {
             vertexData[i][0] *= scale;
             vertexData[i][1] *= scale;
             vertexData[i][2] *= scale;
         }
+        this->translate(tmp);
     }
 
     // updates the vertex data when the center of the cube changes
