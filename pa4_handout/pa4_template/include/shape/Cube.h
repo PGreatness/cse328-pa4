@@ -38,7 +38,7 @@ public:
         this->size = size;
 
         this->translate(center);
-        this->scale(size);
+        this->scale(size / 2.0f);
         this->color = {DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B};
         this->oldColor = this->color;
     }
@@ -50,7 +50,7 @@ public:
         this->size = size;
 
         this->translate(center);
-        this->scale(size);
+        this->scale(size / 2.0f);
         this->color = color;
         this->oldColor = {DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B};
     }
@@ -111,7 +111,7 @@ public:
     }
 
     void setSize(float size) {
-        this->scale(size / this->size);
+        this->scale(size);
     }
 
     void setColor(glm::vec3 color) {
@@ -121,7 +121,7 @@ public:
 
     // scale the cube
     void scale(float scaleFactor) {
-        this->size *= scaleFactor;
+        this->size += scaleFactor;
         // size changed, so we need to update the vertex data
         updateCubeSize(scaleFactor);
     }
@@ -287,9 +287,9 @@ private:
         this->translate(-tmp);
         // update the vertex data
         for (int i = 0; i < NUM_VERTICES; i++) {
-            vertexData[i][0] *= scale;
-            vertexData[i][1] *= scale;
-            vertexData[i][2] *= scale;
+            vertexData[i][0] += vertexData[i][0] * scale;
+            vertexData[i][1] += vertexData[i][1] * scale;
+            vertexData[i][2] += vertexData[i][2] * scale;
         }
         this->translate(tmp);
     }

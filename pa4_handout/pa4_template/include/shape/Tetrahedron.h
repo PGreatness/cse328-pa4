@@ -72,7 +72,7 @@ public:
         vertex.emplace_back(V2);
 
         translate(baseCenter);
-        scale(size);
+        scale(size / 2.0f);
     }
 
     Tetrahedron(glm::vec3 baseCenter, GLfloat size, glm::vec3 color) {
@@ -101,7 +101,7 @@ public:
         vertex.emplace_back(V2);
 
         translate(baseCenter);
-        scale(size);
+        scale(size / 2.0f);
     }
 
     virtual GLint getNumVertices() const override {
@@ -134,15 +134,13 @@ public:
 
     // setters
     void setBaseCenter(glm::vec3 baseCenter) { this->translate(baseCenter - this->baseCenter); }
-    void setSize(GLfloat size) { this->scale(size / this->size); }
+    void setSize(GLfloat size) { this->scale(size); }
     void setColor(glm::vec3 color) { this->oldColor = this->color; this->color = color; }
 
     // scale the tetrahedron
     void scale(float scaleFactor) {
         this->size += scaleFactor;
         // size changed, so we need to update the vertex data
-        std::cout << "scale factor: " << scaleFactor << std::endl;
-        std::cout << "scale size: " << this->size << std::endl;
         updateTetrahedronSize(scaleFactor);
     }
 

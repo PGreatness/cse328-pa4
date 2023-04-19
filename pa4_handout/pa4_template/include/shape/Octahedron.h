@@ -57,7 +57,7 @@ public:
         vertex.emplace_back(V6); vertex.emplace_back(V1); vertex.emplace_back(V4);
 
         this->translate(center);
-        this->scale(size);
+        this->scale(size / 2.0f);
     }
 
     Octahedron(glm::vec3 center, GLfloat size, glm::vec3 color)
@@ -79,7 +79,7 @@ public:
         vertex.emplace_back(V6); vertex.emplace_back(V1); vertex.emplace_back(V4);
 
         this->translate(center);
-        this->scale(size);
+        this->scale(size / 2.0f);
     }
 
     // getters
@@ -120,7 +120,7 @@ public:
 
     // setters
     void setCenter(glm::vec3 center) { this->translate(center - this->center); }
-    void setSize(GLfloat size) { this->scale(size / this->size); }
+    void setSize(GLfloat size) { this->scale(size); }
     void setColor(glm::vec3 color) { this->oldColor = this->color; this->color = color; }
 
     void translate(glm::vec3 translation) {
@@ -130,7 +130,7 @@ public:
     }
 
     void scale(GLfloat scale) {
-        this->size *= scale;
+        this->size += scale;
         // size changed, so we need to update the vertex data
         updateOctaSize(scale);
     }
@@ -219,9 +219,9 @@ private:
         this->translate(-tmp);
         // update the vertex data
         for (int i = 0; i < NUM_VERTICES; i++) {
-            vertex[i][0] *= scale;
-            vertex[i][1] *= scale;
-            vertex[i][2] *= scale;
+            vertex[i][0] += vertex[i][0] * scale;
+            vertex[i][1] += vertex[i][1] * scale;
+            vertex[i][2] += vertex[i][2] * scale;
         }
         this->translate(tmp);
     }
