@@ -381,6 +381,8 @@ private:
     }
 
     void updateCubeOrientation(float angle, glm::vec3 axes) {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
         if (axes[0] != 0) {
             rotateX(angle);
         }
@@ -390,6 +392,7 @@ private:
         if (axes[2] != 0) {
             rotateZ(angle);
         }
+        this->translate(tmp);
     }
 
     // initialize the render data for the cube

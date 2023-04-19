@@ -334,6 +334,8 @@ private:
         }
 
         void updateDodecahedronOrientation(float angle, glm::vec3 axis) {
+            auto tmp = this->getCenter();
+            this->translate(-tmp);
             if (axis[0] != 0) {
                 rotateX(angle);
             }
@@ -343,6 +345,7 @@ private:
             if (axis[2] != 0) {
                 rotateZ(angle);
             }
+            this->translate(tmp);
         }
 
         void initializeRender(GLuint * dodecaArray, GLuint * dodecaBuffer) const {

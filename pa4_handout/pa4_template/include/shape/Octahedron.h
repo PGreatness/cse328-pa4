@@ -278,9 +278,12 @@ private:
     }
 
     void updateOctaOrientation(GLfloat angle, glm::vec3 axis) {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
         if (axis[0] != 0) { rotateX(angle); }
         if (axis[1] != 0) { rotateY(angle); }
         if (axis[2] != 0) { rotateZ(angle); }
+        this->translate(tmp);
     }
 
     void initializeRender(GLuint * octaArray, GLuint * octaBuffer) const {

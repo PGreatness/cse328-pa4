@@ -500,7 +500,10 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
         // normalize the up vector
         glm::vec3 up = glm::normalize(Context::camera.up);
         // rotate the shapes
+        Context::cube.rotate(static_cast<float>(yoffset), up);
         Context::tetrahedron.rotate(static_cast<float>(yoffset), up);
+        Context::octahedron.rotate(static_cast<float>(yoffset), up);
+        Context::dodecahedron.rotate(static_cast<float>(yoffset), up);
         return;
     }
     Context::camera.processMouseScroll(static_cast<float>(yoffset));
