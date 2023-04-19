@@ -500,7 +500,7 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
         // normalize the front vector
         glm::vec3 front = glm::normalize(Context::camera.front);
         // make it so that the rotation is always perpendicular to the front and the shapes spin in place
-        Contex::tetrahedron.rotate(static_cast<float>(yoffset), glm::vec3(0.0f,0.0f,1.0f));
+        Context::tetrahedron.rotate(static_cast<float>(yoffset), glm::vec3(0.0f,0.0f,1.0f));
         return;
     }
     Context::camera.processMouseScroll(static_cast<float>(yoffset));
