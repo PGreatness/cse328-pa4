@@ -499,10 +499,9 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
         // camera's front vector
         // normalize the front vector
         glm::vec3 front = glm::normalize(Context::camera.front);
-        // make it so that the rotation is always perpendicular to the front and the shapes spin in place
-        // get the minimum of the x, y, and z components of the front vector
-
-        Context::tetrahedron.rotate(static_cast<float>(yoffset), front);
+        // find perpendicular to front
+        glm::vec3 left = glm::normalize(glm::cross(front, Context::camera.up));
+        Context::tetrahedron.rotate(static_cast<float>(yoffset), left);
         return;
     }
     Context::camera.processMouseScroll(static_cast<float>(yoffset));
