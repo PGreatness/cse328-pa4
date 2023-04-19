@@ -32,6 +32,9 @@ public:
                 this->size = DEFAULT_SIZE;
                 this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
                 this->oldColor = this->color;
+
+                setCenter(center);
+                setSize(size);
         }
         Dodecahedron(glm::vec3 center, GLfloat size, glm::vec3 color) {
                 initializeVertex();
@@ -39,6 +42,10 @@ public:
                 this->size = DEFAULT_SIZE;
                 this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
                 this->oldColor = this->color;
+
+                setCenter(center);
+                setSize(size);
+                setColor(color);
         }
 
         // getters
