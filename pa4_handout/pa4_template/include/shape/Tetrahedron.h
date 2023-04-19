@@ -139,11 +139,11 @@ public:
 
     // scale the tetrahedron
     void scale(float scaleFactor) {
-        this->size = 1.0f - scaleFactor;
+        this->size += scaleFactor;
         // size changed, so we need to update the vertex data
         std::cout << "scale factor: " << scaleFactor << std::endl;
         std::cout << "scale size: " << this->size << std::endl;
-        updateTetrahedronSize(this->size);
+        updateTetrahedronSize(scaleFactor);
     }
 
     void translate(glm::vec3 translation) {
@@ -229,9 +229,9 @@ private:
         auto tmp = this->getCenter();
         this->translate(-tmp);
         for (int i = 0; i < NUM_VERTICES; i++) {
-            vertex[i][0] *= scaleFactor;
-            vertex[i][1] *= scaleFactor;
-            vertex[i][2] *= scaleFactor;
+            vertex[i][0] += vertex[i][0] * scaleFactor;
+            vertex[i][1] += vertex[i][1] * scaleFactor;
+            vertex[i][2] += vertex[i][2] * scaleFactor;
         }
         this->translate(tmp);
     }
