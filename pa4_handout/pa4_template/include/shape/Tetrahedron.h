@@ -151,10 +151,7 @@ public:
     }
 
     void rotate(float angle, glm::vec3 axis) {
-        glm::vec3 center = this->getCenter();
-        this->translate(glm::vec3(0, 0, 0));
         updateTetrahedronOrientation(angle, axis);
-        this->translate(center);
     }
 
     void render(GLuint tetArray, GLuint tetBuffer, GLuint shaderID) const {
