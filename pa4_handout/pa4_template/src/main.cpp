@@ -495,14 +495,17 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
 {
     if (Context::rotationKeyPressed) {
-        // rotate the shapes given degree and axes of rotation based on the
+        // rotate the shapes clockwise given degree and axes of rotation based on the
         // camera's front vector
         // normalize the front vector
         glm::vec3 front = glm::normalize(Context::camera.front);
-        Context::cube.rotate(static_cast<float>(yoffset), front);
-        Context::tetrahedron.rotate(static_cast<float>(yoffset), front);
-        Context::octahedron.rotate(static_cast<float>(yoffset), front);
-        Context::dodecahedron.rotate(static_cast<float>(yoffset), front);
+        // make it so that the rotation makes the shape spin with respect to the camera
+        // and not the world
+        glm::vec3 rotationAxis = glm::normalize(glm::cross(front, Context::camera.up));
+        Context::cube.rotate(static_cast<float>(yoffset), rotationAxis);
+        Context::tetrahedron.rotate(static_cast<float>(yoffset), rotationAxis);
+        Context::octahedron.rotate(static_cast<float>(yoffset), rotationAxis);
+        Context::dodecahedron.rotate(static_cast<float>(yoffset), rotationAxis);
         return;
     }
     Context::camera.processMouseScroll(static_cast<float>(yoffset));
