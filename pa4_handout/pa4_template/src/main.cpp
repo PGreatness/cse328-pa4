@@ -675,12 +675,17 @@ void initializeContext()
             };
 
     if (!Context::axesVisible) {
-        axisVertexData[1] = glm::vec3(0.0f);
-        axisVertexData[3] = glm::vec3(0.0f);
-        axisVertexData[5] = glm::vec3(0.0f);
-        axisVertexData[7] = glm::vec3(0.0f);
-        axisVertexData[9] = glm::vec3(0.0f);
-        axisVertexData[11] = glm::vec3(0.0f);
+        axisVertexData = {
+                // x+ axis in red
+                {0, 0, 0}, {0, 0, 0},
+                {10, 0, 0}, {0, 0, 0},
+                // y+ axis in green
+                {0, 0, 0}, {0, 0, 0},
+                {0, 10, 0}, {0, 0, 0},
+                // z+ axis in green
+                {0, 0, 0}, {0, 0, 0},
+                {0, 0, 10}, {0, 0, 0},
+        };
     }
     glGenBuffers(1, &Primitive::axisVertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, Primitive::axisVertexBuffer);
