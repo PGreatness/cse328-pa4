@@ -357,10 +357,29 @@ int main()
 
         // TODO: Render
 
-        if (STATE::CURRENT == STATE::F1) {
-            Context::displayCube();
-            Context::displayTetrahedron();
-            Context::displayOctahedron();
+        switch (STATE::CURRENT) {
+            case STATE::F1:
+                glfwSetWindowTitle(window, "PA4 - Simple Polyhedral Objects");
+                Context::displayCube();
+                Context::displayTetrahedron();
+                Context::displayOctahedron();
+                break;
+            case STATE::F2:
+                // break;
+            case STATE::F3:
+                // break;
+            case STATE::F4:
+                // break;
+            case STATE::F5:
+                // break;
+            case STATE::F6:
+                // break;
+            case STATE::F7:
+                // break;
+            case STATE::F8:
+                // break;
+            default:
+                glfwSetWindowTitle(window, "PA4");
         }
 
         glfwSwapBuffers(window);
