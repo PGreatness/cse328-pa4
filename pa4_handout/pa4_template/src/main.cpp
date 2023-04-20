@@ -486,19 +486,20 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     Context::tetrahedron.setColor(Colors::currentColor);
     Context::octahedron.setColor(Colors::currentColor);
     Context::dodecahedron.setColor(Colors::currentColor);
+    Context::icosahedron.setColor(Colors::currentColor);
 
     // check if key pressed is 1
-    if (key == GLFW_KEY_1 && action == GLFW_PRESS && STATE::CURRENT == STATE::F1)
+    if (key == GLFW_KEY_1 && action == GLFW_PRESS)
     {
         Colors::currentColor = Colors::WIREFRAME;
         Context::setOptions(Context::cubeOptions::WIREFRAME);
     }
-    if (key == GLFW_KEY_2 && action == GLFW_PRESS && STATE::CURRENT == STATE::F1)
+    if (key == GLFW_KEY_2 && action == GLFW_PRESS)
     {
         Colors::currentColor = Colors::FLAT;
         Context::setOptions(Context::cubeOptions::FLAT);
     }
-    if (key == GLFW_KEY_4 && action == GLFW_PRESS && STATE::CURRENT == STATE::F1)
+    if (key == GLFW_KEY_4 && action == GLFW_PRESS)
     {
         Colors::currentColor = Colors::SMOOTH;
         Context::setOptions(Context::cubeOptions::SMOOTH);
