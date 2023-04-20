@@ -475,7 +475,7 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     // axis visibility
     if (key == GLFW_KEY_Z && action == GLFW_PRESS)
     {
-        Context::axisVisible = !Context::axisVisible;
+        Context::axesVisible = !Context::axesVisible;
     }
 
 }
