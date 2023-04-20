@@ -38,6 +38,8 @@ namespace Colors
     const glm::vec3 SMOOTH = glm::vec3(1.0f, 0.5f, 0.31f);
     glm::vec3 currentColor = WIREFRAME;
 } // namespace Colors
+
+
 namespace Context
 {
 
@@ -47,6 +49,9 @@ constexpr unsigned int kWindowHeight = 1024U;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 10.0f));
+
+// axis visibility
+bool axesVisible = true;
 
 // lighting
 glm::vec3 lightPos(10.0f, -10.0f, 10.0f);
@@ -466,6 +471,13 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     {
         Context::shearKeyPressed = false;
     }
+
+    // axis visibility
+    if (key == GLFW_KEY_Z && action == GLFW_PRESS)
+    {
+        Context::axisVisible = !Context::axisVisible;
+    }
+
 }
 
 
@@ -662,6 +674,7 @@ void initializeContext()
                     {0, 0, 10}, {0, 0, 1},
             };
 
+    if (!Context::axesVisible) { axisVertexData.clear(); }
     glGenBuffers(1, &Primitive::axisVertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, Primitive::axisVertexBuffer);
     glBufferData(GL_ARRAY_BUFFER,
