@@ -402,7 +402,9 @@ int main()
                 Context::displayOctahedron();
                 break;
             case STATE::F2:
-                // break;
+                glfwSetWindowTitle(window, "PA4 - Subdivisions");
+                Context::displayIcosahedron();
+                break;
             case STATE::F3:
                 // break;
             case STATE::F4:
