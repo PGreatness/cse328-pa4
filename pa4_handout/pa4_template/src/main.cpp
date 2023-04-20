@@ -612,26 +612,37 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
 {
     bool specialKeyPressed = false;
-    if (Context::rotationKeyPressed && STATE::CURRENT == STATE::F1) {
+    if (Context::rotationKeyPressed) {
         specialKeyPressed = true;
-        // rotate the shapes clockwise given degree and axes of rotation based on the
-        // camera's up vector
-        // normalize the up vector
         glm::vec3 up = glm::normalize(Context::camera.up);
         // rotate the shapes
-        Context::cube.rotate(static_cast<float>(yoffset), up);
-        Context::tetrahedron.rotate(static_cast<float>(yoffset), up);
-        Context::octahedron.rotate(static_cast<float>(yoffset), up);
-        Context::dodecahedron.rotate(static_cast<float>(yoffset), up);
+        if (STATE::CURRENT == STATE::F1)
+        {
+            Context::cube.rotate(static_cast<float>(yoffset), up);
+            Context::tetrahedron.rotate(static_cast<float>(yoffset), up);
+            Context::octahedron.rotate(static_cast<float>(yoffset), up);
+            Context::dodecahedron.rotate(static_cast<float>(yoffset), up);
+        }
+        if (STATE::CURRENT == STATE::F2)
+        {
+            Context::icosahedron.rotate(static_cast<float>(yoffset), up);
+        }
     }
 
-    if (Context::scaleKeyPressed && STATE::CURRENT == STATE::F1) {
+    if (Context::scaleKeyPressed) {
         specialKeyPressed = true;
         // scale the shapes given the scroll offset
-        Context::cube.scale(static_cast<float>(yoffset) * 0.01f);
-        Context::tetrahedron.scale(static_cast<float>(yoffset) * 0.01f);
-        Context::octahedron.scale(static_cast<float>(yoffset) * 0.01f);
-        Context::dodecahedron.scale(static_cast<float>(yoffset) * 0.01f);
+        if (STATE::CURRENT == STATE::F1)
+        {
+            Context::cube.scale(static_cast<float>(yoffset) * 0.01f);
+            Context::tetrahedron.scale(static_cast<float>(yoffset) * 0.01f);
+            Context::octahedron.scale(static_cast<float>(yoffset) * 0.01f);
+            Context::dodecahedron.scale(static_cast<float>(yoffset) * 0.01f);
+        }
+        if (STATE::CURRENT == STATE::F2)
+        {
+            Context::icosahedron.scale(static_cast<float>(yoffset) * 0.01f);
+        }
     }
     if (specialKeyPressed) { return; }
     Context::camera.processMouseScroll(static_cast<float>(yoffset));
@@ -642,7 +653,7 @@ void perFrameKeyInput(GLFWwindow * window)
 {
     bool specialKeyPressed = false;
     // move the shapes depending on the key pressed so it can be done smoothly
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && Context::modificationKeyPressed && STATE::CURRENT == STATE::F1)
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && Context::modificationKeyPressed)
     {
         specialKeyPressed = true;
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
@@ -651,12 +662,19 @@ void perFrameKeyInput(GLFWwindow * window)
         // find the vector perpendicular to the front vector heading towards the left
         glm::vec3 left = glm::normalize(glm::cross(front, Context::camera.up));
         // move the shapes to the left
-        Context::cube.translate(-left * displacement);
-        Context::tetrahedron.translate(-left * displacement);
-        Context::octahedron.translate(-left * displacement);
-        Context::dodecahedron.translate(-left * displacement);
+        if (STATE::CURRENT == STATE::F1)
+        {
+            Context::cube.translate(-left * displacement);
+            Context::tetrahedron.translate(-left * displacement);
+            Context::octahedron.translate(-left * displacement);
+            Context::dodecahedron.translate(-left * displacement);
+        }
+        if (STATE::CURRENT == STATE::F2)
+        {
+            Context::icosahedron.translate(-left * displacement);
+        }
     }
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && Context::modificationKeyPressed && STATE::CURRENT == STATE::F1)
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && Context::modificationKeyPressed)
     {
         specialKeyPressed = true;
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
@@ -665,54 +683,89 @@ void perFrameKeyInput(GLFWwindow * window)
         // find the vector perpendicular to the front vector heading towards the left
         glm::vec3 left = glm::normalize(glm::cross(front, Context::camera.up));
         // move the shapes to the left
-        Context::cube.translate(left * displacement);
-        Context::tetrahedron.translate(left * displacement);
-        Context::octahedron.translate(left * displacement);
-        Context::dodecahedron.translate(left * displacement);
+        if (STATE::CURRENT == STATE::F1)
+        {
+            Context::cube.translate(left * displacement);
+            Context::tetrahedron.translate(left * displacement);
+            Context::octahedron.translate(left * displacement);
+            Context::dodecahedron.translate(left * displacement);
+        }
+        if (STATE::CURRENT == STATE::F2)
+        {
+            Context::icosahedron.translate(left * displacement);
+        }
     }
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed && STATE::CURRENT == STATE::F1)
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed)
     {
         specialKeyPressed = true;
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
         // normalize the front vector
         glm::vec3 front = glm::normalize(Context::camera.front);
         // move the shapes closer to the camera
-        Context::cube.translate(front * displacement);
-        Context::tetrahedron.translate(front * displacement);
-        Context::octahedron.translate(front * displacement);
-        Context::dodecahedron.translate(front * displacement);
+        if (STATE::CURRENT == STATE::F1)
+        {
+            Context::cube.translate(front * displacement);
+            Context::tetrahedron.translate(front * displacement);
+            Context::octahedron.translate(front * displacement);
+            Context::dodecahedron.translate(front * displacement);
+        }
+        if (STATE::CURRENT == STATE::F2)
+        {
+            Context::icosahedron.translate(front * displacement);
+        }
     }
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && Context::modificationKeyPressed && STATE::CURRENT == STATE::F1)
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && Context::modificationKeyPressed)
     {
         specialKeyPressed = true;
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
         // normalize the front vector
         glm::vec3 front = glm::normalize(Context::camera.front);
         // move the shapes away from the camera
-        Context::cube.translate(-front * displacement);
-        Context::tetrahedron.translate(-front * displacement);
-        Context::octahedron.translate(-front * displacement);
-        Context::dodecahedron.translate(-front * displacement);
+        if (STATE::CURRENT == STATE::F1)
+        {
+            Context::cube.translate(-front * displacement);
+            Context::tetrahedron.translate(-front * displacement);
+            Context::octahedron.translate(-front * displacement);
+            Context::dodecahedron.translate(-front * displacement);
+        }
+        if (STATE::CURRENT == STATE::F2)
+        {
+            Context::icosahedron.translate(-front * displacement);
+        }
     }
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && Context::modificationKeyPressed && STATE::CURRENT == STATE::F1)
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && Context::modificationKeyPressed)
     {
         specialKeyPressed = true;
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
         // move the shapes up
-        Context::cube.translate(glm::vec3(0.0f, displacement, 0.0f));
-        Context::tetrahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
-        Context::octahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
-        Context::dodecahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
+        if (STATE::CURRENT == STATE::F1)
+        {
+            Context::cube.translate(glm::vec3(0.0f, displacement, 0.0f));
+            Context::tetrahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
+            Context::octahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
+            Context::dodecahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
+        }
+        if (STATE::CURRENT == STATE::F2)
+        {
+            Context::icosahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
+        }
     }
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS && Context::modificationKeyPressed && STATE::CURRENT == STATE::F1)
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS && Context::modificationKeyPressed)
     {
         specialKeyPressed = true;
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
         // move the shapes down
-        Context::cube.translate(glm::vec3(0.0f, -displacement, 0.0f));
-        Context::tetrahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
-        Context::octahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
-        Context::dodecahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
+        if (STATE::CURRENT == STATE::F1)
+        {
+            Context::cube.translate(glm::vec3(0.0f, -displacement, 0.0f));
+            Context::tetrahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
+            Context::octahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
+            Context::dodecahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
+        }
+        if (STATE::CURRENT == STATE::F2)
+        {
+            Context::icosahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
+        }
     }
     if (specialKeyPressed) { return; }
     // camera control
