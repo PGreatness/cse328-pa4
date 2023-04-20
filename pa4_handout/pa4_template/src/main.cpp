@@ -103,6 +103,9 @@ Octahedron octahedron(glm::vec3(2.0f,0.0f,0.0f), 1.0f, Colors::currentColor); //
 std::shared_ptr<Shader> dodecahedronShader;       // shader for dodecahedron
 Dodecahedron dodecahedron(glm::vec3(0.0f,0.0f,0.0f), 0.5f, Colors::currentColor); // default dodecahedron object
 
+std::shared_ptr<Shader> icosahedronShader;       // shader for icosahedron
+Icosahedron icosahedron(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default icosahedron object
+
 struct cubeOptions
 {
     static const uint DEFAULT = 0;
@@ -142,6 +145,9 @@ GLuint octahedronVertexBuffer;
 
 GLuint dodecahedronVertexArray;
 GLuint dodecahedronVertexBuffer;
+
+GLuint icosahedronVertexArray;
+GLuint icosahedronVertexBuffer;
 
 
 
@@ -281,6 +287,34 @@ void displayDodecahedron()
                         Context::dodecahedronShader->getShaderProgramHandle(),
                         options);
 }
+
+void displayIcosahedron()
+{
+    Context::icosahedronShader->use();
+
+    // set lighting uniforms
+    Context::icosahedronShader->setVec3("lightPos", Context::lightPos);
+    Context::icosahedronShader->setVec3("viewPos", Context::camera.position);
+    Context::icosahedronShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+
+    // set options
+    Context::icosahedronShader->setInt("options", options);
+
+    glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
+                                            static_cast<GLfloat>(Context::kWindowWidth) /
+                                            static_cast<GLfloat>(Context::kWindowHeight),
+                                            0.01f,
+                                            100.0f);
+    Context::icosahedronShader->setMat4("projection", projection);
+    glm::mat4 view = Context::camera.getViewMatrix();
+    Context::icosahedronShader->setMat4("view", view);
+    Context::icosahedronShader->setMat4("model", glm::mat4(1.0f));
+
+    icosahedron.render(Primitive::icosahedronVertexArray,
+                        Primitive::icosahedronVertexBuffer,
+                        Context::icosahedronShader->getShaderProgramHandle(),
+                        options);
+}
 // TODO: Add display functions for other primitives
 
 }  // namespace Context
@@ -339,6 +373,9 @@ int main()
 
     Context::dodecahedronShader = std::make_shared<Shader>("src/shader/Dodecahedron/vert.glsl",
                                                             "src/shader/Dodecahedron/frag.glsl");
+
+    Context::icosahedronShader = std::make_shared<Shader>("src/shader/Icosahedron/vert.glsl",
+                                                            "src/shader/Icosahedron/frag.glsl");
 
     // render loop
     glEnable(GL_DEPTH_TEST);
