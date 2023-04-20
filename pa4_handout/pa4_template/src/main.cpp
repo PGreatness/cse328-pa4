@@ -338,7 +338,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // TODO: Display or hide axis based on keyboard functions
-        Context::displayAxis();
+        if (Context::axesVisible) { Context::displayAxis(); }
 
         // TODO: Render
 
@@ -673,20 +673,6 @@ void initializeContext()
                     {0, 0, 0}, {0, 0, 1},
                     {0, 0, 10}, {0, 0, 1},
             };
-
-    if (!Context::axesVisible) {
-        axisVertexData = {
-                // x+ axis in red
-                {0, 0, 0}, {0, 0, 0},
-                {10, 0, 0}, {0, 0, 0},
-                // y+ axis in green
-                {0, 0, 0}, {0, 0, 0},
-                {0, 10, 0}, {0, 0, 0},
-                // z+ axis in green
-                {0, 0, 0}, {0, 0, 0},
-                {0, 0, 10}, {0, 0, 0},
-        };
-    }
     glGenBuffers(1, &Primitive::axisVertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, Primitive::axisVertexBuffer);
     glBufferData(GL_ARRAY_BUFFER,
