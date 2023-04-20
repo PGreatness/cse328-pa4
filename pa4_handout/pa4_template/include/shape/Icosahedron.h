@@ -143,10 +143,15 @@ public:
 
     void render(GLuint icosaArray, GLuint icosaBuffer, uint shaderID, uint options) const
     {
+        std::cout << "1" << std::endl;
         initializeRender(&icosaArray, &icosaBuffer);
+        std::cout << "2" << std::endl;
 
+        std::cout << "3" << std::endl;
         GLuint colorLocation = glGetUniformLocation(shaderID, "icosaColor");
+        std::cout << "4" << std::endl;
         glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
+        std::cout << "5" << std::endl;
 
         if (options & Options::WIREFRAME)
         {
