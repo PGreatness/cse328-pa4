@@ -674,7 +674,14 @@ void initializeContext()
                     {0, 0, 10}, {0, 0, 1},
             };
 
-    if (!Context::axesVisible) { axisVertexData.clear(); }
+    if (!Context::axesVisible) {
+        axisVertexData[1] = glm::vec3(0.0f);
+        axisVertexData[3] = glm::vec3(0.0f);
+        axisVertexData[5] = glm::vec3(0.0f);
+        axisVertexData[7] = glm::vec3(0.0f);
+        axisVertexData[9] = glm::vec3(0.0f);
+        axisVertexData[11] = glm::vec3(0.0f);
+    }
     glGenBuffers(1, &Primitive::axisVertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, Primitive::axisVertexBuffer);
     glBufferData(GL_ARRAY_BUFFER,
