@@ -39,6 +39,20 @@ namespace Colors
     glm::vec3 currentColor = WIREFRAME;
 } // namespace Colors
 
+namespace STATE
+{
+    const uint F0 = 0;
+    const uint F1 = 1;
+    const uint F2 = 2;
+    const uint F3 = 3;
+    const uint F4 = 4;
+    const uint F5 = 5;
+    const uint F6 = 6;
+    const uint F7 = 7;
+    const uint F8 = 8;
+
+    uint CURRENT = F0;
+}
 
 namespace Context
 {
@@ -72,6 +86,7 @@ bool modificationKeyPressed = false;
 bool rotationKeyPressed = false;
 bool scaleKeyPressed = false;
 bool shearKeyPressed = false;
+bool fnKeyPressed = false;
 
 std::shared_ptr<Shader> axisShader;       // shader for x, y, z axis
 
@@ -337,18 +352,16 @@ int main()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // TODO: Display or hide axis based on keyboard functions
+        // Display or hide axis based on keyboard functions
         if (Context::axesVisible) { Context::displayAxis(); }
 
         // TODO: Render
 
-        // Context::displayCube();
-
-        Context::displayTetrahedron();
-
-        Context::displayOctahedron();
-
-        Context::displayDodecahedron();
+        if (STATE::CURRENT == STATE::F1) {
+            Context::displayCube();
+            Context::displayTetrahedron();
+            Context::displayOctahedron();
+        }
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -417,17 +430,17 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     Context::dodecahedron.setColor(Colors::currentColor);
 
     // check if key pressed is 1
-    if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+    if (key == GLFW_KEY_1 && action == GLFW_PRESS && STATE::CURRENT == STATE::F1)
     {
         Colors::currentColor = Colors::WIREFRAME;
         Context::setOptions(Context::cubeOptions::WIREFRAME);
     }
-    if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+    if (key == GLFW_KEY_2 && action == GLFW_PRESS && STATE::CURRENT == STATE::F1)
     {
         Colors::currentColor = Colors::FLAT;
         Context::setOptions(Context::cubeOptions::FLAT);
     }
-    if (key == GLFW_KEY_4 && action == GLFW_PRESS)
+    if (key == GLFW_KEY_4 && action == GLFW_PRESS && STATE::CURRENT == STATE::F1)
     {
         Colors::currentColor = Colors::SMOOTH;
         Context::setOptions(Context::cubeOptions::SMOOTH);
@@ -472,6 +485,39 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
         Context::shearKeyPressed = false;
     }
 
+    // check if holding the function keys
+    if (key == GLFW_KEY_F1 && action == GLFW_PRESS)
+    {
+        STATE::CURRENT = STATE::F1;
+    }
+    if (key == GLFW_KEY_F2 && action == GLFW_PRESS)
+    {
+        STATE::CURRENT = STATE::F2;
+    }
+    if (key == GLFW_KEY_F3 && action == GLFW_PRESS)
+    {
+        STATE::CURRENT = STATE::F3;
+    }
+    if (key == GLFW_KEY_F4 && action == GLFW_PRESS)
+    {
+        STATE::CURRENT = STATE::F4;
+    }
+    if (key == GLFW_KEY_F5 && action == GLFW_PRESS)
+    {
+        STATE::CURRENT = STATE::F5;
+    }
+    if (key == GLFW_KEY_F6 && action == GLFW_PRESS)
+    {
+        STATE::CURRENT = STATE::F6;
+    }
+    if (key == GLFW_KEY_F7 && action == GLFW_PRESS)
+    {
+        STATE::CURRENT = STATE::F7;
+    }
+    if (key == GLFW_KEY_F8 && action == GLFW_PRESS)
+    {
+        STATE::CURRENT = STATE::F8;
+    }
     // axis visibility
     if (key == GLFW_KEY_Z && action == GLFW_PRESS)
     {
@@ -507,7 +553,7 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
 {
     bool specialKeyPressed = false;
-    if (Context::rotationKeyPressed) {
+    if (Context::rotationKeyPressed && STATE::CURRENT == STATE::F1) {
         specialKeyPressed = true;
         // rotate the shapes clockwise given degree and axes of rotation based on the
         // camera's up vector
@@ -520,7 +566,7 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
         Context::dodecahedron.rotate(static_cast<float>(yoffset), up);
     }
 
-    if (Context::scaleKeyPressed) {
+    if (Context::scaleKeyPressed && STATE::CURRENT == STATE::F1) {
         specialKeyPressed = true;
         // scale the shapes given the scroll offset
         Context::cube.scale(static_cast<float>(yoffset) * 0.01f);
@@ -537,7 +583,7 @@ void perFrameKeyInput(GLFWwindow * window)
 {
     bool specialKeyPressed = false;
     // move the shapes depending on the key pressed so it can be done smoothly
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && Context::modificationKeyPressed)
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && Context::modificationKeyPressed && STATE::CURRENT == STATE::F1)
     {
         specialKeyPressed = true;
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
@@ -551,7 +597,7 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::octahedron.translate(-left * displacement);
         Context::dodecahedron.translate(-left * displacement);
     }
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && Context::modificationKeyPressed)
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && Context::modificationKeyPressed && STATE::CURRENT == STATE::F1)
     {
         specialKeyPressed = true;
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
@@ -565,7 +611,7 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::octahedron.translate(left * displacement);
         Context::dodecahedron.translate(left * displacement);
     }
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed)
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed && STATE::CURRENT == STATE::F1)
     {
         specialKeyPressed = true;
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
@@ -577,7 +623,7 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::octahedron.translate(front * displacement);
         Context::dodecahedron.translate(front * displacement);
     }
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && Context::modificationKeyPressed)
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && Context::modificationKeyPressed && STATE::CURRENT == STATE::F1)
     {
         specialKeyPressed = true;
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
@@ -589,7 +635,7 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::octahedron.translate(-front * displacement);
         Context::dodecahedron.translate(-front * displacement);
     }
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && Context::modificationKeyPressed)
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && Context::modificationKeyPressed && STATE::CURRENT == STATE::F1)
     {
         specialKeyPressed = true;
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
@@ -599,7 +645,7 @@ void perFrameKeyInput(GLFWwindow * window)
         Context::octahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
         Context::dodecahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
     }
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS && Context::modificationKeyPressed)
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS && Context::modificationKeyPressed && STATE::CURRENT == STATE::F1)
     {
         specialKeyPressed = true;
         float displacement = Context::camera.movementSpeed * static_cast<float>(Context::deltaTime);
