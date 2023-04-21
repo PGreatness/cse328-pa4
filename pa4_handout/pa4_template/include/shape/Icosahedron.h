@@ -161,7 +161,30 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
+    void subdivide()
+    {
+        glm::vec3 * newVertexData = new glm::vec3[INIT_NUM_VERTICES * 4];
 
+        for (int i = 0; i < INIT_NUM_VERTICES; i += 3)
+        {
+            glm::vec3 a = glm::vec3(vertexData[i][0], vertexData[i][1], vertexData[i][2]);
+            glm::vec3 b = glm::vec3(vertexData[i + 1][0], vertexData[i + 1][1], vertexData[i + 1][2]);
+            glm::vec3 c = glm::vec3(vertexData[i + 2][0], vertexData[i + 2][1], vertexData[i + 2][2]);
+
+            glm::vec3 newVertices[4][3] = subdivision(a, b, c);
+
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    newVertexData.push_back({newVertices[j][k][0],
+                                            newVertices[j][k][1],
+                                            newVertices[j][k][2]});
+                }
+            }
+        }
+        this->vertexData = newVertexData;
+    }
 
 private:
 
@@ -176,7 +199,7 @@ private:
     static constexpr GLfloat DEFAULT_COLOR_B = 1.0f;
 
     static constexpr GLint INIT_NUM_FACETS = 20;
-    static constexpr GLint INIT_NUM_VERTICES = INIT_NUM_FACETS * 3;
+    GLint INIT_NUM_VERTICES = INIT_NUM_FACETS * 3;
 
     static constexpr GLfloat X = 0.525731112119133606f;
     static constexpr GLfloat Z = 0.850650808352039932f;
@@ -313,6 +336,29 @@ private:
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 
+    }
+
+    // Subdivide an icosahedron to approximate a unit sphere.
+    // Takes as input a triangular facet on a unit icosahedron
+    // and subdivide it into four new triangular facets.
+    // Returns an array of glm::vec3. The 4 elements are the
+    // new vertices
+    glm::vec3 ** subdivision(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3)
+    {
+        // sampling
+        glm::vec3 v12 = glm::normalize((v1 + v2) / 2.0f);
+        glm::vec3 v23 = glm::normalize((v2 + v3) / 2.0f);
+        glm::vec3 v31 = glm::normalize((v3 + v1) / 2.0f);
+
+        // return the new vertices
+        glm::vec3 newVertices[4][3] = {
+                {v1, v12, v31},
+                {v2, v23, v12},
+                {v3, v31, v23},
+                {v12, v23, v31}
+        };
+
+        return newVertices;
     }
 };
 
