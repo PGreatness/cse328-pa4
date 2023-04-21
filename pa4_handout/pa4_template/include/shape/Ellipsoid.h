@@ -225,7 +225,7 @@ private:
         }
     }
 
-    updateEllipsoidLocation(glm::vec3 translation)
+    void updateEllipsoidLocation(glm::vec3 translation)
     {
         for (auto &vertex : vertices)
         {
@@ -235,7 +235,7 @@ private:
         }
     }
 
-    updateEllipsoidSize(GLfloat size)
+    void updateEllipsoidSize(GLfloat size)
     {
         auto tmp = this->getCenter();
         this->translate(-tmp);
@@ -308,7 +308,7 @@ private:
         }
     }
 
-    updateEllipsoidOrientation(GLfloat angle, glm::vec3 axes)
+    void updateEllipsoidOrientation(GLfloat angle, glm::vec3 axes)
     {
         auto tmp = this->getCenter();
         this->translate(-tmp);
@@ -355,3 +355,5 @@ private:
 
     }
 }
+
+#endif // PA4_ELLIPSOID_H
