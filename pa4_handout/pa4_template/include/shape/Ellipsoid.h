@@ -367,7 +367,7 @@ private:
         glBindBuffer(GL_ARRAY_BUFFER, *ellBuffer);
 
         const glm::vec3 * verticesData = this->getVertexData();
-        const size = this->getNumVertices() * sizeof(glm::vec3);
+        const auto size = this->getNumVertices() * sizeof(glm::vec3);
         glBufferData(GL_ARRAY_BUFFER, size, verticesData, GL_STATIC_DRAW);
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
