@@ -151,10 +151,10 @@ public:
         if (options & Options::WIREFRAME)
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-            glDrawArrays(GL_LINE_STRIP, 0, INIT_NUM_VERTICES * this->subdivisions);
+            glDrawArrays(GL_LINE_STRIP, 0, INIT_NUM_VERTICES * this->subdivisions * 4);
         } else {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            glDrawArrays(GL_TRIANGLES, 0, INIT_NUM_VERTICES * this->subdivisions);
+            glDrawArrays(GL_TRIANGLES, 0, INIT_NUM_VERTICES * this->subdivisions * 4);
         }
 
         glBindVertexArray(0);
@@ -343,7 +343,7 @@ private:
         glBindBuffer(GL_ARRAY_BUFFER, *icosaBuffer);
 
         const glm::vec3 *dataStart = getVertexData();
-        glBufferData(GL_ARRAY_BUFFER, INIT_NUM_VERTICES * sizeof(glm::vec3) * this->subdivisions, dataStart, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, INIT_NUM_VERTICES * sizeof(glm::vec3) * this->subdivisions * 4, dataStart, GL_STATIC_DRAW);
 
         // position attribute
         glEnableVertexAttribArray(0);
