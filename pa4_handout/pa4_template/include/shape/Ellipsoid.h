@@ -378,8 +378,6 @@ private:
     void subdivision()
     {
         std::vector<std::array<GLfloat, 3>> newVertices;
-        auto tmp = this->getAxesLength();
-        this->setAxesLength(glm::vec3(1.0f / tmp[0], 1.0f / tmp[1], 1.0f / tmp[2]));
         for (int i = 0; i < this->getNumVertices(); i += 3)
         {
             std::array<GLfloat, 3> v1 = { this->vertices[i][0], this->vertices[i][1], this->vertices[i][2] };
@@ -415,7 +413,6 @@ private:
         {
             this->vertices.push_back(vertex);
         }
-        this->setAxesLength(tmp);
     }
 
     void getHalfVertex(std::array<GLfloat,3> * v1, std::array<GLfloat,3> * v2, std::array<GLfloat,3>  * v12)
@@ -423,6 +420,14 @@ private:
         (*v12)[0] = ((*v1)[0] + (*v2)[0]) / 2;
         (*v12)[1] = ((*v1)[1] + (*v2)[1]) / 2;
         (*v12)[2] = ((*v1)[2] + (*v2)[2]) / 2;
+
+        GLfloat scaleX = this->xAxisLength / sqrt((*v12)[0] + (*v12)[0]);
+        GLfloat scaleY = this->yAxisLength / sqrt((*v12)[1] + (*v12)[1]);
+        GLfloat scaleZ = this->zAxisLength / sqrt((*v12)[2] + (*v12)[2]);
+
+        (*v12)[0] = (*v12)[0] * scaleX;
+        (*v12)[1] = (*v12)[1] * scaleY;
+        (*v12)[2] = (*v12)[2] * scaleZ;
     }
 };
 
