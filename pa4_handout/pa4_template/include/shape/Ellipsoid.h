@@ -415,7 +415,7 @@ private:
         {
             this->vertices.push_back(vertex);
         }
-        this->setAxesLength(tmp);
+        // this->setAxesLength(tmp);
     }
 
     void getHalfVertex(std::array<GLfloat,3> * v1, std::array<GLfloat,3> * v2, std::array<GLfloat,3>  * v12)
