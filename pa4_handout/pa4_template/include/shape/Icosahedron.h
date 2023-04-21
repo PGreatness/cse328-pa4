@@ -163,9 +163,8 @@ public:
 
     void subdivide()
     {
-        GLfloat newVertexData[INIT_NUM_VERTICES * 4][3];
-
-        for (int i = 0; i < INIT_NUM_VERTICES; i += 3)
+        std::vector<glm::vec3> subdividedVertices;
+        for (int i = 0; i < this->vertexData.size(); i += 3)
         {
             glm::vec3 a = glm::vec3(this->vertexData[i][0],
                                     this->vertexData[i][1],
@@ -183,14 +182,16 @@ public:
 
             for (int j = 0; j < newVertices.size(); j++)
             {
-                newVertexData[i * 4 + j][0] = newVertices[j][0];
-                newVertexData[i * 4 + j][1] = newVertices[j][1];
-                newVertexData[i * 4 + j][2] = newVertices[j][2];
+                subdividedVertices.push_back(newVertices[j]);
             }
         }
-        // std::cout << "subdivided" << std::endl;
-        // memcpy(this->vertexData, newVertexData, sizeof(newVertexData));
-        // std::cout << "copied" << std::endl;
+        // clear the old vertex data
+        this->vertexData.clear();
+        // add the new vertex data
+        for (int i = 0; i < subdividedVertices.size(); i++)
+        {
+            this->vertexData.push_back(subdividedVertices[i]);
+        }
     }
 
 private:
