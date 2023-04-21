@@ -163,7 +163,7 @@ public:
 
     void subdivide()
     {
-        glm::vec3 * newVertexData = new glm::vec3[this->INIT_NUM_VERTICES * 4];
+        GLfloat newVertexData[INIT_NUM_VERTICES * 4][3];
 
         for (int i = 0; i < INIT_NUM_VERTICES; i += 3)
         {
