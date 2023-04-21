@@ -214,7 +214,7 @@ private:
 
     // Each line represents the 3 vertices of a triangular facet.
     // An icosahedron has 20 such facets, each occupies one line.
-    GLfloat vertexData[this->INIT_NUM_VERTICES][3] =
+    GLfloat vertexData[INIT_NUM_VERTICES][3] =
             {
                     {X,   0.0,  Z}, {0.0, Z,    X}, {-X,  0.0,  Z},
                     {0.0, Z,    X}, {-Z,  X,  0.0}, {-X,  0.0,  Z},
