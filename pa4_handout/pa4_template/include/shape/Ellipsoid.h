@@ -88,7 +88,7 @@ public:
         glm::vec3 * vertices = new glm::vec3[this->vertices.size()];
         for (int i = 0; i < this->vertices.size(); i++)
         {
-            vertices[i] = glm::vec3(this->vertices[i].x, this->vertices[i].y, this->vertices[i].z);
+            vertices[i] = glm::vec3(this->vertices[i][0], this->vertices[i][1], this->vertices[i][2]);
         }
         return vertices;
     }
@@ -97,7 +97,8 @@ public:
         glm::vec3 * normals = new glm::vec3[this->vertices.size()];
         for (int i = 0; i < this->vertices.size(); i++)
         {
-            normals[i] = glm::normalize(this->vertices[i]);
+            normals[i] = glm::vec3(this->vertices[i][0], this->vertices[i][1], this->vertices[i][2]);
+            normals[i] = glm::normalize(normals[i]);
         }
         return normals;
     }
