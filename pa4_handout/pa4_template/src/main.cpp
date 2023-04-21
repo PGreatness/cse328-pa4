@@ -583,6 +583,24 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
         Context::axesVisible = !Context::axesVisible;
     }
 
+    // the shift key pressed
+    if (key == GLFW_KEY_LEFT_SHIFT && action == GLFW_PRESS)
+    {
+        Context::shiftKeyPressed = true;
+    }
+    if (key == GLFW_KEY_LEFT_SHIFT && action == GLFW_RELEASE)
+    {
+        Context::shiftKeyPressed = false;
+    }
+    // the plus key pressed
+    if (key == GLFW_KEY_EQUAL && action == GLFW_PRESS && Context::shiftKeyPressed)
+    {
+        if (STATE::CURRENT == STATE::F2)
+        {
+            Context::icosahedron.subdivide();
+        }
+    }
+
 }
 
 
