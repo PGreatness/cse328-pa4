@@ -188,9 +188,9 @@ public:
                 newVertexData[i * 4 + j][2] = newVertices[j][2];
             }
         }
-        std::cout << "subdivided" << std::endl;
-        memcpy(this->vertexData, newVertexData, sizeof(newVertexData));
-        std::cout << "copied" << std::endl;
+        // std::cout << "subdivided" << std::endl;
+        // memcpy(this->vertexData, newVertexData, sizeof(newVertexData));
+        // std::cout << "copied" << std::endl;
     }
 
 private:
