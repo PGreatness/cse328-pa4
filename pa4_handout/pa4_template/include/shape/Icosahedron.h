@@ -163,38 +163,8 @@ public:
 
     void subdivide()
     {
-        std::vector<std::array<GLfloat, 3>> subdividedVertices;
-        for (int i = 0; i < this->vertexData.size(); i += 3)
-        {
-            glm::vec3 a = glm::vec3(this->vertexData[i][0],
-                                    this->vertexData[i][1],
-                                    this->vertexData[i][2]);
-
-            glm::vec3 b = glm::vec3(this->vertexData[i + 1][0],
-                                    this->vertexData[i + 1][1],
-                                    this->vertexData[i + 1][2]);
-
-            glm::vec3 c = glm::vec3(this->vertexData[i + 2][0],
-                                    this->vertexData[i + 2][1],
-                                    this->vertexData[i + 2][2]);
-
-            std::vector<glm::vec3> newVertices = subdivision(a, b, c);
-
-            // std::cout << "newVertices.size(): " << newVertices.size() << std::endl;
-            for (int j = 0; j < newVertices.size(); j++)
-            {
-                subdividedVertices.push_back({newVertices[j][0], newVertices[j][1], newVertices[j][2]});
-            }
-        }
-        // clear the old vertex data
-        this->vertexData.clear();
-        // add the new vertex data
-        for (int i = 0; i < subdividedVertices.size(); i++)
-        {
-            this->vertexData.push_back(subdividedVertices[i]);
-        }
         this->subdivisions++;
-        // std::cout << "this->vertexData.size(): " << this->vertexData.size() << std::endl;
+        subdivision();
     }
 
 private:
@@ -356,32 +326,57 @@ private:
     // and subdivide it into four new triangular facets.
     // Returns an array of glm::vec3. The 4 elements are the
     // new vertices
-    std::vector<glm::vec3> subdivision(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3)
+    void subdivision()
     {
-        // sampling
-        glm::vec3 v12 = glm::normalize((v1 + v2) / 2.0f);
-        glm::vec3 v23 = glm::normalize((v2 + v3) / 2.0f);
-        glm::vec3 v31 = glm::normalize((v3 + v1) / 2.0f);
+        std::vector<std::array<GLfloat, 3>> newVertices;
+        for (int i = 0; i < this->getNumVertices(); i += 3)
+        {
+            std::array<GLfloat, 3> v1 = { this->vertexData[i][0], this->vertexData[i][1], this->vertexData[i][2] };
+            std::array<GLfloat, 3> v2 = { this->vertexData[i + 1][0], this->vertexData[i + 1][1], this->vertexData[i + 1][2] };
+            std::array<GLfloat, 3> v3 = { this->vertexData[i + 2][0], this->vertexData[i + 2][1], this->vertexData[i + 2][2] };
 
-        // return the new vertices
-        std::vector<glm::vec3> newVertices;
-        newVertices.push_back(v1);
-        newVertices.push_back(v12);
-        newVertices.push_back(v31);
+            std::array<GLfloat, 3> v12;
+            std::array<GLfloat, 3> v23;
+            std::array<GLfloat, 3> v31;
 
-        newVertices.push_back(v2);
-        newVertices.push_back(v23);
-        newVertices.push_back(v12);
+            getHalfVertex(&v1, &v2, &v12);
+            getHalfVertex(&v2, &v3, &v23);
+            getHalfVertex(&v3, &v1, &v31);
 
-        newVertices.push_back(v3);
-        newVertices.push_back(v31);
-        newVertices.push_back(v23);
+            newVertices.push_back(v1);
+            newVertices.push_back(v12);
+            newVertices.push_back(v31);
 
-        newVertices.push_back(v12);
-        newVertices.push_back(v23);
-        newVertices.push_back(v31);
+            newVertices.push_back(v2);
+            newVertices.push_back(v23);
+            newVertices.push_back(v12);
 
-        return newVertices;
+            newVertices.push_back(v3);
+            newVertices.push_back(v31);
+            newVertices.push_back(v23);
+
+            newVertices.push_back(v12);
+            newVertices.push_back(v23);
+            newVertices.push_back(v31);
+        }
+        this->vertexData.clear();
+        for (auto &vertex : newVertices)
+        {
+            this->vertexData.push_back(vertex);
+        }
+    }
+
+    void getHalfVertex(std::array<GLfloat,3> * v1, std::array<GLfloat,3> * v2, std::array<GLfloat,3> * v12)
+    {
+        (*v12)[0] = ((*v1)[0] + (*v2)[0]) / 2;
+        (*v12)[1] = ((*v1)[1] + (*v2)[1]) / 2;
+        (*v12)[2] = ((*v1)[2] + (*v2)[2]) / 2;
+
+        // scale it back to the icosahedron
+        GLfloat scale = sqrt((*v12)[0] * (*v12)[0] / this->radius + (*v12)[1] * (*v12)[1] / this->radius + (*v12)[2] * (*v12)[2] / this->radius);
+        (*v12)[0] /= scale;
+        (*v12)[1] /= scale;
+        (*v12)[2] /= scale;
     }
 };
 
