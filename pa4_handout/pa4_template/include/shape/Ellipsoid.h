@@ -421,13 +421,10 @@ private:
         (*v12)[1] = ((*v1)[1] + (*v2)[1]) / 2;
         (*v12)[2] = ((*v1)[2] + (*v2)[2]) / 2;
 
-        GLfloat scaleX = this->xAxisLength / sqrt((*v12)[0] + (*v12)[0]);
-        GLfloat scaleY = this->yAxisLength / sqrt((*v12)[1] + (*v12)[1]);
-        GLfloat scaleZ = this->zAxisLength / sqrt((*v12)[2] + (*v12)[2]);
-
-        (*v12)[0] = (*v12)[0] * scaleX;
-        (*v12)[1] = (*v12)[1] * scaleY;
-        (*v12)[2] = (*v12)[2] * scaleZ;
+        GLfloat scale = 1 / sqrt((*v12)[0] * (*v12)[0] + (*v12)[1] * (*v12)[1] + (*v12)[2] * (*v12)[2]);
+        (*v12)[0] *= scale;
+        (*v12)[1] *= scale;
+        (*v12)[2] *= scale;
     }
 };
 
