@@ -188,13 +188,7 @@ public:
                 newVertexData[i * 4 + j][2] = newVertices[j][2];
             }
         }
-        for (int i = 0; i < INIT_NUM_VERTICES; i++)
-        {
-            delete[] this->vertexData[i];
-        }
-        delete[] this->vertexData;
-        this->vertexData = newVertexData;
-        this->INIT_NUM_VERTICES *= 4;
+        memcpy(this->vertexData, newVertexData, sizeof(newVertexData));
     }
 
 private:
@@ -211,8 +205,6 @@ private:
 
     static constexpr GLint INIT_NUM_FACETS = 20;
     static constexpr GLint INIT_NUM_VERTICES = INIT_NUM_FACETS * 3;
-
-    GLint NUM_VERTICES = INIT_NUM_VERTICES;
 
     static constexpr GLfloat X = 0.525731112119133606f;
     static constexpr GLfloat Z = 0.850650808352039932f;
