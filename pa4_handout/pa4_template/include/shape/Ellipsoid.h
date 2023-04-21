@@ -365,7 +365,7 @@ private:
         std::vector<std::array<GLfloat, 3>> newVertices;
         for (int i = 0; i < this->getNumVertices(); i++)
         {
-            std::array<GLfloat, 3> v1 = this->vertices[i][0];
+            std::array<GLfloat, 3> v1 = { this->vertices[i][0], this->vertices[i][1], this->vertices[i][2] };
         }
     }
 
