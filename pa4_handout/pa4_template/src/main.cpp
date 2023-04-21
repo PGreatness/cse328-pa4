@@ -730,6 +730,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::icosahedron.translate(-left * displacement);
         }
+        if (STATE::CURRENT == STATE::F3)
+        {
+            Context::ellipsoid.translate(-left * displacement);
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && Context::modificationKeyPressed)
     {
@@ -751,6 +755,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::icosahedron.translate(left * displacement);
         }
+        if (STATE::CURRENT == STATE::F3)
+        {
+            Context::ellipsoid.translate(left * displacement);
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed)
     {
@@ -769,6 +777,10 @@ void perFrameKeyInput(GLFWwindow * window)
         if (STATE::CURRENT == STATE::F2)
         {
             Context::icosahedron.translate(front * displacement);
+        }
+        if (STATE::CURRENT == STATE::F3)
+        {
+            Context::ellipsoid.translate(front * displacement);
         }
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && Context::modificationKeyPressed)
@@ -789,6 +801,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::icosahedron.translate(-front * displacement);
         }
+        if (STATE::CURRENT == STATE::F3)
+        {
+            Context::ellipsoid.translate(-front * displacement);
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && Context::modificationKeyPressed)
     {
@@ -806,6 +822,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::icosahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
         }
+        if (STATE::CURRENT == STATE::F3)
+        {
+            Context::ellipsoid.translate(glm::vec3(0.0f, displacement, 0.0f));
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS && Context::modificationKeyPressed)
     {
@@ -822,6 +842,10 @@ void perFrameKeyInput(GLFWwindow * window)
         if (STATE::CURRENT == STATE::F2)
         {
             Context::icosahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
+        }
+        if (STATE::CURRENT == STATE::F3)
+        {
+            Context::ellipsoid.translate(glm::vec3(0.0f, -displacement, 0.0f));
         }
     }
     if (specialKeyPressed) { return; }
