@@ -179,14 +179,11 @@ public:
                                     this->vertexData[i + 2][1],
                                     this->vertexData[i + 2][2]);
 
-            glm::vec3 newVertices[4][3] = this->subdivision(a, b, c);
+            std::vector<glm::vec3> newVertices = subdivision(a, b, c);
 
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < newVertices.size(); j++)
             {
-                for (int k = 0; k < 3; k++)
-                {
-                    newVertexData.push_back(newVertices[j][k]);
-                }
+                newVertexData.push_back(newVertices[j]);
             }
         }
         this->vertexData = newVertexData;
@@ -349,7 +346,7 @@ private:
     // and subdivide it into four new triangular facets.
     // Returns an array of glm::vec3. The 4 elements are the
     // new vertices
-    glm::vec3 ** subdivision(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3)
+    std::vector<glm::vec3> subdivision(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3)
     {
         // sampling
         glm::vec3 v12 = glm::normalize((v1 + v2) / 2.0f);
@@ -357,25 +354,22 @@ private:
         glm::vec3 v31 = glm::normalize((v3 + v1) / 2.0f);
 
         // return the new vertices
-        glm::vec3 ** newVertices = new glm::vec3*[4];
-        for (int i = 0; i < 4; i++) {
-            newVertices[i] = new glm::vec3[3];
-        }
-        newVertices[0][0] = v1;
-        newVertices[0][1] = v12;
-        newVertices[0][2] = v31;
+        std::vector<glm::vec3> newVertices;
+        newVertices.push_back(v1);
+        newVertices.push_back(v12);
+        newVertices.push_back(v31);
 
-        newVertices[1][0] = v2;
-        newVertices[1][1] = v23;
-        newVertices[1][2] = v12;
+        newVertices.push_back(v2);
+        newVertices.push_back(v23);
+        newVertices.push_back(v12);
 
-        newVertices[2][0] = v3;
-        newVertices[2][1] = v31;
-        newVertices[2][2] = v23;
+        newVertices.push_back(v3);
+        newVertices.push_back(v31);
+        newVertices.push_back(v23);
 
-        newVertices[3][0] = v12;
-        newVertices[3][1] = v23;
-        newVertices[3][2] = v31;
+        newVertices.push_back(v12);
+        newVertices.push_back(v23);
+        newVertices.push_back(v31);
 
         return newVertices;
     }
