@@ -193,6 +193,7 @@ public:
         {
             this->vertexData.push_back(subdividedVertices[i]);
         }
+        std::cout << "this->vertexData.size(): " << this->vertexData.size() << std::endl;
     }
 
 private:
