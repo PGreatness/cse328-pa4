@@ -313,7 +313,7 @@ private:
         glBindBuffer(GL_ARRAY_BUFFER, *icosaBuffer);
 
         const glm::vec3 *dataStart = getVertexData();
-        const size = this->getNumVertices() * sizeof(glm::vec3);
+        const auto size = this->getNumVertices() * sizeof(glm::vec3);
         glBufferData(GL_ARRAY_BUFFER, size, dataStart, GL_STATIC_DRAW);
 
         // position attribute
