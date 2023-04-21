@@ -188,7 +188,13 @@ public:
                 newVertexData[i * 4 + j][2] = newVertices[j][2];
             }
         }
+        for (int i = 0; i < INIT_NUM_VERTICES; i++)
+        {
+            delete[] this->vertexData[i];
+        }
+        delete[] this->vertexData;
         this->vertexData = newVertexData;
+        this->INIT_NUM_VERTICES *= 4;
     }
 
 private:
