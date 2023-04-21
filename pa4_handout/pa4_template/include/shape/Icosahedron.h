@@ -54,18 +54,18 @@ public:
     // getters
     virtual GLint getNumVertices() const override
     {
-        return INIT_NUM_VERTICES;
+        return this->vertexData.size();
     }
     virtual const glm::vec3 * getVertexData() const override {
-        glm::vec3 * tmp = new glm::vec3[INIT_NUM_VERTICES];
-        for (int i = 0; i < INIT_NUM_VERTICES; i++) {
+        glm::vec3 * tmp = new glm::vec3[this->vertexData.size()];
+        for (int i = 0; i < this->vertexData.size(); i++) {
             tmp[i] = glm::vec3(vertexData[i][0], vertexData[i][1], vertexData[i][2]);
         }
         return tmp;
     }
     virtual const glm::vec3 * getNormalData() const override {
-        glm::vec3 * tmp = new glm::vec3[INIT_NUM_VERTICES];
-        for (int i = 0; i < INIT_NUM_VERTICES; i++) {
+        glm::vec3 * tmp = new glm::vec3[this->vertexData.size()];
+        for (int i = 0; i < this->vertexData.size(); i++) {
             tmp[i] = glm::vec3(vertexData[i][0], vertexData[i][1], vertexData[i][2]);
             tmp[i] = glm::normalize(tmp[i]);
         }
@@ -313,7 +313,8 @@ private:
         glBindBuffer(GL_ARRAY_BUFFER, *icosaBuffer);
 
         const glm::vec3 *dataStart = getVertexData();
-        glBufferData(GL_ARRAY_BUFFER, INIT_NUM_VERTICES * sizeof(glm::vec3) * this->subdivisions * 4, dataStart, GL_STATIC_DRAW);
+        const size = this->getNumVertices() * sizeof(glm::vec3);
+        glBufferData(GL_ARRAY_BUFFER, size, dataStart, GL_STATIC_DRAW);
 
         // position attribute
         glEnableVertexAttribArray(0);
@@ -373,7 +374,7 @@ private:
         (*v12)[2] = ((*v1)[2] + (*v2)[2]) / 2;
 
         // scale it back to the icosahedron
-        GLfloat scale = sqrt((*v12)[0] * (*v12)[0] / this->radius + (*v12)[1] * (*v12)[1] / this->radius + (*v12)[2] * (*v12)[2] / this->radius);
+        GLfloat scale = sqrt((*v12)[0] * (*v12)[0] / this->size + (*v12)[1] * (*v12)[1] / this->size + (*v12)[2] * (*v12)[2] / this->size);
         (*v12)[0] /= scale;
         (*v12)[1] /= scale;
         (*v12)[2] /= scale;
