@@ -185,9 +185,7 @@ public:
             {
                 for (int k = 0; k < 3; k++)
                 {
-                    newVertexData.push_back({newVertices[j][k][0],
-                                            newVertices[j][k][1],
-                                            newVertices[j][k][2]});
+                    newVertexData.push_back(newVertices[j][k]);
                 }
             }
         }
@@ -359,12 +357,25 @@ private:
         glm::vec3 v31 = glm::normalize((v3 + v1) / 2.0f);
 
         // return the new vertices
-        glm::vec3 newVertices[4][3] = {
-                {v1, v12, v31},
-                {v2, v23, v12},
-                {v3, v31, v23},
-                {v12, v23, v31}
-        };
+        glm::vec3 ** newVertices = new glm::vec3*[4];
+        for (int i = 0; i < 4; i++) {
+            newVertices[i] = new glm::vec3[3];
+        }
+        newVertices[0][0] = v1;
+        newVertices[0][1] = v12;
+        newVertices[0][2] = v31;
+
+        newVertices[1][0] = v2;
+        newVertices[1][1] = v23;
+        newVertices[1][2] = v12;
+
+        newVertices[2][0] = v3;
+        newVertices[2][1] = v31;
+        newVertices[2][2] = v23;
+
+        newVertices[3][0] = v12;
+        newVertices[3][1] = v23;
+        newVertices[3][2] = v31;
 
         return newVertices;
     }
