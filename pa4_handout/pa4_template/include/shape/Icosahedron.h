@@ -373,11 +373,10 @@ private:
         (*v12)[1] = ((*v1)[1] + (*v2)[1]) / 2;
         (*v12)[2] = ((*v1)[2] + (*v2)[2]) / 2;
 
-        // scale it back to the icosahedron
-        GLfloat length = sqrt((*v12)[0] * (*v12)[0] + (*v12)[1] * (*v12)[1] + (*v12)[2] * (*v12)[2]);
-        (*v12)[0] /= length;
-        (*v12)[1] /= length;
-        (*v12)[2] /= length;
+        // scale it so that the vertex is on the radius of the icosahedron
+        (*v12)[0] = (*v12)[0] * (1 / sqrt(pow((*v12)[0], 2) + pow((*v12)[1], 2) + pow((*v12)[2], 2)));
+        (*v12)[1] = (*v12)[1] * (1 / sqrt(pow((*v12)[0], 2) + pow((*v12)[1], 2) + pow((*v12)[2], 2)));
+        (*v12)[2] = (*v12)[2] * (1 / sqrt(pow((*v12)[0], 2) + pow((*v12)[1], 2) + pow((*v12)[2], 2)));
     }
 };
 
