@@ -9,6 +9,7 @@
 #include "shape/Icosahedron.h"
 #include "shape/Tetrahedron.h"
 #include "shape/Octahedron.h"
+#include "shape/Ellipsoid.h"
 #include "util/Camera.h"
 #include "util/Shader.h"
 
@@ -106,6 +107,9 @@ Dodecahedron dodecahedron(glm::vec3(0.0f,0.0f,0.0f), 0.5f, Colors::currentColor)
 std::shared_ptr<Shader> icosahedronShader;       // shader for icosahedron
 Icosahedron icosahedron(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default icosahedron object
 
+std::shared_ptr<Shader> ellipsoidShader;       // shader for ellipsoid
+Ellipsoid ellipsoid(glm::vec3(0.0f,0.0f,0.0f), 1.0f, 1.0f, 1.0f, Colors::currentColor, glm::vec3(1.0f, 2.0f, 1.0f)); // default ellipsoid object
+
 struct cubeOptions
 {
     static const uint DEFAULT = 0;
@@ -149,7 +153,8 @@ GLuint dodecahedronVertexBuffer;
 GLuint icosahedronVertexArray;
 GLuint icosahedronVertexBuffer;
 
-
+GLuint ellipsoidVertexArray;
+GLuint ellipsoidVertexBuffer;
 
 }  // namespace Primitive
 
@@ -315,6 +320,34 @@ void displayIcosahedron()
                         Context::icosahedronShader->getShaderProgramHandle(),
                         options);
 }
+
+void displayEllipsoid()
+{
+    Context::ellipsoidShader->use();
+
+    // set lighting uniforms
+    Context::ellipsoidShader->setVec3("lightPos", Context::lightPos);
+    Context::ellipsoidShader->setVec3("viewPos", Context::camera.position);
+    Context::ellipsoidShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+
+    // set options
+    Context::ellipsoidShader->setInt("options", options);
+
+    glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
+                                            static_cast<GLfloat>(Context::kWindowWidth) /
+                                            static_cast<GLfloat>(Context::kWindowHeight),
+                                            0.01f,
+                                            100.0f);
+    Context::ellipsoidShader->setMat4("projection", projection);
+    glm::mat4 view = Context::camera.getViewMatrix();
+    Context::ellipsoidShader->setMat4("view", view);
+    Context::ellipsoidShader->setMat4("model", glm::mat4(1.0f));
+
+    ellipsoid.render(Primitive::ellipsoidVertexArray,
+                        Primitive::ellipsoidVertexBuffer,
+                        Context::ellipsoidShader->getShaderProgramHandle(),
+                        options);
+}
 // TODO: Add display functions for other primitives
 
 }  // namespace Context
@@ -377,6 +410,9 @@ int main()
     Context::icosahedronShader = std::make_shared<Shader>("src/shader/Icosahedron/vert.glsl",
                                                             "src/shader/Icosahedron/frag.glsl");
 
+    Context::ellipsoidShader = std::make_shared<Shader>("src/shader/Ellipsoid/vert.glsl",
+                                                            "src/shader/Ellipsoid/frag.glsl");
+
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);
@@ -406,7 +442,9 @@ int main()
                 Context::displayIcosahedron();
                 break;
             case STATE::F3:
-                // break;
+                glfwSetWindowTitle(window, "PA4 - Ellipsoid");
+                Context::displayEllipsoid();
+                break;
             case STATE::F4:
                 // break;
             case STATE::F5:
