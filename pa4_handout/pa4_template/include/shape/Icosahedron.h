@@ -163,15 +163,23 @@ public:
 
     void subdivide()
     {
-        glm::vec3 * newVertexData = new glm::vec3[INIT_NUM_VERTICES * 4];
+        glm::vec3 * newVertexData = new glm::vec3[this->INIT_NUM_VERTICES * 4];
 
         for (int i = 0; i < INIT_NUM_VERTICES; i += 3)
         {
-            glm::vec3 a = glm::vec3(vertexData[i][0], vertexData[i][1], vertexData[i][2]);
-            glm::vec3 b = glm::vec3(vertexData[i + 1][0], vertexData[i + 1][1], vertexData[i + 1][2]);
-            glm::vec3 c = glm::vec3(vertexData[i + 2][0], vertexData[i + 2][1], vertexData[i + 2][2]);
+            glm::vec3 a = glm::vec3(this->vertexData[i][0],
+                                    this->vertexData[i][1],
+                                    this->vertexData[i][2]);
 
-            glm::vec3 newVertices[4][3] = subdivision(a, b, c);
+            glm::vec3 b = glm::vec3(this->vertexData[i + 1][0],
+                                    this->vertexData[i + 1][1],
+                                    this->vertexData[i + 1][2]);
+
+            glm::vec3 c = glm::vec3(this->vertexData[i + 2][0],
+                                    this->vertexData[i + 2][1],
+                                    this->vertexData[i + 2][2]);
+
+            glm::vec3 newVertices[4][3] = this->subdivision(a, b, c);
 
             for (int j = 0; j < 4; j++)
             {
