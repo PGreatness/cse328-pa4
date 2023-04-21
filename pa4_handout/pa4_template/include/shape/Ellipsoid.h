@@ -166,6 +166,12 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
+    void subdivide()
+    {
+        this->subdivision();
+        this->subdivionLevel++;
+    }
+
 private:
     // the default ellipsoid is centered at the origin and has a side length of 1
     static constexpr GLfloat DEFAULT_CENTER_X = 0.0f;
