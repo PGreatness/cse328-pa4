@@ -369,8 +369,8 @@ private:
 
     void getHalfVertex(glm::vec3 * v1, glm::vec3 * v2, glm::vec3 * v12)
     {
-        v12 = (v1 + v2) / 2.0f;
-        v12 = glm::normalize(v12);
+        // v12 = (v1 + v2) / 2.0f;
+        // v12 = glm::normalize(v12);
     }
 };
 
