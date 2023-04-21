@@ -351,9 +351,9 @@ private:
         this->translate(-tmp);
         for (auto &vertex : vertices)
         {
-            vertex[0] *= axes[0];
-            vertex[1] *= axes[1];
-            vertex[2] *= axes[2];
+            vertex[0] += vertex[0] * axes[0];
+            vertex[1] += vertex[1] * axes[1];
+            vertex[2] += vertex[2] * axes[2];
         }
         this->translate(tmp);
     }
@@ -420,6 +420,8 @@ private:
         (*v12)[0] = ((*v1)[0] + (*v2)[0]) / 2;
         (*v12)[1] = ((*v1)[1] + (*v2)[1]) / 2;
         (*v12)[2] = ((*v1)[2] + (*v2)[2]) / 2;
+
+
     }
 };
 
