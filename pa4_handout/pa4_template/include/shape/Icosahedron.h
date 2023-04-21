@@ -180,13 +180,14 @@ public:
 
             std::vector<glm::vec3> newVertices = subdivision(a, b, c);
 
+            std::cout << "newVertices.size(): " << newVertices.size() << std::endl;
             for (int j = 0; j < newVertices.size(); j++)
             {
                 subdividedVertices.push_back({newVertices[j][0], newVertices[j][1], newVertices[j][2]});
             }
         }
         // clear the old vertex data
-        // this->vertexData.clear();
+        this->vertexData.clear();
         // add the new vertex data
         for (int i = 0; i < subdividedVertices.size(); i++)
         {
