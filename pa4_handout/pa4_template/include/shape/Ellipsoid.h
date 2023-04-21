@@ -343,7 +343,7 @@ private:
         this->translate(tmp);
     }
 
-    void initializeRender(GLuint * ellArray, GLuint * ellBuffer)
+    void initializeRender(GLuint * ellArray, GLuint * ellBuffer) const
     {
         glGenVertexArrays(1, ellArray);
         glGenBuffers(1, ellBuffer);
