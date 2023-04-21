@@ -357,6 +357,6 @@ private:
         glEnableVertexAttribArray(0);
 
     }
-}
+};
 
 #endif // PA4_ELLIPSOID_H
