@@ -213,8 +213,8 @@ private:
 
     // Each line represents the 3 vertices of a triangular facet.
     // An icosahedron has 20 such facets, each occupies one line.
-    std::array<GLfloat[3], INIT_NUM_VERTICES> vertexData =
-            {{
+    std::vector<std::array<GLfloat, 3>> vertexData =
+            {
                     {X,   0.0,  Z}, {0.0, Z,    X}, {-X,  0.0,  Z},
                     {0.0, Z,    X}, {-Z,  X,  0.0}, {-X,  0.0,  Z},
                     {0.0, Z,    X}, {0.0, Z,   -X}, {-Z,  X,  0.0},
@@ -235,7 +235,7 @@ private:
                     {-X,  0.0, -Z}, {-Z,  -X, 0.0}, {-Z,  X,  0.0},
                     {0.0, Z,   -X}, {-X,  0.0, -Z}, {-Z,  X,  0.0},
                     {-Z,  -X, 0.0}, {-X,  0.0, -Z}, {0.0, -Z,  -X}
-            }};
+            };
 
     // user-defined center, size, and color
     glm::vec3 center;
