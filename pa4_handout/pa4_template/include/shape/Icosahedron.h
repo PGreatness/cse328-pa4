@@ -151,10 +151,10 @@ public:
         if (options & Options::WIREFRAME)
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-            glDrawArrays(GL_LINE_STRIP, 0, INIT_NUM_VERTICES * this->subdivisions * 4);
+            glDrawArrays(GL_LINE_STRIP, 0, INIT_NUM_VERTICES * this->subdivisions);
         } else {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            glDrawArrays(GL_TRIANGLES, 0, INIT_NUM_VERTICES * this->subdivisions * 4);
+            glDrawArrays(GL_TRIANGLES, 0, INIT_NUM_VERTICES * this->subdivisions);
         }
 
         glBindVertexArray(0);
