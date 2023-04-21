@@ -422,9 +422,9 @@ private:
         (*v12)[2] = ((*v1)[2] + (*v2)[2]) / 2;
 
         // scale it back to the ellipsoid
-        (*v12)[0] = (*v12)[0] * this->xAxisLength;
-        (*v12)[1] = (*v12)[1] * this->yAxisLength;
-        (*v12)[2] = (*v12)[2] * this->zAxisLength;
+        (*v12)[0] = (*v12)[0] * (this->xAxisLength / (*v12)[0]);
+        (*v12)[1] = (*v12)[1] * (this->yAxisLength / (*v12)[1]);
+        (*v12)[2] = (*v12)[2] * (this->zAxisLength / (*v12)[2]);
     }
 };
 
