@@ -169,10 +169,10 @@ public:
     void subdivide()
     {
         std::cout << "subdividing ellipsoid" << std::endl;
-        std::cout << "INIT_NUM_VERTICES * sizeof(glm::vec3) * (this->subdivisionLevel + 1) before: " << INIT_NUM_VERTICES * sizeof(glm::vec3) * (this->subdivisionLevel + 1) << std::endl;
+        std::cout << "INIT_NUM_VERTICES * 3 * (this->subdivisionLevel + 1) before: " << INIT_NUM_VERTICES * 3 * (this->subdivisionLevel + 1) << std::endl;
         this->subdivision();
         this->subdivisionLevel++;
-        std::cout << "INIT_NUM_VERTICES * sizeof(glm::vec3) * (this->subdivisionLevel + 1) after: " << INIT_NUM_VERTICES * sizeof(glm::vec3) * (this->subdivisionLevel + 1) << std::endl;
+        std::cout << "INIT_NUM_VERTICES * 3 * (this->subdivisionLevel + 1) after: " << INIT_NUM_VERTICES * 3 * (this->subdivisionLevel + 1) << std::endl;
     }
 
 private:
