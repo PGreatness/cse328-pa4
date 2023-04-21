@@ -353,7 +353,7 @@ private:
         glBindBuffer(GL_ARRAY_BUFFER, *ellBuffer);
 
         const glm::vec3 * verticesData = this->getVertexData();
-        glBufferData(GL_ARRAY_BUFFER, INIT_NUM_VERTICES * sizeof(glm::vec3), verticesData, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, INIT_NUM_VERTICES * sizeof(glm::vec3) * (this->subdivisionLevel + 1), verticesData, GL_STATIC_DRAW);
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
         glEnableVertexAttribArray(0);
@@ -363,9 +363,40 @@ private:
     void subdivision()
     {
         std::vector<std::array<GLfloat, 3>> newVertices;
-        for (int i = 0; i < this->getNumVertices(); i++)
+        for (int i = 0; i < this->getNumVertices(); i += 3)
         {
             std::array<GLfloat, 3> v1 = { this->vertices[i][0], this->vertices[i][1], this->vertices[i][2] };
+            std::array<GLfloat, 3> v2 = { this->vertices[i + 1][0], this->vertices[i + 1][1], this->vertices[i + 1][2] };
+            std::array<GLfloat, 3> v3 = { this->vertices[i + 2][0], this->vertices[i + 2][1], this->vertices[i + 2][2] };
+
+            std::array<GLfloat, 3> v12;
+            std::array<GLfloat, 3> v23;
+            std::array<GLfloat, 3> v31;
+
+            getHalfVertex(&v1, &v2, &v12);
+            getHalfVertex(&v2, &v3, &v23);
+            getHalfVertex(&v3, &v1, &v31);
+
+            newVertices.push_back(v1);
+            newVertices.push_back(v12);
+            newVertices.push_back(v31);
+
+            newVertices.push_back(v2);
+            newVertices.push_back(v23);
+            newVertices.push_back(v12);
+
+            newVertices.push_back(v3);
+            newVertices.push_back(v31);
+            newVertices.push_back(v23);
+
+            newVertices.push_back(v12);
+            newVertices.push_back(v23);
+            newVertices.push_back(v31);
+        }
+        this->vertices.clear();
+        for (auto &vertex : newVertices)
+        {
+            this->vertices.push_back(vertex);
         }
     }
 
