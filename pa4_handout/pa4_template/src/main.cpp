@@ -525,6 +525,7 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     Context::octahedron.setColor(Colors::currentColor);
     Context::dodecahedron.setColor(Colors::currentColor);
     Context::icosahedron.setColor(Colors::currentColor);
+    Context::ellipsoid.setColor(Colors::currentColor);
 
     // check if key pressed is 1
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
