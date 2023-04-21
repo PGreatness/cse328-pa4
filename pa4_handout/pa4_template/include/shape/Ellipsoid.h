@@ -179,6 +179,9 @@ private:
     static constexpr GLint INIT_NUM_FACETS = 20; // the initial number of faces of the ellipsoid
     static constexpr GLint INIT_NUM_VERTICES = INIT_NUM_FACETS * 3; // the initial number of vertices of the ellipsoid
     const float PI = 3.14159265358979323846f;
+    
+    static constexpr GLfloat X = 0.525731112119133606f;
+    static constexpr GLfloat Z = 0.850650808352039932f;
 
     // copy over the vertices and normals from the icosahedron
     std::vector<std::array<GLfloat, 3>> vertices =
