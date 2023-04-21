@@ -638,6 +638,10 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
         {
             Context::icosahedron.subdivide();
         }
+        if (STATE::CURRENT == STATE::F3)
+        {
+            Context::ellipsoid.subdivide();
+        }
     }
 
 }
