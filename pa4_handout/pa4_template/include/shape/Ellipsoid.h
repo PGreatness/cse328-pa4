@@ -170,11 +170,13 @@ public:
     {
         std::cout << "subdividing ellipsoid" << std::endl;
         std::cout << "INIT_NUM_VERTICES: " << INIT_NUM_VERTICES << std::endl;
+        std::cout << "size: " << this->getNumVertices() << std::endl;
         std::cout << "this->subdivisionLevel: " << this->subdivisionLevel << std::endl;
         std::cout << "INIT_NUM_VERTICES * 3 * (this->subdivisionLevel + 1) before: " << INIT_NUM_VERTICES * 3 * (this->subdivisionLevel + 1) << std::endl;
         this->subdivision();
         this->subdivisionLevel++;
         std::cout << "INIT_NUM_VERTICES: " << INIT_NUM_VERTICES << std::endl;
+        std::cout << "size: " << this->getNumVertices() << std::endl;
         std::cout << "INIT_NUM_VERTICES * 3 * (this->subdivisionLevel + 1) after: " << INIT_NUM_VERTICES * 3 * (this->subdivisionLevel + 1) << std::endl;
     }
 
