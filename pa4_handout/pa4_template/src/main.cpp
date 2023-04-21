@@ -108,7 +108,7 @@ std::shared_ptr<Shader> icosahedronShader;       // shader for icosahedron
 Icosahedron icosahedron(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); // default icosahedron object
 
 std::shared_ptr<Shader> ellipsoidShader;       // shader for ellipsoid
-Ellipsoid ellipsoid(glm::vec3(0.0f,0.0f,0.0f), 1.0f, 1.0f, 1.0f, Colors::currentColor, glm::vec3(1.0f, 2.0f, 1.0f)); // default ellipsoid object
+Ellipsoid ellipsoid(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor, glm::vec3(1.0f, 2.0f, 1.0f)); // default ellipsoid object
 
 struct cubeOptions
 {
