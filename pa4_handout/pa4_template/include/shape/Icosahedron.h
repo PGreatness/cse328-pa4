@@ -151,10 +151,10 @@ public:
         if (options & Options::WIREFRAME)
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-            glDrawArrays(GL_LINE_STRIP, 0, INIT_NUM_VERTICES);
+            glDrawArrays(GL_LINE_STRIP, 0, INIT_NUM_VERTICES * this->subdivisions);
         } else {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            glDrawArrays(GL_TRIANGLES, 0, INIT_NUM_VERTICES);
+            glDrawArrays(GL_TRIANGLES, 0, INIT_NUM_VERTICES * this->subdivisions);
         }
 
         glBindVertexArray(0);
@@ -180,7 +180,7 @@ public:
 
             std::vector<glm::vec3> newVertices = subdivision(a, b, c);
 
-            std::cout << "newVertices.size(): " << newVertices.size() << std::endl;
+            // std::cout << "newVertices.size(): " << newVertices.size() << std::endl;
             for (int j = 0; j < newVertices.size(); j++)
             {
                 subdividedVertices.push_back({newVertices[j][0], newVertices[j][1], newVertices[j][2]});
@@ -193,7 +193,8 @@ public:
         {
             this->vertexData.push_back(subdividedVertices[i]);
         }
-        std::cout << "this->vertexData.size(): " << this->vertexData.size() << std::endl;
+        this->subdivisions++;
+        // std::cout << "this->vertexData.size(): " << this->vertexData.size() << std::endl;
     }
 
 private:
@@ -210,6 +211,8 @@ private:
 
     static constexpr GLint INIT_NUM_FACETS = 20;
     static constexpr GLint INIT_NUM_VERTICES = INIT_NUM_FACETS * 3;
+
+    GLint subdivisions = 1;
 
     static constexpr GLfloat X = 0.525731112119133606f;
     static constexpr GLfloat Z = 0.850650808352039932f;
@@ -340,7 +343,7 @@ private:
         glBindBuffer(GL_ARRAY_BUFFER, *icosaBuffer);
 
         const glm::vec3 *dataStart = getVertexData();
-        glBufferData(GL_ARRAY_BUFFER, INIT_NUM_VERTICES * sizeof(glm::vec3), dataStart, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, INIT_NUM_VERTICES * sizeof(glm::vec3) * this->subdivisions, dataStart, GL_STATIC_DRAW);
 
         // position attribute
         glEnableVertexAttribArray(0);
