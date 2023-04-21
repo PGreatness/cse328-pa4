@@ -82,7 +82,7 @@ public:
     glm::vec3 getColor() const { return this->color; }
     glm::vec3 getAxesLength() const { return glm::vec3(this->xAxisLength, this->yAxisLength, this->zAxisLength); }
 
-    virtual GLint getNumVertices() const override { return this->vertices.size() * 3; }
+    virtual GLint getNumVertices() const override { return this->vertices.size(); }
     virtual const glm::vec3 * getVertexData() const override
     {
         glm::vec3 * vertices = new glm::vec3[this->vertices.size()];
@@ -145,8 +145,6 @@ public:
 
     void render(GLuint ellArray, GLuint ellBuffer, uint shaderID, uint options) const
     {
-        std::cout << "size of vertices through method: " << this->getNumVertices() << std::endl;
-        std::cout << "size of vertices: " << this->vertices.size() << std::endl;
         initializeRender(&ellArray, &ellBuffer);
 
         // set the color
@@ -364,13 +362,18 @@ private:
 
     void subdivision()
     {
-        // TODO: implement subdivision
+        std::vector<std::array<GLfloat, 3>> newVertices;
+        for (int i = 0; i < this->getNumVertices(); i++)
+        {
+            std::array<GLfloat, 3> v1 = this->vertices[i][0];
+        }
     }
 
-    void getHalfVertex(glm::vec3 * v1, glm::vec3 * v2, glm::vec3 * v12)
+    void getHalfVertex(std::array<GLfloat,3> * v1, std::array<GLfloat,3> * v2, std::array<GLfloat,3>  * v12)
     {
-        // v12 = (v1 + v2) / 2.0f;
-        // v12 = glm::normalize(v12);
+        v12[0] = (v1[0] + v2[0]) / 2;
+        v12[1] = (v1[1] + v2[1]) / 2;
+        v12[2] = (v1[2] + v2[2]) / 2;
     }
 };
 
