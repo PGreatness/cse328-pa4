@@ -163,7 +163,7 @@ public:
 
     void subdivide()
     {
-        std::vector<glm::vec3> subdividedVertices;
+        std::vector<std::array<GLfloat, 3>> subdividedVertices;
         for (int i = 0; i < this->vertexData.size(); i += 3)
         {
             glm::vec3 a = glm::vec3(this->vertexData[i][0],
@@ -182,7 +182,7 @@ public:
 
             for (int j = 0; j < newVertices.size(); j++)
             {
-                subdividedVertices.push_back(newVertices[j]);
+                subdividedVertices.push_back({newVertices[j][0], newVertices[j][1], newVertices[j][2]});
             }
         }
         // clear the old vertex data
