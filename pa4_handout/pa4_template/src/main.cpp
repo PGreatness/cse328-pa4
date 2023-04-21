@@ -86,7 +86,7 @@ bool modificationKeyPressed = false;
 bool rotationKeyPressed = false;
 bool scaleKeyPressed = false;
 bool shearKeyPressed = false;
-bool fnKeyPressed = false;
+bool shiftKeyPressed = false;
 
 std::shared_ptr<Shader> axisShader;       // shader for x, y, z axis
 
