@@ -183,7 +183,9 @@ public:
 
             for (int j = 0; j < newVertices.size(); j++)
             {
-                newVertexData[i * 4 + j] = newVertices[j];
+                newVertexData[i * 4 + j][0] = newVertices[j][0];
+                newVertexData[i * 4 + j][1] = newVertices[j][1];
+                newVertexData[i * 4 + j][2] = newVertices[j][2];
             }
         }
         this->vertexData = newVertexData;
