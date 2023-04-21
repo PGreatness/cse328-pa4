@@ -145,6 +145,8 @@ public:
 
     void render(GLuint ellArray, GLuint ellBuffer, uint shaderID, uint options) const
     {
+        std::cout << "size of vertices through method: " << this->getNumVertices() << std::endl;
+        std::cout << "size of vertices: " << this->vertices.size() << std::endl;
         initializeRender(&ellArray, &ellBuffer);
 
         // set the color
@@ -180,7 +182,8 @@ private:
     static constexpr GLint INIT_NUM_FACETS = 20; // the initial number of faces of the ellipsoid
     static constexpr GLint INIT_NUM_VERTICES = INIT_NUM_FACETS * 3; // the initial number of vertices of the ellipsoid
     const float PI = 3.14159265358979323846f;
-    
+
+    static GLuint subdivisionLevel = 0; // the number of times the icosahedron has been subdivided
     static constexpr GLfloat X = 0.525731112119133606f;
     static constexpr GLfloat Z = 0.850650808352039932f;
 
@@ -357,6 +360,17 @@ private:
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
         glEnableVertexAttribArray(0);
 
+    }
+
+    void subdivision()
+    {
+        // TODO: implement subdivision
+    }
+
+    void getHalfVertex(glm::vec3 * v1, glm::vec3 * v2, glm::vec3 * v12)
+    {
+        v12 = (v1 + v2) / 2.0f;
+        v12 = glm::normalize(v12);
     }
 };
 
