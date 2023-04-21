@@ -422,9 +422,10 @@ private:
         (*v12)[2] = ((*v1)[2] + (*v2)[2]) / 2;
 
         // scale it back to the ellipsoid
-        (*v12)[0] += (*v12)[0] * (this->xAxisLength / (*v12)[0]);
-        (*v12)[1] += (*v12)[1] * (this->yAxisLength / (*v12)[1]);
-        (*v12)[2] += (*v12)[2] * (this->zAxisLength / (*v12)[2]);
+        GLfloat scale = sqrt(pow((*v12)[0], 2) / pow(this->xAxisLength, 2) + pow((*v12)[1], 2) / pow(this->yAxisLength, 2) + pow((*v12)[2], 2) / pow(this->zAxisLength, 2));
+        (*v12)[0] = (*v12)[0] / scale;
+        (*v12)[1] = (*v12)[1] / scale;
+        (*v12)[2] = (*v12)[2] / scale;
     }
 };
 
