@@ -351,9 +351,9 @@ private:
         this->translate(-tmp);
         for (auto &vertex : vertices)
         {
-            vertex[0] += vertex[0] * axes[0];
-            vertex[1] += vertex[1] * axes[1];
-            vertex[2] += vertex[2] * axes[2];
+            vertex[0] = vertex[0] * axes[0];
+            vertex[1] = vertex[1] * axes[1];
+            vertex[2] = vertex[2] * axes[2];
         }
         this->translate(tmp);
     }
@@ -379,7 +379,7 @@ private:
     {
         std::vector<std::array<GLfloat, 3>> newVertices;
         auto tmp = this->getAxesLength();
-        this->setAxesLength(glm::vec3(-1.0f / tmp[0], -1.0f / tmp[1], -1.0f / tmp[2]));
+        this->setAxesLength(glm::vec3(1.0f / tmp[0], 1.0f / tmp[1], 1.0f / tmp[2]));
         for (int i = 0; i < this->getNumVertices(); i += 3)
         {
             std::array<GLfloat, 3> v1 = { this->vertices[i][0], this->vertices[i][1], this->vertices[i][2] };
