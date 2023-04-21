@@ -169,7 +169,7 @@ public:
     void subdivide()
     {
         this->subdivision();
-        this->subdivionLevel++;
+        this->subdivisionLevel++;
     }
 
 private:
