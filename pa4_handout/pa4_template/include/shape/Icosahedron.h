@@ -207,7 +207,7 @@ private:
     static constexpr GLfloat DEFAULT_COLOR_B = 1.0f;
 
     static constexpr GLint INIT_NUM_FACETS = 20;
-    constexpr GLint INIT_NUM_VERTICES = INIT_NUM_FACETS * 3;
+    static constexpr GLint INIT_NUM_VERTICES = INIT_NUM_FACETS * 3;
 
     static constexpr GLfloat X = 0.525731112119133606f;
     static constexpr GLfloat Z = 0.850650808352039932f;
