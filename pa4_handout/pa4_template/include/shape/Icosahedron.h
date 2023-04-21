@@ -101,7 +101,7 @@ public:
 
     void setSize(float size)
     {
-        this->scale(size);
+        this->scale(size / this->size);
     }
 
     void setColor(glm::vec3 color)
@@ -163,6 +163,8 @@ public:
 
     void subdivide()
     {
+        auto oldSize = this->size;
+        this->setSize(1.0f);
         std::vector<std::array<GLfloat, 3>> subdividedVertices;
         for (int i = 0; i < this->vertexData.size(); i += 3)
         {
@@ -185,6 +187,7 @@ public:
             {
                 subdividedVertices.push_back({newVertices[j][0], newVertices[j][1], newVertices[j][2]});
             }
+            this->setSize(oldSize);
         }
         // clear the old vertex data
         this->vertexData.clear();
