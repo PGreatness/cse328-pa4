@@ -88,7 +88,7 @@ public:
         glm::vec3 * vertices = new glm::vec3[this->vertices.size()];
         for (int i = 0; i < this->vertices.size(); i++)
         {
-            vertices[i] = this->vertices[i];
+            vertices[i] = glm::vec3(this->vertices[i].x, this->vertices[i].y, this->vertices[i].z);
         }
         return vertices;
     }
