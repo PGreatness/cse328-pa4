@@ -107,7 +107,7 @@ public:
     void setCenter(glm::vec3 center) { this->translate(center - this->center); }
     void setSize(GLfloat size) { this->scale(size / this->size); }
     void setColor(glm::vec3 color) { this->oldColor = this->color; this->color = color; }
-    void setAxesLength(glm::vec3 axesLength) { this->updateEllipsoidAxesLength(axesLength); }
+    void setAxesLength(glm::vec3 axesLength) { this->updateEllipsoidAxes(axesLength); }
 
     // methods
     void translate(glm::vec3 translation)
