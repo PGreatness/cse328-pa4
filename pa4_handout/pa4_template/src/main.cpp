@@ -684,6 +684,10 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
         {
             Context::icosahedron.rotate(static_cast<float>(yoffset), up);
         }
+        if (STATE::CURRENT == STATE::F3)
+        {
+            Context::ellipsoid.rotate(static_cast<float>(yoffset), up);
+        }
     }
 
     if (Context::scaleKeyPressed) {
@@ -699,6 +703,10 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
         if (STATE::CURRENT == STATE::F2)
         {
             Context::icosahedron.scale(static_cast<float>(yoffset) * 0.01f);
+        }
+        if (STATE::CURRENT == STATE::F3)
+        {
+            Context::ellipsoid.scale(static_cast<float>(yoffset) * 0.01f);
         }
     }
     if (specialKeyPressed) { return; }
