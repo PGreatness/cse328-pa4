@@ -408,9 +408,9 @@ private:
         auto tmp = this->getCenter();
         auto tmp2 = this->getRotationDegree();
         this->translate(-tmp);
-        this->rotate(-tmp2[0], glm::vec3(1.0f, 0.0f, 0.0f));
-        this->rotate(-tmp2[1], glm::vec3(0.0f, 1.0f, 0.0f));
-        this->rotate(-tmp2[2], glm::vec3(0.0f, 0.0f, 1.0f));
+        this->rotateX(-tmp2[0]);
+        this->rotateY(-tmp2[1]);
+        this->rotateZ(-tmp2[2]);
 
         std::vector<std::array<GLfloat, 3>> newVertices;
         for (int i = 0; i < this->getNumVertices(); i += 3)
@@ -449,9 +449,9 @@ private:
             this->vertices.push_back(vertex);
         }
         this->translate(tmp);
-        this->rotate(tmp2[0], glm::vec3(1.0f, 0.0f, 0.0f));
-        this->rotate(tmp2[1], glm::vec3(0.0f, 1.0f, 0.0f));
-        this->rotate(tmp2[2], glm::vec3(0.0f, 0.0f, 1.0f));
+        this->rotateX(tmp2[0]);
+        this->rotateY(tmp2[1]);
+        this->rotateZ(tmp2[2]);
     }
 
     void getHalfVertex(std::array<GLfloat,3> * v1, std::array<GLfloat,3> * v2, std::array<GLfloat,3>  * v12)
