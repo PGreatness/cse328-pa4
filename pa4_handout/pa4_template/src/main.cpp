@@ -1059,4 +1059,5 @@ int findUserParams()
         );
         Transformations::setReflection(reflectionA, reflectionB);
     }
+    return 1;
 }
