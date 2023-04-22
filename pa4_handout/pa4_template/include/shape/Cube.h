@@ -147,6 +147,11 @@ public:
         updateCubeReflection(planeA, planeB);
     }
 
+    void shear(glm::vec3 shearFactors)
+    {
+        updateCubeShear(shearFactors[0], shearFactors[1], shearFactors[2]);
+    }
+
 
     // render the cube
     void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID) const {
@@ -396,6 +401,73 @@ private:
             vertexData[i][1] = vertex.y;
             vertexData[i][2] = vertex.z;
         }
+    }
+
+    void shearX(float shearAmountY, float shearAmountZ)
+    {
+        // get the shear matrix
+        glm::mat4 shear = {
+            1, shearAmountY, shearAmountZ, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        };
+
+        // multiply the shear matrix with each vertex
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 vertex = glm::vec4(vertexData[i][0], vertexData[i][1], vertexData[i][2], 1.0f);
+            vertex = shear * vertex;
+            vertexData[i][0] = vertex.x;
+            vertexData[i][1] = vertex.y;
+            vertexData[i][2] = vertex.z;
+        }
+    }
+
+    void shearY(float shearAmountX, float shearAmountZ)
+    {
+        // get the shear matrix
+        glm::mat4 shear = {
+            1, 0, 0, 0,
+            shearAmountX, 1, shearAmountZ, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        };
+
+        // multiply the shear matrix with each vertex
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 vertex = glm::vec4(vertexData[i][0], vertexData[i][1], vertexData[i][2], 1.0f);
+            vertex = shear * vertex;
+            vertexData[i][0] = vertex.x;
+            vertexData[i][1] = vertex.y;
+            vertexData[i][2] = vertex.z;
+        }
+    }
+
+    void shearZ(float shearAmountX, float shearAmountY)
+    {
+        // get the shear matrix
+        glm::mat4 shear = {
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            shearAmountX, shearAmountY, 1, 0,
+            0, 0, 0, 1
+        };
+
+        // multiply the shear matrix with each vertex
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 vertex = glm::vec4(vertexData[i][0], vertexData[i][1], vertexData[i][2], 1.0f);
+            vertex = shear * vertex;
+            vertexData[i][0] = vertex.x;
+            vertexData[i][1] = vertex.y;
+            vertexData[i][2] = vertex.z;
+        }
+    }
+
+    void updateCubeShear(float shearAmountX, float shearAmountY, float shearAmountZ)
+    {
+        shearX(shearAmountY, shearAmountZ);
+        shearY(shearAmountX, shearAmountZ);
+        shearZ(shearAmountX, shearAmountY);
     }
 
     void updateCubeOrientation(float angle, glm::vec3 axes) {
