@@ -188,12 +188,14 @@ public:
         GLuint colorLocation = glGetUniformLocation(shaderID, "icosaColor");
         glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
 
+        GLuint flatLocation = glGetUniformLocation(shaderID, "isFlat");
         if (options == Options::FLAT) {
-            GLuint flatLocation = glGetUniformLocation(shaderID, "isFlat");
             glUniform1i(flatLocation, 1);
+        } else {
+            glUniform1i(flatLocation, 0);
         }
 
-        if (options & Options::WIREFRAME)
+        if (options == Options::WIREFRAME)
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             glDrawArrays(GL_LINE_STRIP, 0, this->getNumVertices());
