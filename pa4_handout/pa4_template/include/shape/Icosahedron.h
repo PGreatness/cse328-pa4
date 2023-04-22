@@ -67,7 +67,7 @@ public:
         return tmp;
     }
     virtual const glm::vec3 * getNormalData() const override {
-        glm::vec3 * faceNormals = new glm::vec3[this->vertexData.size() / 3];
+        glm::vec3 * faceNormals = new glm::vec3[this->vertexData.size()];
         std::vector<glm::vec3> tmp;
         for (int i = 0; i < this->vertexData.size(); i += 3)
         {
@@ -75,6 +75,8 @@ public:
             glm::vec3 v2 = glm::vec3(vertexData[i + 1][0], vertexData[i + 1][1], vertexData[i + 1][2]);
             glm::vec3 v3 = glm::vec3(vertexData[i + 2][0], vertexData[i + 2][1], vertexData[i + 2][2]);
             glm::vec3 normal = glm::normalize(glm::cross(v2 - v1, v3 - v1));
+            tmp.push_back(normal);
+            tmp.push_back(normal);
             tmp.push_back(normal);
         }
         for (int i = 0; i < tmp.size(); i++)
@@ -377,7 +379,7 @@ private:
         const glm::vec3 *dataStart = getVertexData();
         const auto size = this->getNumVertices() * sizeof(glm::vec3);
         const glm::vec3 *normalsStart = getNormalData();
-        const auto normalsSize = this->getNumVertices() / 3 * sizeof(glm::vec3);
+        const auto normalsSize = this->getNumVertices() * sizeof(glm::vec3);
 
         glBufferData(GL_ARRAY_BUFFER, size, dataStart, GL_STATIC_DRAW);
 
@@ -390,8 +392,8 @@ private:
 
 
         // normal attribute
-        // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-        // glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(1);
 
     }
 
