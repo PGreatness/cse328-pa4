@@ -64,7 +64,7 @@ namespace Transformations
         glm::vec3 ROTATION = glm::vec3(0.0f, 0.0f, 0.0f);
         glm::vec3 SCALE = glm::vec3(1.0f, 1.0f, 1.0f);
         glm::vec3 SHEAR = glm::vec3(0.0f, 0.0f, 0.0f);
-        glm::vec3 REFLECTION = glm::array<glm::vec3, 2>{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f)};
+        glm::vec3 REFLECTION = std::array<glm::vec3, 2>{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f)};
     };
 
     VALUES VALUES;
@@ -72,7 +72,7 @@ namespace Transformations
     void setRotation(glm::vec3 rotation) { VALUES.ROTATION = rotation; }
     void setScale(glm::vec3 scale) { VALUES.SCALE = scale; }
     void setShear(glm::vec3 shear) { VALUES.SHEAR = shear; }
-    void setReflection(glm::vec3 reflectPlaneA, glm::vec3 reflectPlaneB) { VALUES.REFLECTION = glm::array<glm::vec3, 2>{reflectPlaneA, reflectPlaneB}; }
+    void setReflection(glm::vec3 reflectPlaneA, glm::vec3 reflectPlaneB) { VALUES.REFLECTION = std::array<glm::vec3, 2>{reflectPlaneA, reflectPlaneB}; }
 }
 
 namespace Context
