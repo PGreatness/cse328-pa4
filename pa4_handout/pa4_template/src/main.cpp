@@ -68,11 +68,11 @@ namespace Transformations
     };
 
     VALUES VALUES;
-    void setTranslation(glm::vec3 translation) const { VALUES.TRANSLATION = translation; }
-    void setRotation(glm::vec3 rotation) const { VALUES.ROTATION = rotation; }
-    void setScale(glm::vec3 scale) const { VALUES.SCALE = scale; }
-    void setShear(glm::vec3 shear) const { VALUES.SHEAR = shear; }
-    void setReflection(glm::vec3 reflectPlaneA, glm::vec3 reflectPlaneB) const { VALUES.REFLECTION = std::array<glm::vec3, 2>{reflectPlaneA, reflectPlaneB}; }
+    void setTranslation(glm::vec3 translation) { VALUES.TRANSLATION = translation; }
+    void setRotation(glm::vec3 rotation) { VALUES.ROTATION = rotation; }
+    void setScale(glm::vec3 scale) { VALUES.SCALE = scale; }
+    void setShear(glm::vec3 shear) { VALUES.SHEAR = shear; }
+    void setReflection(glm::vec3 reflectPlaneA, glm::vec3 reflectPlaneB) { VALUES.REFLECTION = std::array<glm::vec3, 2>{reflectPlaneA, reflectPlaneB}; }
 }
 
 namespace Context
