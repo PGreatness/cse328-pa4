@@ -151,10 +151,10 @@ public:
         if (options & Options::WIREFRAME)
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-            glDrawArrays(GL_LINE_STRIP, 0, INIT_NUM_VERTICES * this->subdivisions);
+            glDrawArrays(GL_LINE_STRIP, 0, this->getNumVertices());
         } else {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            glDrawArrays(GL_TRIANGLES, 0, INIT_NUM_VERTICES * this->subdivisions);
+            glDrawArrays(GL_TRIANGLES, 0, this->getNumVertices());
         }
 
         glBindVertexArray(0);
@@ -163,8 +163,8 @@ public:
 
     void subdivide()
     {
-        this->subdivisions++;
         subdivision();
+        this->subdivisions++;
     }
 
 private:
@@ -317,8 +317,8 @@ private:
         glBufferData(GL_ARRAY_BUFFER, size, dataStart, GL_STATIC_DRAW);
 
         // position attribute
-        glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(0);
 
     }
 
