@@ -58,21 +58,18 @@ namespace STATE
 
 namespace Transformations
 {
-    struct VALUES
-    {
-        static constexpr glm::vec3 TRANSLATION = glm::vec3(0.0f, 0.0f, 0.0f);
-        static constexpr glm::vec3 ROTATION = glm::vec3(0.0f, 0.0f, 0.0f);
-        static constexpr glm::vec3 SCALE = glm::vec3(1.0f, 1.0f, 1.0f);
-        static constexpr glm::vec3 SHEAR = glm::vec3(0.0f, 0.0f, 0.0f);
-        static constexpr std::array<glm::vec3, 2> REFLECTION = std::array<glm::vec3, 2>{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f)};
-    };
 
-    VALUES VALUES;
-    void setTranslation(glm::vec3 translation) { VALUES.TRANSLATION = translation; }
-    void setRotation(glm::vec3 rotation) { VALUES.ROTATION = rotation; }
-    void setScale(glm::vec3 scale) { VALUES.SCALE = scale; }
-    void setShear(glm::vec3 shear) { VALUES.SHEAR = shear; }
-    void setReflection(glm::vec3 reflectPlaneA, glm::vec3 reflectPlaneB) { VALUES.REFLECTION = std::array<glm::vec3, 2>{reflectPlaneA, reflectPlaneB}; }
+    glm::vec3 TRANSLATION = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 ROTATION = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 SCALE = glm::vec3(1.0f, 1.0f, 1.0f);
+    glm::vec3 SHEAR = glm::vec3(0.0f, 0.0f, 0.0f);
+    std::array<glm::vec3, 2> REFLECTION = std::array<glm::vec3, 2>{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f)};
+
+    void setTranslation(glm::vec3 translation) { TRANSLATION = translation; }
+    void setRotation(glm::vec3 rotation) { ROTATION = rotation; }
+    void setScale(glm::vec3 scale) { SCALE = scale; }
+    void setShear(glm::vec3 shear) { SHEAR = shear; }
+    void setReflection(glm::vec3 reflectPlaneA, glm::vec3 reflectPlaneB) { REFLECTION = std::array<glm::vec3, 2>{reflectPlaneA, reflectPlaneB}; }
 }
 
 namespace Context
@@ -700,27 +697,27 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
     {
         if (STATE::CURRENT == STATE::F1)
         {
-            Context::cube.reflect(Transformations::VALUES::REFLECTION[0],
-                                Transformations::VALUES::REFLECTION[1]);
-            Context::tetrahedron.reflect(Transformations::VALUES::REFLECTION[0],
-                                        Transformations::VALUES::REFLECTION[1]);
-            Context::octahedron.reflect(Transformations::VALUES::REFLECTION[0],
-                                        Transformations::VALUES::REFLECTION[1]);
+            Context::cube.reflect(Transformations::REFLECTION[0],
+                                Transformations::REFLECTION[1]);
+            Context::tetrahedron.reflect(Transformations::REFLECTION[0],
+                                        Transformations::REFLECTION[1]);
+            Context::octahedron.reflect(Transformations::REFLECTION[0],
+                                        Transformations::REFLECTION[1]);
         }
         if (STATE::CURRENT == STATE::F2)
         {
-            Context::icosahedron.reflect(Transformations::VALUES::REFLECTION[0],
-                                        Transformations::VALUES::REFLECTION[1]);
+            Context::icosahedron.reflect(Transformations::REFLECTION[0],
+                                        Transformations::REFLECTION[1]);
         }
         if (STATE::CURRENT == STATE::F3)
         {
-            Context::ellipsoid.reflect(Transformations::VALUES::REFLECTION[0],
-                                        Transformations::VALUES::REFLECTION[1]);
+            Context::ellipsoid.reflect(Transformations::REFLECTION[0],
+                                        Transformations::REFLECTION[1]);
         }
         if (STATE::CURRENT == STATE::F4)
         {
-            Context::dodecahedron.reflect(Transformations::VALUES::REFLECTION[0],
-                                        Transformations::VALUES::REFLECTION[1]);
+            Context::dodecahedron.reflect(Transformations::REFLECTION[0],
+                                        Transformations::REFLECTION[1]);
         }
     }
 }
