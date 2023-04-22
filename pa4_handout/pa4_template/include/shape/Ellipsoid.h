@@ -408,6 +408,7 @@ private:
         auto tmp = this->getCenter();
         auto tmp2 = this->getRotationDegree();
         this->translate(-tmp);
+        std::cout << "tmp2: " << tmp2[0] << " " << tmp2[1] << " " << tmp2[2] << std::endl;
         this->rotateX(-tmp2[0]);
         this->rotateY(-tmp2[1]);
         this->rotateZ(-tmp2[2]);
