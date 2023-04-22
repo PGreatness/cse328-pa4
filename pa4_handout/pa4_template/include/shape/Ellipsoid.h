@@ -450,9 +450,9 @@ private:
             this->vertices.push_back(vertex);
         }
         this->translate(tmp);
-        this->rotateX(tmp2[0]);
-        this->rotateY(tmp2[1]);
-        this->rotateZ(tmp2[2]);
+        // this->rotateX(tmp2[0]);
+        // this->rotateY(tmp2[1]);
+        // this->rotateZ(tmp2[2]);
     }
 
     void getHalfVertex(std::array<GLfloat,3> * v1, std::array<GLfloat,3> * v2, std::array<GLfloat,3>  * v12)
