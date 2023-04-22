@@ -373,7 +373,6 @@ private:
         glBindVertexArray(*icosaArray);
 
         glBindBuffer(GL_ARRAY_BUFFER, *icosaBuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, *icosaNormals);
 
         const glm::vec3 *dataStart = getVertexData();
         const auto size = this->getNumVertices() * sizeof(glm::vec3);
@@ -381,6 +380,8 @@ private:
         const auto normalsSize = this->getNumVertices() / 3 * sizeof(glm::vec3);
 
         glBufferData(GL_ARRAY_BUFFER, size, dataStart, GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ARRAY_BUFFER, *icosaNormals);
         glBufferData(GL_ARRAY_BUFFER, normalsSize, normalsStart, GL_STATIC_DRAW);
 
         // position attribute
