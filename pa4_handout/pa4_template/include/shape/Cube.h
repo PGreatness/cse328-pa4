@@ -424,7 +424,7 @@ private:
             vertexData[i][1] = vertex.y;
             vertexData[i][2] = vertex.z;
         }
-
+        this->translate(tmp);
     }
 
     // initialize the render data for the cube
