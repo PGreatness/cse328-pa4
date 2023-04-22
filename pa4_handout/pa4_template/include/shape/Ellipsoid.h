@@ -28,7 +28,7 @@ public:
         this->xAxisLength = 1.0f;
         this->yAxisLength = 1.0f;
         this->zAxisLength = 1.0f;
-        this->rotationDegree = {0.0f, 0.0f, 0.0f}};
+        this->rotationDegree = {0.0f, 0.0f, 0.0f};
         this->initShape(this->xAxisLength, this->yAxisLength, this->zAxisLength);
     }
     Ellipsoid(glm::vec3 center, GLfloat size)
