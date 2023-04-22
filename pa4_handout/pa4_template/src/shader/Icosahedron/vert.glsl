@@ -11,11 +11,17 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 uniform vec3 icosaColor;
+uniform int isFlat = 0;
 
 void main()
 {
     gl_Position = projection * view * model * vec4(aPos, 1.0);
-    Normal = mat3(transpose(inverse(model))) * aNormal;
+    if (isFlat == 1)
+    {
+        Normal = mat3(transpose(inverse(model))) * aNormal;
+    } else {
+        Normal = mat3(transpose(inverse(view))) * aPos;
+    }
     fragPos = vec3(model * vec4(aPos, 1.0));
     ourFragColor = icosaColor;
 }

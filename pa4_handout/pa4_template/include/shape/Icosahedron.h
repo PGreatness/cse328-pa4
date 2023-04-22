@@ -188,6 +188,11 @@ public:
         GLuint colorLocation = glGetUniformLocation(shaderID, "icosaColor");
         glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
 
+        if (options & Options::FLAT) {
+            GLuint flatLocation = glGetUniformLocation(shaderID, "isFlat");
+            glUniform1i(flatLocation, 1);
+        }
+
         if (options & Options::WIREFRAME)
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
