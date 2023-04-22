@@ -136,6 +136,12 @@ public:
                 glBindVertexArray(0);
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
         }
+
+        void subdivide()
+        {
+                this->subdivisions();
+                this->subdivisionsLevel++;
+        }
 private:
         static constexpr GLfloat DEFAULT_CENTER_X = 0.0f;
         static constexpr GLfloat DEFAULT_CENTER_Y = 0.0f;
@@ -244,6 +250,7 @@ private:
         GLfloat size;
         glm::vec3 color;
         glm::vec3 oldColor;
+        GLint subdivisionLevel = 0;
 
         // updates the vertex data when the size of the dodecahedron is changed
         void updateDodecahedronSize(float scale)
@@ -363,6 +370,59 @@ private:
 
             glEnableVertexAttribArray(0);
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        }
+
+        void subdivisions()
+        {
+                std::vector<glm::vec3> newVertex;
+                for (int i = 0; i < this->getNumVertices(); i += 3)
+                {
+                        glm::vec3 v1 = { this->vertex[i][0], this->vertex[i][1], this->vertex[i][2] };
+                        glm::vec3 v2 = { this->vertex[i + 1][0], this->vertex[i + 1][1], this->vertex[i + 1][2] };
+                        glm::vec3 v3 = { this->vertex[i + 2][0], this->vertex[i + 2][1], this->vertex[i + 2][2] };
+
+                        glm::vec3 v12;
+                        glm::vec3 v23;
+                        glm::vec3 v31;
+
+                        getHalfVertex(&v1, &v2, &v12);
+                        getHalfVertex(&v2, &v3, &v23);
+                        getHalfVertex(&v3, &v1, &v31);
+
+                        newVertex.push_back(v1);
+                        newVertex.push_back(v12);
+                        newVertex.push_back(v31);
+
+                        newVertex.push_back(v2);
+                        newVertex.push_back(v23);
+                        newVertex.push_back(v12);
+
+                        newVertex.push_back(v3);
+                        newVertex.push_back(v31);
+                        newVertex.push_back(v23);
+
+                        newVertex.push_back(v12);
+                        newVertex.push_back(v23);
+                        newVertex.push_back(v31);
+
+                }
+                this->vertex.clear();
+                for (auto &v : newVertex)
+                {
+                        this->vertex.push_back(v);
+                }
+        }
+
+        void getHalfVertex(glm::vec3 * v1, glm::vec3 * v2, glm::vec3 * v12)
+        {
+                (*v12)[0] = ((*v1)[0] + (*v2)[0]) / 2;
+                (*v12)[1] = ((*v1)[1] + (*v2)[1]) / 2;
+                (*v12)[2] = ((*v1)[2] + (*v2)[2]) / 2;
+
+                GLfloat scale = sqrt(pow((*v12)[0], 2) / pow(this->size) + pow((*v12)[1], 2) / pow(this->size) + pow((*v12)[2], 2) / pow(this->size));
+                (*v12)[0] /= scale;
+                (*v12)[1] /= scale;
+                (*v12)[2] /= scale;
         }
 };
 
