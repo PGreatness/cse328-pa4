@@ -416,7 +416,7 @@ private:
 
         glGenBuffers(1, ellNormals);
         glBindBuffer(GL_ARRAY_BUFFER, *ellNormals);
-        const glm::vec3 * normalsData = this->getNormalsData();
+        const glm::vec3 * normalsData = this->getNormalData();
         glBufferData(GL_ARRAY_BUFFER, size, normalsData, GL_STATIC_DRAW);
 
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
