@@ -28,6 +28,7 @@ public:
     void translate(glm::vec3 translation);
     void scale(GLfloat scaleFactor);
     void rotate(float angle, glm::vec3 axis);
+    void reflect(glm::vec3 planeA, glm::vec3 planeB);
 
     void render(GLuint VAO, GLuint VBO, GLuint shaderID) const;
     void render(GLuint VAO, GLuint VBO, GLuint shaderID, uint options) const;

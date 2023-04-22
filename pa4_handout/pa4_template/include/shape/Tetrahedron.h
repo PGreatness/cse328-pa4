@@ -154,6 +154,10 @@ public:
         updateTetrahedronOrientation(angle, axis);
     }
 
+    void reflect(glm::vec4 planeA, glm::vec4 planeB) {
+        updateTetrahedronReflection(planeA, planeB);
+    }
+
     void render(GLuint tetArray, GLuint tetBuffer, GLuint shaderID) const {
         initializeRender(&tetArray, &tetBuffer);
 
@@ -294,6 +298,29 @@ private:
             glm::vec4 rotatedVertex = rotationMatrix * glm::vec4(vertex[i], 1.0f);
             vertex[i] = glm::vec3(rotatedVertex);
         }
+    }
+
+    void updateTetrahedronReflection(glm::vec3 planeA, glm::vec3 planeB)
+    {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
+
+        glm::vec3 planeNormal = glm::normalize(glm::cross(planeA, planeB));
+
+        // Create reflection matrix
+        glm::mat4 P = glm::outerProduct(glm::vec4(planeNormal, 0.0f), glm::vec4(planeNormal, 0.0f));
+        glm::mat4 R = glm::mat4(1.0f) - 2.0f * P;
+
+        // Apply reflection matrix to each vertex of the cube
+        for (int i = 0; i < this->getNumVertices(); i++)
+        {
+            glm::vec4 vertices = glm::vec4(this->vertex[i][0], this->vertex[i][1], this->vertex[i][2], 1.0f);
+            glm::vec4 reflectedVertices = R * vertices;
+            this->vertex[i][0] = reflectedVertices[0];
+            this->vertex[i][1] = reflectedVertices[1];
+            this->vertex[i][2] = reflectedVertices[2];
+        }
+        this->translate(tmp);
     }
 
     void initializeRender(GLuint * tetArray, GLuint * tetBuffer) const {

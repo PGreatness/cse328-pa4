@@ -107,6 +107,11 @@ public:
                 updateDodecahedronSize(scale);
         }
 
+        void reflect(glm::vec3 planeA, glm::vec3 planeB)
+        {
+                updateDodecahedronReflection(planeA, planeB);
+        }
+
         void render(GLuint dodecaArray, GLuint dodecaBuffer, GLuint shaderID) const {
                 initializeRender(&dodecaArray, &dodecaBuffer);
 
@@ -356,6 +361,32 @@ private:
                 rotateZ(angle);
             }
             this->translate(tmp);
+        }
+
+        void updateDodecahedronReflection(glm::vec3 planeA, glm::vec3 planeB)
+        {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
+
+        glm::vec3 planeNormal = glm::normalize(glm::cross(planeA, planeB));
+
+        // Create reflection matrix
+        glm::mat4 P = glm::outerProduct(glm::vec4(planeNormal, 0.0f), glm::vec4(planeNormal, 0.0f));
+        glm::mat4 R = glm::mat4(1.0f) - 2.0f * P;
+
+        // Apply reflection matrix to each vertex of the cube
+        for (int i = 0; i < this->getNumVertices(); i++)
+        {
+                glm::vec4 vertex = glm::vec4(this->vertex[i][0],
+                                        this->vertex[i][1],
+                                        this->vertex[i][2],
+                                        1.0f);
+                vertex = R * vertex;
+                this->vertex[i][0] = vertex[0];
+                this->vertex[i][1] = vertex[1];
+                this->vertex[i][2] = vertex[2];
+        }
+        this->translate(tmp);
         }
 
         void initializeRender(GLuint * dodecaArray, GLuint * dodecaBuffer) const {

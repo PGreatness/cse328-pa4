@@ -128,6 +128,11 @@ public:
         updateIcosahedronOrientation(angle, axis);
     }
 
+    void reflect(glm::vec3 planeA, glm::vec3 planeB)
+    {
+        updateIcosahedronReflection(planeA, planeB);
+    }
+
     void render(GLuint icosaArray, GLuint icosaBuffer, uint shaderID) const
     {
         initializeRender(&icosaArray, &icosaBuffer);
@@ -298,6 +303,28 @@ private:
         if (axes[0] != 0) { rotateX(angle); }
         if (axes[1] != 0) { rotateY(angle); }
         if (axes[2] != 0) { rotateZ(angle); }
+        this->translate(tmp);
+    }
+
+    void updateIsocahedronReflection(glm::vec3 planeA, glm::vec3 planeB)
+    {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
+
+        glm::vec3 planeNormal = glm::normalize(glm::cross(planeA, planeB));
+
+        // Create reflection matrix
+        glm::mat4 P = glm::outerProduct(glm::vec4(planeNormal, 0.0f), glm::vec4(planeNormal, 0.0f));
+        glm::mat4 R = glm::mat4(1.0f) - 2.0f * P;
+
+        // Apply reflection matrix to each vertex of the cube
+        for (int i = 0; i < this->getNumVertices(); i++)
+        {
+            glm::vec4 tmp = R * glm::vec4(this->vertexData[i][0], this->vertexData[i][1], this->vertexData[i][2], 1.0f);
+            this->vertexData[i][0] = tmp[0];
+            this->vertexData[i][1] = tmp[1];
+            this->vertexData[i][2] = tmp[2];
+        }
         this->translate(tmp);
     }
 

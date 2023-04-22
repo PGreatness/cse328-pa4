@@ -127,6 +127,11 @@ public:
         this->updateEllipsoidOrientation(angle, axis);
     }
 
+    void reflect(glm::vec3 planeA, glm::vec3 planeB)
+    {
+        this->updateEllipsoidReflection(planeA, planeB);
+    }
+
     void render(GLuint ellArray, GLuint ellBuffer, uint shaderID) const
     {
         initializeRender(&ellArray, &ellBuffer);
@@ -326,6 +331,29 @@ private:
         if (axes[0] != 0) { rotateX(angle); }
         if (axes[1] != 0) { rotateY(angle); }
         if (axes[2] != 0) { rotateZ(angle); }
+        this->translate(tmp);
+    }
+
+    void updateEllipsoidReflection(glm::vec3 planeA, glm::vec3 planeB)
+    {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
+
+        glm::vec3 planeNormal = glm::normalize(glm::cross(planeA, planeB));
+
+        // Create reflection matrix
+        glm::mat4 P = glm::outerProduct(glm::vec4(planeNormal, 0.0f), glm::vec4(planeNormal, 0.0f));
+        glm::mat4 R = glm::mat4(1.0f) - 2.0f * P;
+
+        // Apply reflection matrix to each vertex of the cube
+        for (int i = 0; i < this->getNumVertices(); i++)
+        {
+            glm::vec4 vertex = glm::vec4(this->vertices[i][0], this->vertices[i][1], this->vertices[i][2], 1.0f);
+            glm::vec4 reflectedVertex = R * vertex;
+            this->vertices[i][0] = reflectedVertex.x;
+            this->vertices[i][1] = reflectedVertex.y;
+            this->vertices[i][2] = reflectedVertex.z;
+        }
         this->translate(tmp);
     }
 

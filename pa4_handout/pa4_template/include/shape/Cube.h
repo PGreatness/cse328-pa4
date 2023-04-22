@@ -416,7 +416,7 @@ private:
         glm::mat4 R = glm::mat4(1.0f) - 2.0f * P;
 
         // Apply reflection matrix to each vertex of the cube
-        for (int i = 0; i < NUM_VERTICES; i++)
+        for (int i = 0; i < this->getNumVertices(); i++)
         {
             glm::vec4 vertex = glm::vec4(vertexData[i][0], vertexData[i][1], vertexData[i][2], 1.0f);
             vertex = R * vertex;
