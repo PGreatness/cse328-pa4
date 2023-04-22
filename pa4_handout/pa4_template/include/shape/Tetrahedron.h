@@ -154,7 +154,7 @@ public:
         updateTetrahedronOrientation(angle, axis);
     }
 
-    void reflect(glm::vec4 planeA, glm::vec4 planeB) {
+    void reflect(glm::vec3 planeA, glm::vec3 planeB) {
         updateTetrahedronReflection(planeA, planeB);
     }
 
