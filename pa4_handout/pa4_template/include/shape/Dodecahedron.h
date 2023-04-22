@@ -117,7 +117,8 @@ public:
         }
 
         void render(GLuint dodecaArray, GLuint dodecaBuffer, GLuint shaderID) const {
-                initializeRender(&dodecaArray, &dodecaBuffer);
+                GLuint dodecaNormals;
+                initializeRender(&dodecaArray, &dodecaBuffer, &dodecaNormals);
 
                 GLuint colorLocation = glGetUniformLocation(shaderID, "dodecaColor");
                 glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
@@ -129,11 +130,21 @@ public:
         }
 
         void render(GLuint dodecaArray, GLuint dodecaBuffer, GLuint shaderID, uint options) const {
-                initializeRender(&dodecaArray, &dodecaBuffer);
+                GLuint dodecaNormals;
+                initializeRender(&dodecaArray, &dodecaBuffer, &dodecaNormals);
 
                 GLuint colorLocation = glGetUniformLocation(shaderID, "dodecaColor");
                 glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
 
+                GLuint flatLocation = glGetUniformLocation(shaderID, "isFlat");
+                if (options == Options::FLAT)
+                {
+                        glUniform1i(flatLocation, 1);
+                }
+                else
+                {
+                        glUniform1i(flatLocation, 0);
+                }
                 if (options & Options::WIREFRAME) {
                         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
                         glDrawArrays(GL_LINE_STRIP, 0, this->getNumVertices());
@@ -397,19 +408,29 @@ private:
         this->translate(tmp);
         }
 
-        void initializeRender(GLuint * dodecaArray, GLuint * dodecaBuffer) const {
-            glGenVertexArrays(1, dodecaArray);
-            glBindVertexArray(*dodecaArray);
+        void initializeRender(GLuint *dodecaArray, GLuint *dodecaBuffer, GLuint *dodecaNormals) const
+        {
+        glGenVertexArrays(1, dodecaArray);
+        glBindVertexArray(*dodecaArray);
 
-            glGenBuffers(1, dodecaBuffer);
-            glBindBuffer(GL_ARRAY_BUFFER, *dodecaBuffer);
+        glGenBuffers(1, dodecaBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, *dodecaBuffer);
 
-            const glm::vec3 *dataStart = getVertexData();
-            const auto size = getNumVertices() * sizeof(glm::vec3);
-            glBufferData(GL_ARRAY_BUFFER, size, dataStart, GL_STATIC_DRAW);
+        const glm::vec3 *dataStart = getVertexData();
+        const auto size = getNumVertices() * sizeof(glm::vec3);
+        glBufferData(GL_ARRAY_BUFFER, size, dataStart, GL_STATIC_DRAW);
 
-            glEnableVertexAttribArray(0);
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+
+        glGenBuffers(1, dodecaNormals);
+        glBindBuffer(GL_ARRAY_BUFFER, *dodecaNormals);
+        const glm::vec3 *dataStart2 = getNormalData();
+        const auto size2 = getNumVertices() * sizeof(glm::vec3);
+        glBufferData(GL_ARRAY_BUFFER, size2, dataStart2, GL_STATIC_DRAW);
+
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
         }
 
         void subdivisions()

@@ -120,8 +120,15 @@ public:
 
     virtual const glm::vec3 * getNormalData() const override {
         glm::vec3 *normalData = new glm::vec3[NUM_VERTICES];
-        for (int i = 0; i < NUM_VERTICES; i++) {
-            normalData[i] = glm::normalize(vertex[i]);
+        for (int i = 0; i < NUM_VERTICES; i += 3)
+        {
+            glm::vec3 v1 = vertex[i + 1] - vertex[i];
+            glm::vec3 v2 = vertex[i + 2] - vertex[i];
+            glm::vec3 normal = glm::normalize(glm::cross(v1, v2));
+
+            normalData[i] = normal;
+            normalData[i + 1] = normal;
+            normalData[i + 2] = normal;
         }
         return normalData;
     }
@@ -159,7 +166,8 @@ public:
     }
 
     void render(GLuint tetArray, GLuint tetBuffer, GLuint shaderID) const {
-        initializeRender(&tetArray, &tetBuffer);
+        GLuint tetNormals;
+        initializeRender(&tetArray, &tetBuffer, &tetNormals);
 
         // set the color
         GLuint colorLocation = glGetUniformLocation(shaderID, "tetraColor");
@@ -175,13 +183,20 @@ public:
     }
 
     void render(GLuint tetraArray, GLuint tetraBuffer, GLuint shaderID, uint options) const {
-        initializeRender(&tetraArray, &tetraBuffer);
+        GLuint tetNormals;
+        initializeRender(&tetraArray, &tetraBuffer, &tetNormals);
 
         // set the color
         GLuint colorLocation = glGetUniformLocation(shaderID, "tetraColor");
 
         glUniform3f(colorLocation, color[0], color[1], color[2]);
 
+        GLuint flatLocation = glGetUniformLocation(shaderID, "isFlat");
+        if (options == Options::FLAT) {
+            glUniform1i(flatLocation, 1);
+        } else {
+            glUniform1i(flatLocation, 0);
+        }
         // draw the tetrahedron
         if (options & Options::WIREFRAME) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -323,7 +338,7 @@ private:
         this->translate(tmp);
     }
 
-    void initializeRender(GLuint * tetArray, GLuint * tetBuffer) const {
+    void initializeRender(GLuint * tetArray, GLuint * tetBuffer, GLuint * tetNormals) const {
         glGenVertexArrays(1, tetArray);
         glBindVertexArray(*tetArray);
 
@@ -335,6 +350,14 @@ private:
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
+
+        glGenBuffers(1, tetNormals);
+        glBindBuffer(GL_ARRAY_BUFFER, *tetNormals);
+        const glm::vec3 * normalData = getNormalData();
+        glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), normalData, GL_STATIC_DRAW);
+
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
     }
 };
 

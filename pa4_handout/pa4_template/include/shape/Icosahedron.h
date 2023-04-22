@@ -88,17 +88,6 @@ public:
         return faceNormals;
     }
 
-    const glm::vec3 * getCombinedData() const {
-        glm::vec3 * tmp = new glm::vec3[this->vertexData.size() * 2];
-        for (int i = 0; i < this->vertexData.size(); i++) {
-            tmp[i] = glm::vec3(vertexData[i][0], vertexData[i][1], vertexData[i][2]);
-        }
-        for (int i = 0; i < this->vertexData.size(); i++) {
-            tmp[i + this->vertexData.size()] = glm::vec3(vertexData[i][0], vertexData[i][1], vertexData[i][2]);
-            tmp[i + this->vertexData.size()] = glm::normalize(tmp[i + this->vertexData.size()]);
-        }
-        return tmp;
-    }
 
     // getters
     glm::vec3 getCenter() const

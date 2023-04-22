@@ -144,7 +144,8 @@ public:
     }
 
     void render(GLuint octaArray, GLuint octaBuffer, GLuint shaderID) const {
-        initializeRender(&octaArray, &octaBuffer);
+        GLuint octaNormals;
+        initializeRender(&octaArray, &octaBuffer, &octaNormals);
 
         // set the color
         GLint colorID = glGetUniformLocation(shaderID, "octaColor");
@@ -159,11 +160,19 @@ public:
     }
 
     void render(GLuint octaArray, GLuint octaBuffer, GLuint shaderID, uint options) const {
-        initializeRender(&octaArray, &octaBuffer);
+        GLuint octaNormals;
+        initializeRender(&octaArray, &octaBuffer, &octaNormals);
 
         // set the color
         GLint colorID = glGetUniformLocation(shaderID, "octaColor");
         glUniform3f(colorID, this->color[0], this->color[1], this->color[2]);
+
+        GLuint flatLocation = glGetUniformLocation(shaderID, "isFlat");
+        if (options == Options::FLAT) {
+            glUniform1i(flatLocation, 1);
+        } else {
+            glUniform1i(flatLocation, 0);
+        }
 
         // draw the octa
         if (options & Options::WIREFRAME) {
@@ -316,7 +325,7 @@ private:
         this->translate(tmp);
     }
 
-    void initializeRender(GLuint * octaArray, GLuint * octaBuffer) const {
+    void initializeRender(GLuint * octaArray, GLuint * octaBuffer, GLuint * octaNormals) const {
         // create the vertex array object
         glGenVertexArrays(1, octaArray);
         glBindVertexArray(*octaArray);
@@ -332,6 +341,18 @@ private:
         // set up the vertex attributes
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+        // create the vertex buffer object
+        glGenBuffers(1, octaNormals);
+        glBindBuffer(GL_ARRAY_BUFFER, *octaNormals);
+
+        // get the vertex data
+        const glm::vec3 *dataStart2 = getNormalData();
+        glBufferData(GL_ARRAY_BUFFER, NUM_VERTICES * sizeof(glm::vec3), dataStart2, GL_STATIC_DRAW);
+
+        // set up the vertex attributes
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     }
 };
 

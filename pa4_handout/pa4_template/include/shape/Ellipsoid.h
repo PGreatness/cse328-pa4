@@ -100,10 +100,15 @@ public:
     virtual const glm::vec3 * getNormalData() const override
     {
         glm::vec3 * normals = new glm::vec3[this->vertices.size()];
-        for (int i = 0; i < this->vertices.size(); i++)
+        for (int i = 0; i < this->vertices.size(); i += 3)
         {
-            normals[i] = glm::vec3(this->vertices[i][0], this->vertices[i][1], this->vertices[i][2]);
-            normals[i] = glm::normalize(normals[i]);
+            glm::vec3 v1 = this->vertices[i];
+            glm::vec3 v2 = this->vertices[i + 1];
+            glm::vec3 v3 = this->vertices[i + 2];
+            glm::vec3 normal = glm::normalize(glm::cross(v2 - v1, v3 - v1));
+            normals[i] = normal;
+            normals[i + 1] = normal;
+            normals[i + 2] = normal;
         }
         return normals;
     }
@@ -142,7 +147,8 @@ public:
 
     void render(GLuint ellArray, GLuint ellBuffer, uint shaderID) const
     {
-        initializeRender(&ellArray, &ellBuffer);
+        GLuint ellNormals;
+        initializeRender(&ellArray, &ellBuffer, &ellNormals);
 
         // set the color
         GLint colorLoc = glGetUniformLocation(shaderID, "ellColor");
@@ -158,12 +164,19 @@ public:
 
     void render(GLuint ellArray, GLuint ellBuffer, uint shaderID, uint options) const
     {
-        initializeRender(&ellArray, &ellBuffer);
+        GLuint ellNormals;
+        initializeRender(&ellArray, &ellBuffer, &ellNormals);
 
         // set the color
         GLint colorLoc = glGetUniformLocation(shaderID, "ellColor");
         glUniform3f(colorLoc, color.x, color.y, color.z);
 
+        GLuint flatLocation = glGetUniformLocation(shaderID, "isFlat");
+        if (options == Options::FLAT) {
+            glUniform1i(flatLocation, 1);
+        } else {
+            glUniform1i(flatLocation, 0);
+        }
         if (options & Options::WIREFRAME)
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -386,7 +399,7 @@ private:
         this->translate(tmp);
     }
 
-    void initializeRender(GLuint * ellArray, GLuint * ellBuffer) const
+    void initializeRender(GLuint * ellArray, GLuint * ellBuffer, GLuint * ellNormals) const
     {
         glGenVertexArrays(1, ellArray);
         glGenBuffers(1, ellBuffer);
@@ -400,6 +413,14 @@ private:
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
         glEnableVertexAttribArray(0);
+
+        glGenBuffers(1, ellNormals);
+        glBindBuffer(GL_ARRAY_BUFFER, *ellNormals);
+        const glm::vec3 * normalsData = this->getNormalsData();
+        glBufferData(GL_ARRAY_BUFFER, size, normalsData, GL_STATIC_DRAW);
+
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(1);
 
     }
 
