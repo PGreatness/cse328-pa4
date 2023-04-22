@@ -698,7 +698,30 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
     // the middle mouse button
     if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS)
     {
-        Context::cube.reflect(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        if (STATE::CURRENT == STATE::F1)
+        {
+            Context::cube.reflect(Transformations::VALUES::REFLECTION[0],
+                                Transformations::VALUES::REFLECTION[1]);
+            Context::tetrahedron.reflect(Transformations::VALUES::REFLECTION[0],
+                                        Transformations::VALUES::REFLECTION[1]);
+            Context::octahedron.reflect(Transformations::VALUES::REFLECTION[0],
+                                        Transformations::VALUES::REFLECTION[1]);
+        }
+        if (STATE::CURRENT == STATE::F2)
+        {
+            Context::icosahedron.reflect(Transformations::VALUES::REFLECTION[0],
+                                        Transformations::VALUES::REFLECTION[1]);
+        }
+        if (STATE::CURRENT == STATE::F3)
+        {
+            Context::ellipsoid.reflect(Transformations::VALUES::REFLECTION[0],
+                                        Transformations::VALUES::REFLECTION[1]);
+        }
+        if (STATE::CURRENT == STATE::F4)
+        {
+            Context::dodecahedron.reflect(Transformations::VALUES::REFLECTION[0],
+                                        Transformations::VALUES::REFLECTION[1]);
+        }
     }
 }
 
@@ -715,7 +738,6 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
             Context::cube.rotate(static_cast<float>(yoffset), up);
             Context::tetrahedron.rotate(static_cast<float>(yoffset), up);
             Context::octahedron.rotate(static_cast<float>(yoffset), up);
-            Context::dodecahedron.rotate(static_cast<float>(yoffset), up);
         }
         if (STATE::CURRENT == STATE::F2)
         {
@@ -743,7 +765,6 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
             Context::cube.scale(static_cast<float>(yoffset) * 0.01f);
             Context::tetrahedron.scale(static_cast<float>(yoffset) * 0.01f);
             Context::octahedron.scale(static_cast<float>(yoffset) * 0.01f);
-            Context::dodecahedron.scale(static_cast<float>(yoffset) * 0.01f);
         }
         if (STATE::CURRENT == STATE::F2)
         {
@@ -997,6 +1018,7 @@ void perFrameTimeLogic()
 
 void initializeContext()
 {
+    findUserParams();
     // TODO: Modify this function to fit your own ideas
     
     Context::axisShader = std::make_shared<Shader>("src/shader/axis.vert.glsl",
