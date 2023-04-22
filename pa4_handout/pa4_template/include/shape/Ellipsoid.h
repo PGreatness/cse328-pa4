@@ -102,9 +102,9 @@ public:
         glm::vec3 * normals = new glm::vec3[this->vertices.size()];
         for (int i = 0; i < this->vertices.size(); i += 3)
         {
-            glm::vec3 v1 = this->vertices[i];
-            glm::vec3 v2 = this->vertices[i + 1];
-            glm::vec3 v3 = this->vertices[i + 2];
+            glm::vec3 v1 = glm::vec3(this->vertices[i][0], this->vertices[i][1], this->vertices[i][2]);
+            glm::vec3 v2 = glm::vec3(this->vertices[i + 1][0], this->vertices[i + 1][1], this->vertices[i + 1][2]);
+            glm::vec3 v3 = glm::vec3(this->vertices[i + 2][0], this->vertices[i + 2][1], this->vertices[i + 2][2]);
             glm::vec3 normal = glm::normalize(glm::cross(v2 - v1, v3 - v1));
             normals[i] = normal;
             normals[i + 1] = normal;
