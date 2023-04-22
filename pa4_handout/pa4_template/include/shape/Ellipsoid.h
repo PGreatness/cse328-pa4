@@ -28,6 +28,7 @@ public:
         this->xAxisLength = 1.0f;
         this->yAxisLength = 1.0f;
         this->zAxisLength = 1.0f;
+        this->rotationDegree = {0.0f, 0.0f, 0.0f}};
         this->initShape(this->xAxisLength, this->yAxisLength, this->zAxisLength);
     }
     Ellipsoid(glm::vec3 center, GLfloat size)
@@ -39,6 +40,7 @@ public:
         this->xAxisLength = 1.0f;
         this->yAxisLength = 1.0f;
         this->zAxisLength = 1.0f;
+        this->rotationDegree = {0.0f, 0.0f, 0.0f};
         this->initShape(this->xAxisLength, this->yAxisLength, this->zAxisLength);
 
         this->translate(center);
@@ -53,6 +55,7 @@ public:
         this->xAxisLength = 1.0f;
         this->yAxisLength = 1.0f;
         this->zAxisLength = 1.0f;
+        this->rotationDegree = {0.0f, 0.0f, 0.0f};
         this->initShape(this->xAxisLength, this->yAxisLength, this->zAxisLength);
 
         this->translate(center);
@@ -68,6 +71,7 @@ public:
         this->xAxisLength = axesLength.x;
         this->yAxisLength = axesLength.y;
         this->zAxisLength = axesLength.z;
+        this->rotationDegree = {0.0f, 0.0f, 0.0f};
         this->initShape(this->xAxisLength, this->yAxisLength, this->zAxisLength);
 
         this->translate(center);
@@ -80,6 +84,7 @@ public:
     glm::vec3 getCenter() const { return this->center; }
     GLfloat getSize() const { return this->size; }
     glm::vec3 getColor() const { return this->color; }
+    glm::vec3 getRotationDegree() const { return this->rotationDegree; }
     glm::vec3 getAxesLength() const { return glm::vec3(this->xAxisLength, this->yAxisLength, this->zAxisLength); }
 
     virtual GLint getNumVertices() const override { return this->vertices.size(); }
@@ -124,6 +129,9 @@ public:
 
     void rotate(GLfloat angle, glm::vec3 axis)
     {
+        this->rotationDegree[axis.x] += angle;
+        this->rotationDegree[axis.y] += angle;
+        this->rotationDegree[axis.z] += angle;
         this->updateEllipsoidOrientation(angle, axis);
     }
 
@@ -398,7 +406,12 @@ private:
     void subdivision()
     {
         auto tmp = this->getCenter();
+        auto tmp2 = this->getRotationDegree();
         this->translate(-tmp);
+        this->rotate(-tmp2[0], glm::vec3(1.0f, 0.0f, 0.0f));
+        this->rotate(-tmp2[1], glm::vec3(0.0f, 1.0f, 0.0f));
+        this->rotate(-tmp2[2], glm::vec3(0.0f, 0.0f, 1.0f));
+
         std::vector<std::array<GLfloat, 3>> newVertices;
         for (int i = 0; i < this->getNumVertices(); i += 3)
         {
@@ -436,6 +449,9 @@ private:
             this->vertices.push_back(vertex);
         }
         this->translate(tmp);
+        this->rotate(tmp2[0], glm::vec3(1.0f, 0.0f, 0.0f));
+        this->rotate(tmp2[1], glm::vec3(0.0f, 1.0f, 0.0f));
+        this->rotate(tmp2[2], glm::vec3(0.0f, 0.0f, 1.0f));
     }
 
     void getHalfVertex(std::array<GLfloat,3> * v1, std::array<GLfloat,3> * v2, std::array<GLfloat,3>  * v12)
