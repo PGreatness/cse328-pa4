@@ -55,7 +55,7 @@ public:
         glm::vec3 getOldColor() const { return oldColor; }
 
         virtual GLint getNumVertices() const override {
-                return this->INIT_NUM_VERTICES;
+                return this->vertex.size();
         }
 
         virtual const glm::vec3 * getVertexData() const override {
@@ -366,7 +366,8 @@ private:
             glBindBuffer(GL_ARRAY_BUFFER, *dodecaBuffer);
 
             const glm::vec3 *dataStart = getVertexData();
-            glBufferData(GL_ARRAY_BUFFER, getNumVertices() * sizeof(glm::vec3), dataStart, GL_STATIC_DRAW);
+            const auto size = getNumVertices() * sizeof(glm::vec3);
+            glBufferData(GL_ARRAY_BUFFER, size, dataStart, GL_STATIC_DRAW);
 
             glEnableVertexAttribArray(0);
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
