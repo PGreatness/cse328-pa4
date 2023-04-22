@@ -404,7 +404,7 @@ private:
         this->translate(tmp);
     }
 
-    updateCubeReflection(glm::vec3 planeA, glm::vec3 planeB)
+    void updateCubeReflection(glm::vec3 planeA, glm::vec3 planeB)
     {
         auto tmp = this->getCenter();
         this->translate(-tmp);
