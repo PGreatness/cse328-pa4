@@ -233,7 +233,7 @@ private:
     GLfloat size;
     glm::vec3 color;
     glm::vec3 oldColor;
-
+    glm::vec3 rotationDegree;
     GLfloat xAxisLength;
     GLfloat yAxisLength;
     GLfloat zAxisLength;
