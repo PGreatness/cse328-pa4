@@ -142,7 +142,6 @@ public:
 
     void reflect(glm::vec3 planeA, glm::vec3 planeB)
     {
-        std::cout << "reflecting cube" << std::endl;
         updateCubeReflection(planeA, planeB);
     }
 

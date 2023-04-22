@@ -397,6 +397,8 @@ private:
 
     void subdivision()
     {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
         std::vector<std::array<GLfloat, 3>> newVertices;
         for (int i = 0; i < this->getNumVertices(); i += 3)
         {
@@ -433,6 +435,7 @@ private:
         {
             this->vertices.push_back(vertex);
         }
+        this->translate(tmp);
     }
 
     void getHalfVertex(std::array<GLfloat,3> * v1, std::array<GLfloat,3> * v2, std::array<GLfloat,3>  * v12)
