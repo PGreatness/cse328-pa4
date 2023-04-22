@@ -1069,8 +1069,10 @@ int findUserParams()
     {
         tokens.push_back(token);
     }
+    std::cout << "Token size: " << tokens.size() << std::endl;
+
     // rotation
-    if (token.size() >= 3)
+    if (tokens.size() >= 3)
     {
         // rotation values given, convert to floats
         std::cout << "rotation values given" << std::endl;
@@ -1082,7 +1084,7 @@ int findUserParams()
         Transformations::setRotation(rotation);
     }
     // shear
-    if (token.size() >= 6)
+    if (tokens.size() >= 6)
     {
         // shear values given, convert to floats
         std::cout << "shear values given" << std::endl;
@@ -1094,7 +1096,7 @@ int findUserParams()
         Transformations::setShear(shear);
     }
     // reflection
-    if (token.size() == 12)
+    if (tokens.size() == 12)
     {
         // reflection values given, convert to floats
         std::cout << "reflection values given" << std::endl;
