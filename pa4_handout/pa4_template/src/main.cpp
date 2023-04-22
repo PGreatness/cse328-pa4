@@ -476,7 +476,8 @@ int main()
             case STATE::F7:
                 // break;
             case STATE::F8:
-                // break;
+                Context::displayCube();
+                break;
             default:
                 glfwSetWindowTitle(window, "PA4");
         }
@@ -790,6 +791,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::dodecahedron.translate(-left * displacement);
         }
+        if (STATE::CURRENT == STATE::F8)
+        {
+            Context::cube.translate(-left * displacement);
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && Context::modificationKeyPressed)
     {
@@ -819,6 +824,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::dodecahedron.translate(left * displacement);
         }
+        if (STATE::CURRENT == STATE::F8)
+        {
+            Context::cube.translate(left * displacement);
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && Context::modificationKeyPressed)
     {
@@ -845,6 +854,10 @@ void perFrameKeyInput(GLFWwindow * window)
         if (STATE::CURRENT == STATE::F4)
         {
             Context::dodecahedron.translate(front * displacement);
+        }
+        if (STATE::CURRENT == STATE::F8)
+        {
+            Context::cube.translate(front * displacement);
         }
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && Context::modificationKeyPressed)
@@ -873,6 +886,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::dodecahedron.translate(-front * displacement);
         }
+        if (STATE::CURRENT == STATE::F8)
+        {
+            Context::cube.translate(-front * displacement);
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && Context::modificationKeyPressed)
     {
@@ -898,6 +915,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::dodecahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
         }
+        if (STATE::CURRENT == STATE::F8)
+        {
+            Context::cube.translate(glm::vec3(0.0f, displacement, 0.0f));
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS && Context::modificationKeyPressed)
     {
@@ -922,6 +943,10 @@ void perFrameKeyInput(GLFWwindow * window)
         if (STATE::CURRENT == STATE::F4)
         {
             Context::dodecahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
+        }
+        if (STATE::CURRENT == STATE::F8)
+        {
+            Context::cube.translate(glm::vec3(0.0f, -displacement, 0.0f));
         }
     }
     if (specialKeyPressed) { return; }
