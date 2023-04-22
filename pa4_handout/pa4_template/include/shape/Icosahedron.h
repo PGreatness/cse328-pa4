@@ -306,7 +306,7 @@ private:
         this->translate(tmp);
     }
 
-    void updateIsocahedronReflection(glm::vec3 planeA, glm::vec3 planeB)
+    void updateIcosahedronReflection(glm::vec3 planeA, glm::vec3 planeB)
     {
         auto tmp = this->getCenter();
         this->translate(-tmp);
