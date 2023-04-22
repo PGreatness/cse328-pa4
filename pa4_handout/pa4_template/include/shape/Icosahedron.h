@@ -376,7 +376,7 @@ private:
 
         const glm::vec3 *dataStart = getVertexData();
         const auto size = this->getNumVertices() * sizeof(glm::vec3);
-        const glm::vec3 *normalsStart = getNormalsData();
+        const glm::vec3 *normalsStart = getNormalData();
         const auto normalsSize = this->getNumVertices() / 3 * sizeof(glm::vec3);
 
         glBufferData(GL_ARRAY_BUFFER, size, dataStart, GL_STATIC_DRAW);
