@@ -1073,6 +1073,7 @@ int findUserParams()
     if (token.size() >= 3)
     {
         // rotation values given, convert to floats
+        std::cout << "rotation values given" << std::endl;
         auto rotation = glm::vec3(
                 std::stof(tokens[0]),
                 std::stof(tokens[1]),
@@ -1084,6 +1085,7 @@ int findUserParams()
     if (token.size() >= 6)
     {
         // shear values given, convert to floats
+        std::cout << "shear values given" << std::endl;
         auto shear = glm::vec3(
                 std::stof(tokens[3]),
                 std::stof(tokens[4]),
@@ -1095,6 +1097,7 @@ int findUserParams()
     if (token.size() == 12)
     {
         // reflection values given, convert to floats
+        std::cout << "reflection values given" << std::endl;
         auto reflectionA = glm::vec3(
                 std::stof(tokens[6]),
                 std::stof(tokens[7]),
