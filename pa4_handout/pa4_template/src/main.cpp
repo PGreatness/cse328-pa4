@@ -3,6 +3,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <fstream>
 
 #include "shape/Cube.h"
 #include "shape/Dodecahedron.h"
@@ -53,6 +54,25 @@ namespace STATE
     const uint F8 = 8;
 
     uint CURRENT = F0;
+}
+
+namespace Transformations
+{
+    struct VALUES
+    {
+        glm::vec3 TRANSLATION = glm::vec3(0.0f, 0.0f, 0.0f);
+        glm::vec3 ROTATION = glm::vec3(0.0f, 0.0f, 0.0f);
+        glm::vec3 SCALE = glm::vec3(1.0f, 1.0f, 1.0f);
+        glm::vec3 SHEAR = glm::vec3(0.0f, 0.0f, 0.0f);
+        glm::vec3 REFLECTION = glm::array<glm::vec3, 2>{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f)};
+    };
+
+    VALUES VALUES;
+    void setTranslation(glm::vec3 translation) { VALUES.TRANSLATION = translation; }
+    void setRotation(glm::vec3 rotation) { VALUES.ROTATION = rotation; }
+    void setScale(glm::vec3 scale) { VALUES.SCALE = scale; }
+    void setShear(glm::vec3 shear) { VALUES.SHEAR = shear; }
+    void setReflection(glm::vec3 reflectPlaneA, glm::vec3 reflectPlaneB) { VALUES.REFLECTION = glm::array<glm::vec3, 2>{reflectPlaneA, reflectPlaneB}; }
 }
 
 namespace Context
@@ -673,6 +693,12 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
     {
         Context::mousePressed = false;
     }
+
+    // the middle mouse button
+    if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS)
+    {
+        Context::cube.reflect(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    }
 }
 
 
@@ -974,4 +1000,63 @@ void initializeContext()
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec3), reinterpret_cast<void *>(sizeof(glm::vec3)));
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+int findUserParams()
+{
+    std::ifstream file("etc/config.txt");
+    if (!file.is_open())
+    {
+        std::cerr << "Failed to open config file" << std::endl;
+        return -1;
+    }
+    std::string line;
+    // read only the first line
+    std::getline(file, line);
+    // line has 12 space separated values
+    std::stringstream ss(line);
+    std::string token;
+    std::vector<std::string> tokens;
+    while (std::getline(ss, token, ' '))
+    {
+        tokens.push_back(token);
+    }
+    // rotation
+    if (token.size() >= 3)
+    {
+        // rotation values given, convert to floats
+        auto rotation = glm::vec3(
+                std::stof(tokens[0]),
+                std::stof(tokens[1]),
+                std::stof(tokens[2])
+        );
+        Transformations::setRotation(rotation);
+    }
+    // shear
+    if (token.size() >= 6)
+    {
+        // shear values given, convert to floats
+        auto shear = glm::vec3(
+                std::stof(tokens[3]),
+                std::stof(tokens[4]),
+                std::stof(tokens[5])
+        );
+        Transformations::setShear(shear);
+    }
+    // reflection
+    if (token.size() == 12)
+    {
+        // reflection values given, convert to floats
+        auto reflectionA = glm::vec3(
+                std::stof(tokens[6]),
+                std::stof(tokens[7]),
+                std::stof(tokens[8])
+        );
+        auto reflectionB = glm::vec3(
+                std::stof(tokens[9]),
+                std::stof(tokens[10]),
+                std::stof(tokens[11])
+        );
+        Transformations::setReflection(reflectionA, reflectionB);
+    }
 }

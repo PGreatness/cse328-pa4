@@ -140,6 +140,12 @@ public:
         updateCubeOrientation(angle, axis);
     }
 
+    void reflect(glm::vec3 planeA, glm::vec3 planeB)
+    {
+        std::cout << "reflecting cube" << std::endl;
+        updateCubeReflection(planeA, planeB);
+    }
+
 
     // render the cube
     void render(GLuint cubeArray, GLuint cubeBuffer, GLuint shaderID) const {
@@ -396,6 +402,29 @@ private:
             rotateZ(angle);
         }
         this->translate(tmp);
+    }
+
+    updateCubeReflection(glm::vec3 planeA, glm::vec3 planeB)
+    {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
+
+        glm::vec3 planeNormal = glm::normalize(glm::cross(planeA, planeB));
+
+        // Create reflection matrix
+        glm::mat4 P = glm::outerProduct(glm::vec4(planeNormal, 1.0f), glm::vec4(planeNormal, 1.0f));
+        glm::mat4 R = glm::mat4(1.0f) - 2.0f * P;
+
+        // Apply reflection matrix to each vertex of the cube
+        for (int i = 0; i < NUM_VERTICES; i++)
+        {
+            glm::vec4 vertex = glm::vec4(vertexData[i][0], vertexData[i][1], vertexData[i][2], 1.0f);
+            vertex = R * vertex;
+            vertexData[i][0] = vertex.x;
+            vertexData[i][1] = vertex.y;
+            vertexData[i][2] = vertex.z;
+        }
+
     }
 
     // initialize the render data for the cube
