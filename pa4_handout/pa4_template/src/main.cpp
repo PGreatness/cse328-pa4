@@ -31,7 +31,7 @@ void perFrameTimeLogic();
 
 void initializeContext();
 
-void initializeCubes();
+int findUserParams();
 
 namespace Colors
 {
