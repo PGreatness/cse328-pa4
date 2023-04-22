@@ -140,7 +140,7 @@ public:
         void subdivide()
         {
                 this->subdivisions();
-                this->subdivisionsLevel++;
+                this->subdivisionLevel++;
         }
 private:
         static constexpr GLfloat DEFAULT_CENTER_X = 0.0f;
@@ -419,7 +419,7 @@ private:
                 (*v12)[1] = ((*v1)[1] + (*v2)[1]) / 2;
                 (*v12)[2] = ((*v1)[2] + (*v2)[2]) / 2;
 
-                GLfloat scale = sqrt(pow((*v12)[0], 2) / pow(this->size) + pow((*v12)[1], 2) / pow(this->size) + pow((*v12)[2], 2) / pow(this->size));
+                GLfloat scale = sqrt(pow((*v12)[0], 2) / pow(this->size, 2) + pow((*v12)[1], 2) / pow(this->size, 2) + pow((*v12)[2], 2) / pow(this->size, 2));
                 (*v12)[0] /= scale;
                 (*v12)[1] /= scale;
                 (*v12)[2] /= scale;
