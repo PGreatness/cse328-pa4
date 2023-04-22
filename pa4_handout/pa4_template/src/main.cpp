@@ -729,6 +729,10 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
         {
             Context::dodecahedron.rotate(static_cast<float>(yoffset), up);
         }
+        if (STATE::CURRENT == STATE::F8)
+        {
+            Context::cube.rotate(static_cast<float>(yoffset), up);
+        }
     }
 
     if (Context::scaleKeyPressed) {
