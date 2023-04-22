@@ -180,7 +180,8 @@ public:
 
     void render(GLuint icosaArray, GLuint icosaBuffer, uint shaderID, uint options) const
     {
-        initializeRender(&icosaArray, &icosaBuffer);
+        GLuint vbo_normals;
+        initializeRender(&icosaArray, &icosaBuffer, &vbo_normals);
 
         GLuint colorLocation = glGetUniformLocation(shaderID, "icosaColor");
         glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
