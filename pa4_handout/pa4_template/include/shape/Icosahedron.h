@@ -96,7 +96,7 @@ public:
         return oldColor;
     }
 
-    glm::vec3 getRotatonDegrees() const
+    glm::vec3 getRotationDegrees() const
     {
         return rotationDegrees;
     }
