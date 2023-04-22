@@ -60,11 +60,11 @@ namespace Transformations
 {
     struct VALUES
     {
-        glm::vec3 TRANSLATION = glm::vec3(0.0f, 0.0f, 0.0f);
-        glm::vec3 ROTATION = glm::vec3(0.0f, 0.0f, 0.0f);
-        glm::vec3 SCALE = glm::vec3(1.0f, 1.0f, 1.0f);
-        glm::vec3 SHEAR = glm::vec3(0.0f, 0.0f, 0.0f);
-        std::array<glm::vec3, 2> REFLECTION = std::array<glm::vec3, 2>{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f)};
+        static glm::vec3 TRANSLATION = glm::vec3(0.0f, 0.0f, 0.0f);
+        static glm::vec3 ROTATION = glm::vec3(0.0f, 0.0f, 0.0f);
+        static glm::vec3 SCALE = glm::vec3(1.0f, 1.0f, 1.0f);
+        static glm::vec3 SHEAR = glm::vec3(0.0f, 0.0f, 0.0f);
+        static std::array<glm::vec3, 2> REFLECTION = std::array<glm::vec3, 2>{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f)};
     };
 
     VALUES VALUES;
