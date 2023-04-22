@@ -362,7 +362,7 @@ private:
     }
 
     // initialize the render data and uniforms
-    void initializeRender(GLuint * icosaArray, GLuint * icosaBuffer, gLuint * icosaNormals) const
+    void initializeRender(GLuint * icosaArray, GLuint * icosaBuffer, GLuint * icosaNormals) const
     {
         // create buffers/arrays
         glGenVertexArrays(1, icosaArray);
