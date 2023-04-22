@@ -67,10 +67,33 @@ public:
         return tmp;
     }
     virtual const glm::vec3 * getNormalData() const override {
-        glm::vec3 * tmp = new glm::vec3[this->vertexData.size()];
+        glm::vec3 * faceNormals = new glm::vec3[this->vertexData.size() / 3];
+        std::vector<glm::vec3> tmp;
+        for (int i = 0; i < this->vertexData.size(); i += 3)
+        {
+            glm::vec3 v1 = glm::vec3(vertexData[i][0], vertexData[i][1], vertexData[i][2]);
+            glm::vec3 v2 = glm::vec3(vertexData[i + 1][0], vertexData[i + 1][1], vertexData[i + 1][2]);
+            glm::vec3 v3 = glm::vec3(vertexData[i + 2][0], vertexData[i + 2][1], vertexData[i + 2][2]);
+            glm::vec3 normal = glm::normalize(glm::cross(v2 - v1, v3 - v1));
+            tmp.push_back(normal);
+        }
+        for (int i = 0; i < tmp.size(); i++)
+        {
+            faceNormals[i][0] = tmp[i][0];
+            faceNormals[i][1] = tmp[i][1];
+            faceNormals[i][2] = tmp[i][2];
+        }
+        return faceNormals;
+    }
+
+    const glm::vec3 * getCombinedData() const {
+        glm::vec3 * tmp = new glm::vec3[this->vertexData.size() * 2];
         for (int i = 0; i < this->vertexData.size(); i++) {
             tmp[i] = glm::vec3(vertexData[i][0], vertexData[i][1], vertexData[i][2]);
-            tmp[i] = glm::normalize(tmp[i]);
+        }
+        for (int i = 0; i < this->vertexData.size(); i++) {
+            tmp[i + this->vertexData.size()] = glm::vec3(vertexData[i][0], vertexData[i][1], vertexData[i][2]);
+            tmp[i + this->vertexData.size()] = glm::normalize(tmp[i + this->vertexData.size()]);
         }
         return tmp;
     }
@@ -143,7 +166,8 @@ public:
 
     void render(GLuint icosaArray, GLuint icosaBuffer, uint shaderID) const
     {
-        initializeRender(&icosaArray, &icosaBuffer);
+        GLuint vbo_normals;
+        initializeRender(&icosaArray, &icosaBuffer, &vbo_normals);
 
         GLuint colorLocation = glGetUniformLocation(shaderID, "icosaColor");
         glUniform3f(colorLocation, this->color[0], this->color[1], this->color[2]);
@@ -338,23 +362,33 @@ private:
     }
 
     // initialize the render data and uniforms
-    void initializeRender(GLuint * icosaArray, GLuint * icosaBuffer) const
+    void initializeRender(GLuint * icosaArray, GLuint * icosaBuffer, gLuint * icosaNormals) const
     {
         // create buffers/arrays
         glGenVertexArrays(1, icosaArray);
         glGenBuffers(1, icosaBuffer);
+        glGenBuffers(1, icosaNormals);
 
         glBindVertexArray(*icosaArray);
 
         glBindBuffer(GL_ARRAY_BUFFER, *icosaBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, *icosaNormals);
 
         const glm::vec3 *dataStart = getVertexData();
         const auto size = this->getNumVertices() * sizeof(glm::vec3);
+        const glm::vec3 *normalsStart = getNormalsData();
+        const auto normalsSize = this->getNumVertices() / 3 * sizeof(glm::vec3);
+
         glBufferData(GL_ARRAY_BUFFER, size, dataStart, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, normalsSize, normalsStart, GL_STATIC_DRAW);
 
         // position attribute
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
         glEnableVertexAttribArray(0);
+
+        // normal attribute
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(1);
 
     }
 
