@@ -25,6 +25,7 @@ public:
                 this->size = DEFAULT_SIZE;
                 this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
                 this->oldColor = this->color;
+                this->rotationDegrees = {0.0f, 0.0f, 0.0f};
         }
         Dodecahedron(glm::vec3 center, GLfloat size) {
                 initializeVertex();
@@ -32,6 +33,7 @@ public:
                 this->size = DEFAULT_SIZE;
                 this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
                 this->oldColor = this->color;
+                this->rotationDegrees = {0.0f, 0.0f, 0.0f};
 
                 setCenter(center);
                 setSize(size - 1);
@@ -42,6 +44,7 @@ public:
                 this->size = DEFAULT_SIZE;
                 this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
                 this->oldColor = this->color;
+                this->rotationDegrees = {0.0f, 0.0f, 0.0f};
 
                 setCenter(center);
                 setSize(size - 1);
@@ -53,6 +56,7 @@ public:
         GLfloat getSize() const { return size; }
         glm::vec3 getColor() const { return color; }
         glm::vec3 getOldColor() const { return oldColor; }
+        glm::vec3 getRotationDegrees() const { return rotationDegrees; }
 
         virtual GLint getNumVertices() const override {
                 return this->vertex.size();
@@ -255,6 +259,7 @@ private:
         GLfloat size;
         glm::vec3 color;
         glm::vec3 oldColor;
+        glm::vec3 rotationDegrees;
         GLint subdivisionLevel = 0;
 
         // updates the vertex data when the size of the dodecahedron is changed
@@ -352,12 +357,15 @@ private:
             auto tmp = this->getCenter();
             this->translate(-tmp);
             if (axis[0] != 0) {
+                this->rotationDegrees[0] += angle;
                 rotateX(angle);
             }
             if (axis[1] != 0) {
+                this->rotationDegrees[1] += angle;
                 rotateY(angle);
             }
             if (axis[2] != 0) {
+                this->rotationDegrees[2] += angle;
                 rotateZ(angle);
             }
             this->translate(tmp);
@@ -406,6 +414,12 @@ private:
 
         void subdivisions()
         {
+                auto tmp = this->getCenter();
+                auto tmp2 = this->getRotationDegrees();
+                this->translate(-tmp);
+                this->rotateX(-tmp2[0]);
+                this->rotateY(-tmp2[1]);
+                this->rotateZ(-tmp2[2]);
                 std::vector<glm::vec3> newVertex;
                 for (int i = 0; i < this->getNumVertices(); i += 3)
                 {
@@ -443,6 +457,10 @@ private:
                 {
                         this->vertex.push_back(v);
                 }
+                this->translate(tmp);
+                this->rotateX(tmp2[0]);
+                this->rotateY(tmp2[1]);
+                this->rotateZ(tmp2[2]);
         }
 
         void getHalfVertex(glm::vec3 * v1, glm::vec3 * v2, glm::vec3 * v12)

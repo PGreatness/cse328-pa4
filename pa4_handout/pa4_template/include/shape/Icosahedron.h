@@ -26,6 +26,7 @@ public:
         this->size = DEFAULT_SIZE;
         this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
         this->oldColor = this->color;
+        this->rotationDegrees = {0.0f, 0.0f, 0.0f};
     }
 
     Icosahedron(glm::vec3 center, GLfloat size)
@@ -34,6 +35,7 @@ public:
         this->size = DEFAULT_SIZE;
         this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
         this->oldColor = this->color;
+        this->rotationDegrees = {0.0f, 0.0f, 0.0f};
 
         this->translate(center);
         this->scale(size - 1);
@@ -45,6 +47,7 @@ public:
         this->size = DEFAULT_SIZE;
         this->color = glm::vec3(DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B);
         this->oldColor = this->color;
+        this->rotationDegrees = {0.0f, 0.0f, 0.0f};
 
         this->translate(center);
         this->scale(size - 1);
@@ -91,6 +94,11 @@ public:
     glm::vec3 getOldColor() const
     {
         return oldColor;
+    }
+
+    glm::vec3 getRotatonDegrees() const
+    {
+        return rotationDegrees;
     }
 
     // setters
@@ -223,6 +231,7 @@ private:
     GLfloat size;
     glm::vec3 color;
     glm::vec3 oldColor;
+    glm::vec3 rotationDegrees;
 
     // updates the vertex data when the size of the icosahedron changes
     void updateIcosahedronSize(float scale) {
@@ -300,9 +309,9 @@ private:
     void updateIcosahedronOrientation(float angle, glm::vec3 axes) {
         auto tmp = this->getCenter();
         this->translate(-tmp);
-        if (axes[0] != 0) { rotateX(angle); }
-        if (axes[1] != 0) { rotateY(angle); }
-        if (axes[2] != 0) { rotateZ(angle); }
+        if (axes[0] != 0) { this->rotationDegrees[0] += angle; rotateX(angle); }
+        if (axes[1] != 0) { this->rotationDegrees[1] += angle; rotateY(angle); }
+        if (axes[2] != 0) { this->rotationDegrees[2] += angle; rotateZ(angle); }
         this->translate(tmp);
     }
 
@@ -356,6 +365,13 @@ private:
     // new vertices
     void subdivision()
     {
+        auto tmp = this->getCenter();
+        auto tmp2 = this->getRotationDegrees();
+        this->translate(-tmp);
+        this->rotateX(-tmp2[0]);
+        this->rotateY(-tmp2[1]);
+        this->rotateZ(-tmp2[2]);
+
         std::vector<std::array<GLfloat, 3>> newVertices;
         for (int i = 0; i < this->getNumVertices(); i += 3)
         {
@@ -392,6 +408,10 @@ private:
         {
             this->vertexData.push_back(vertex);
         }
+        this->translate(tmp);
+        this->rotateX(tmp2[0]);
+        this->rotateY(tmp2[1]);
+        this->rotateZ(tmp2[2]);
     }
 
     void getHalfVertex(std::array<GLfloat,3> * v1, std::array<GLfloat,3> * v2, std::array<GLfloat,3> * v12)
