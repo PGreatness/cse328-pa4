@@ -189,7 +189,7 @@ GLfloat cylinderHeight = 1.0f;
 
 namespace Context
 {
-
+void displayCylinderBases(glm::mat4 proj, glm::mat4 view, glm::mat4 model);
 // display function for x, y, z axis
 void displayAxis()
 {
