@@ -128,6 +128,7 @@ std::shared_ptr<Shader> ellipsoidShader;       // shader for ellipsoid
 Ellipsoid ellipsoid(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor, glm::vec3(1.0f, 1.5f, 1.0f)); // default ellipsoid object
 
 std::shared_ptr<Shader> sphereShader;       // shader for sphere
+std::shared_ptr<Shader> cylinderShader;     // shader for cylinder
 
 struct cubeOptions
 {
@@ -178,6 +179,10 @@ GLuint ellipsoidVertexBuffer;
 GLfloat sphereX = 0.0f;
 GLfloat sphereY = 0.0f;
 GLfloat sphereZ = 0.0f;
+
+glm::vec3 cylinderCenter = glm::vec3(0.0f, 0.0f, 0.0f);
+GLfloat cylinderRadius = 1.0f;
+GLfloat cylinderHeight = 1.0f;
 
 }  // namespace Primitive
 
@@ -425,6 +430,60 @@ void displaySphere()
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
+
+void displayCylinder()
+{
+    Context::cylinderShader->use();
+
+    // set lighting uniforms
+    Context::cylinderShader->setVec3("lightPos", Context::lightPos);
+    Context::cylinderShader->setVec3("viewPos", Context::camera.position);
+    Context::cylinderShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+    Context::cylinderShader->setFloat("R", 1.0f);
+    Context::cylinderShader->setVec3("xyz", Primitive::cylinderCenter);
+    Context::cylinderShader->setFloat("height", Primitive::cylinderHeight);
+    Context::cylinderShader->setFloat("radius", Primitive::cylinderRadius);
+
+    // set options
+    Context::cylinderShader->setInt("options", options);
+
+    glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
+                                            static_cast<GLfloat>(Context::kWindowWidth) /
+                                            static_cast<GLfloat>(Context::kWindowHeight),
+                                            0.01f,
+                                            100.0f);
+    Context::cylinderShader->setMat4("projection", projection);
+    glm::mat4 view = Context::camera.getViewMatrix();
+    Context::cylinderShader->setMat4("view", view);
+    Context::cylinderShader->setMat4("model", glm::mat4(1.0f));
+
+    GLuint cylinderVertexArray {0};
+    GLuint cylinderVertexBuffer {0};
+
+    glGenVertexArrays(1, &cylinderVertexArray);
+    glGenBuffers(1, &cylinderVertexBuffer);
+
+    glBindVertexArray(cylinderVertexArray);
+    glBindBuffer(GL_ARRAY_BUFFER, cylinderVertexBuffer);
+
+    GLfloat null = 0.0f;
+    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(sizeof(GLfloat)), &null, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+    glEnableVertexAttribArray(0);
+
+    if (options == Context::cubeOptions::WIREFRAME) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    } else {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
+
+    glPatchParameteri(GL_PATCH_VERTICES, 1);
+    glDrawArrays(GL_PATCHES, 0, 1);
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
 // TODO: Add display functions for other primitives
 
 }  // namespace Context
@@ -495,6 +554,11 @@ int main()
                                                         "src/shader/Sphere/eval.glsl",
                                                         "src/shader/Sphere/frag.glsl");
 
+    Context::cylinderShader = std::make_shared<Shader>("src/shader/Cylinder/vert.glsl",
+                                                        "src/shader/Cylinder/ctrl.glsl",
+                                                        "src/shader/Cylinder/eval.glsl",
+                                                        "src/shader/Cylinder/frag.glsl");
+
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);
@@ -532,14 +596,15 @@ int main()
                 Context::displayDodecahedron();
                 break;
             case STATE::F5:
-                // break;
+                glfwSetWindowTitle(window, "PA4 - Torus");
+                break;
             case STATE::F6:
+                glfwSetWindowTitle(window, "PA4 - Sphere, Cylinder, and Cone");
                 Context::displaySphere();
                 break;
             case STATE::F7:
                 // break;
             case STATE::F8:
-                Context::displayCube();
                 break;
             default:
                 glfwSetWindowTitle(window, "PA4");
@@ -613,6 +678,7 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     Context::icosahedron.setColor(Colors::currentColor);
     Context::ellipsoid.setColor(Colors::currentColor);
     Context::sphereShader->setVec3("ourFragColor", Colors::currentColor);
+    Context::cylinderShader->setVec3("ourFragColor", Colors::currentColor);
 
     // check if key pressed is 1
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
@@ -894,7 +960,11 @@ void perFrameKeyInput(GLFWwindow * window)
         }
         if (STATE::CURRENT == STATE::F6)
         {
-            Primitive::sphereX -= displacement;
+            Primitive::sphereX += (-left[0] * displacement);
+            Primitive::sphereY += (-left[1] * displacement);
+            Primitive::sphereZ += (-left[2] * displacement);
+
+            Primitive::cylinderCenter += -left * displacement;
         }
         if (STATE::CURRENT == STATE::F8)
         {
@@ -931,7 +1001,11 @@ void perFrameKeyInput(GLFWwindow * window)
         }
         if (STATE::CURRENT == STATE::F6)
         {
-            Primitive::sphereX += displacement;
+            Primitive::sphereX += (left[0] * displacement);
+            Primitive::sphereY += (left[1] * displacement);
+            Primitive::sphereZ += (left[2] * displacement);
+
+            Primitive::cylinderCenter += left * displacement;
         }
         if (STATE::CURRENT == STATE::F8)
         {
@@ -969,6 +1043,8 @@ void perFrameKeyInput(GLFWwindow * window)
             Primitive::sphereX += (front[0] * displacement);
             Primitive::sphereY += (front[1] * displacement);
             Primitive::sphereZ += (front[2] * displacement);
+
+            Primitive::cylinderCenter += front * displacement;
         }
         if (STATE::CURRENT == STATE::F8)
         {
@@ -1006,6 +1082,8 @@ void perFrameKeyInput(GLFWwindow * window)
             Primitive::sphereX += (-front[0] * displacement);
             Primitive::sphereY += (-front[1] * displacement);
             Primitive::sphereZ += (-front[2] * displacement);
+
+            Primitive::cylinderCenter += -front * displacement;
         }
         if (STATE::CURRENT == STATE::F8)
         {
@@ -1039,6 +1117,8 @@ void perFrameKeyInput(GLFWwindow * window)
         if (STATE::CURRENT == STATE::F6)
         {
             Primitive::sphereY += displacement;
+
+            Primitive::cylinderCenter += glm::vec3(0.0f, displacement, 0.0f);
         }
         if (STATE::CURRENT == STATE::F8)
         {
@@ -1072,6 +1152,8 @@ void perFrameKeyInput(GLFWwindow * window)
         if (STATE::CURRENT == STATE::F6)
         {
             Primitive::sphereY -= displacement;
+
+            Primitive::cylinderCenter += glm::vec3(0.0f, -displacement, 0.0f);
         }
         if (STATE::CURRENT == STATE::F8)
         {
