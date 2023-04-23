@@ -90,43 +90,43 @@ public:
         return normals;
     }
 
-    glm::vec3 getCenter() const override
+    glm::vec3 getCenter() const
     {
         return center;
     }
 
-    GLfloat getSize() const override
+    GLfloat getSize() const
     {
         return radius;
     }
 
-    glm::vec3 getColor() const override
+    glm::vec3 getColor() const
     {
         return color;
     }
 
-    glm::vec3 getOldColor() const override
+    glm::vec3 getOldColor() const
     {
         return oldColor;
     }
 
     // setters
-    void setCenter(glm::vec3 center) override
+    void setCenter(glm::vec3 center)
     {
         this->center = center;
     }
 
-    void setSize(float radius) override
+    void setSize(float radius)
     {
         this->radius = radius;
     }
 
-    void setColor(glm::vec3 color) override
+    void setColor(glm::vec3 color)
     {
         this->color = color;
     }
 
-    void setOldColor(glm::vec3 oldColor) override
+    void setOldColor(glm::vec3 oldColor)
     {
         this->oldColor = oldColor;
     }
@@ -173,7 +173,7 @@ public:
 
 private:
     // fields
-    static constexpr PI = 3.14159265358979323846;
+    static constexpr float PI = 3.14159265358979323846;
     std::vector<glm::vec3> vertices;
 
     static constexpr int INIT_NUM_FACETS = 15;
