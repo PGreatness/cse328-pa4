@@ -151,19 +151,12 @@ public:
         if (options == Options::WIREFRAME)
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            glDrawArrays(GL_LINE_STRIP, 0, getNumVertices());
         }
         else
         {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        }
-
-        if (options == Options::SMOOTH)
-        {
-            glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-        }
-        else
-        {
-            glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+            glDrawArrays(GL_TRIANGLES, 0, getNumVertices());
         }
 
         // unbind VAO
@@ -198,12 +191,12 @@ private:
     void initShape()
     {
         // Generate vertices on the torus
-        for (int j = 0; j < INIT_NUM_VERTICES; j++)
+        for (int j = 0; j < INIT_NUM_VERTICES * 2; j++)
         {
             double phi = 2 * PI * j / INIT_NUM_VERTICES;
             double cosphi = cos(phi);
             double sinphi = sin(phi);
-            for (int i = 0; i < INIT_NUM_VERTICES; i++)
+            for (int i = 0; i < INIT_NUM_VERTICES * 2; i++)
             {
                 double theta = 2 * PI * i / INIT_NUM_VERTICES;
                 double costheta = cos(theta);
@@ -216,12 +209,12 @@ private:
         }
 
         // Generate vertices on the inner tube
-        for (int j = 0; j < INIT_NUM_VERTICES; j++)
+        for (int j = 0; j < INIT_NUM_VERTICES * 2; j++)
         {
             double phi = 2 * PI * j / INIT_NUM_VERTICES;
             double cosphi = cos(phi);
             double sinphi = sin(phi);
-            for (int i = 0; i < INIT_NUM_VERTICES; i++)
+            for (int i = 0; i < INIT_NUM_VERTICES * 2; i++)
             {
                 double theta = 2 * PI * i / INIT_NUM_VERTICES;
                 double costheta = cos(theta);
