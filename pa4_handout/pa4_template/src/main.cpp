@@ -394,6 +394,7 @@ void displaySphere()
     Context::sphereShader->setFloat("X", Primitive::sphereX);
     Context::sphereShader->setFloat("Y", Primitive::sphereY);
     Context::sphereShader->setFloat("Z", Primitive::sphereZ);
+    Context::sphereShader->setVec3("ourFragColor", Colors::currentColor);
 
     // set options
     Context::sphereShader->setInt("options", options);
@@ -448,6 +449,7 @@ void displayCylinder()
     Context::cylinderShader->setVec3("xyz", Primitive::cylinderCenter);
     Context::cylinderShader->setFloat("height", Primitive::cylinderHeight);
     Context::cylinderShader->setFloat("radius", Primitive::cylinderRadius);
+    Context::cylinderShader->setVec3("ourFragColor", Colors::currentColor);
 
     // set options
     Context::cylinderShader->setInt("options", options);
@@ -543,6 +545,7 @@ void displayCone()
     Context::coneShader->setVec3("center", Primitive::coneCenter);
     Context::coneShader->setFloat("height", Primitive::coneHeight);
     Context::coneShader->setFloat("radius", Primitive::coneRadius);
+    Context::coneShader->setVec3("ourFragColor", Colors::currentColor);
 
     // set options
     Context::coneShader->setInt("options", options);
