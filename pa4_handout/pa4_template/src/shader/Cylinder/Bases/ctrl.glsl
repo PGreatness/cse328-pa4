@@ -7,6 +7,9 @@ uniform float centerZ;
 uniform float radius;
 uniform float centerY = 0.0; // Static Y value
 
+const float PI = 3.1415926535897932384626433832795;
+const int NUM_SEGMENTS = 100;
+
 void main()
 {
     // Calculate the positions of the vertices for the circle
