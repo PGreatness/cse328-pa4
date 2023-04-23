@@ -161,6 +161,11 @@ public:
         updateTorusReflection(planeA, planeB);
     }
 
+    void shear(glm::vec3 axis, glm::vec3 shearFactor)
+    {
+        updateTorusShear(axis, shearFactor);
+    }
+
     void render(GLuint VAO, GLuint VBO, GLuint shaderID) const
     {
         render(VAO, VBO, shaderID, Options::DEFAULT);
@@ -281,7 +286,7 @@ private:
         rotationMatrix[2][1] = sin(angle_rad);
         rotationMatrix[2][2] = cos(angle_rad);
 
-        for (int i = 0; i < NUM_VERTICES; i++) {
+        for (int i = 0; i < this->getNumVertices(); i++) {
             glm::vec4 rotatedVertex = rotationMatrix * glm::vec4(vertices[i], 1.0f);
             vertices[i] = glm::vec3(rotatedVertex);
         }
@@ -297,7 +302,7 @@ private:
         rotationMatrix[2][0] = -sin(angle_rad);
         rotationMatrix[2][2] = cos(angle_rad);
 
-        for (int i = 0; i < NUM_VERTICES; i++) {
+        for (int i = 0; i < this->getNumVertices(); i++) {
             glm::vec4 rotatedVertex = rotationMatrix * glm::vec4(vertices[i], 1.0f);
             vertices[i] = glm::vec3(rotatedVertex);
         }
@@ -313,7 +318,7 @@ private:
         rotationMatrix[1][0] = sin(angle_rad);
         rotationMatrix[1][1] = cos(angle_rad);
 
-        for (int i = 0; i < NUM_VERTICES; i++) {
+        for (int i = 0; i < this->getNumVertices(); i++) {
             glm::vec4 rotatedVertex = rotationMatrix * glm::vec4(vertices[i], 1.0f);
             vertices[i] = glm::vec3(rotatedVertex);
         }
@@ -340,7 +345,7 @@ private:
         };
 
         // multiply the shear matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
+        for (int i = 0; i < this->getNumVertices(); i++) {
             glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
             vertexData = shear * vertexData;
             vertices[i][0] = vertexData.x;
@@ -360,7 +365,7 @@ private:
         };
 
         // multiply the shear matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
+        for (int i = 0; i < this->getNumVertices(); i++) {
             glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
             vertexData = shear * vertexData;
             vertices[i][0] = vertexData.x;
@@ -380,7 +385,7 @@ private:
         };
 
         // multiply the shear matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
+        for (int i = 0; i < this->getNumVertices(); i++) {
             glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
             vertexData = shear * vertexData;
             vertices[i][0] = vertexData.x;
@@ -408,7 +413,7 @@ private:
         glm::mat4 R = glm::mat4(1.0f) - 2.0f * P;
 
         // multiply the reflection matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
+        for (int i = 0; i < this->getNumVertices(); i++) {
             glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
             vertexData = R * vertexData;
             vertices[i][0] = vertexData.x;
