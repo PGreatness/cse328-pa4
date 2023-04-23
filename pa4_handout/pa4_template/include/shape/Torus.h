@@ -486,6 +486,8 @@ private:
         this->vertices.clear();
         this->numFacets *= 2;
         higherQualityTorus(this->numFacets);
+
+        this->translate(tmp);
     }
 
     void getHalfVertex(glm::vec3 * v1, glm::vec3 * v2, glm::vec3 * v12)
