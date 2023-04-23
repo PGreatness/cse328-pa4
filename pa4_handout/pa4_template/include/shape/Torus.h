@@ -264,7 +264,7 @@ private:
             rotationMatrix[1][0] = sin(theta);
             rotationMatrix[1][1] = cos(theta);
             // the steps to find each vertices on the circle
-            float step2 = 2 * PI / INIT_NUM_VERTICES / INIT_NUM_FACETS;
+            float step2 = 2 * PI / INIT_NUM_VERTICES;
             // this makes the circles that make up the torus
             for (float j = 0; j < 2 * PI; j += step2)
             {
