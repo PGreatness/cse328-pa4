@@ -153,6 +153,7 @@ public:
     {
         radius += scaleFactor;
         innerRadius += scaleFactor;
+        this->vertices.clear();
         initShape();
     }
 
