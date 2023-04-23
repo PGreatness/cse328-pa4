@@ -181,11 +181,11 @@ GLfloat sphereX = 0.0f;
 GLfloat sphereY = 0.0f;
 GLfloat sphereZ = 0.0f;
 
-glm::vec3 cylinderCenter = glm::vec3(1.5f, 0.0f, 0.0f);
+glm::vec3 cylinderCenter = glm::vec3(2.5f, 0.0f, 0.0f);
 GLfloat cylinderRadius = 1.0f;
 GLfloat cylinderHeight = 1.0f;
 
-glm::vec3 coneCenter = glm::vec3(3.0f, 0.0f, 0.0f);
+glm::vec3 coneCenter = glm::vec3(5.0f, 0.0f, 0.0f);
 GLfloat coneRadius = 1.0f;
 GLfloat coneHeight = 1.0f;
 
