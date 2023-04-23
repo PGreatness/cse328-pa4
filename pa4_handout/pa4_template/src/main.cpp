@@ -11,6 +11,7 @@
 #include "shape/Tetrahedron.h"
 #include "shape/Octahedron.h"
 #include "shape/Ellipsoid.h"
+#include "shape/Torus.h"
 #include "util/Camera.h"
 #include "util/Shader.h"
 
@@ -126,6 +127,9 @@ Icosahedron icosahedron(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor); 
 
 std::shared_ptr<Shader> ellipsoidShader;       // shader for ellipsoid
 Ellipsoid ellipsoid(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor, glm::vec3(1.0f, 1.5f, 1.0f)); // default ellipsoid object
+
+std::shared_ptr<Shader> torusShader;       // shader for torus
+Torus torus(glm::vec3(0.0f,0.0f,0.0f), 1.0f, 0.5f, Colors::currentColor); // default torus object
 
 std::shared_ptr<Shader> sphereShader;       // shader for sphere
 std::shared_ptr<Shader> cylinderShader;     // shader for cylinder
@@ -379,6 +383,34 @@ void displayEllipsoid()
     ellipsoid.render(Primitive::ellipsoidVertexArray,
                         Primitive::ellipsoidVertexBuffer,
                         Context::ellipsoidShader->getShaderProgramHandle(),
+                        options);
+}
+
+void displayTorus()
+{
+    Context::torusShader->use();
+
+    // set lighting uniforms
+    Context::torusShader->setVec3("lightPos", Context::lightPos);
+    Context::torusShader->setVec3("viewPos", Context::camera.position);
+    Context::torusShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+
+    // set options
+    Context::torusShader->setInt("options", options);
+
+    glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
+                                            static_cast<GLfloat>(Context::kWindowWidth) /
+                                            static_cast<GLfloat>(Context::kWindowHeight),
+                                            0.01f,
+                                            100.0f);
+    Context::torusShader->setMat4("projection", projection);
+    glm::mat4 view = Context::camera.getViewMatrix();
+    Context::torusShader->setMat4("view", view);
+    Context::torusShader->setMat4("model", glm::mat4(1.0f));
+
+    torus.render(Primitive::torusVertexArray,
+                        Primitive::torusVertexBuffer,
+                        Context::torusShader->getShaderProgramHandle(),
                         options);
 }
 
@@ -652,6 +684,9 @@ int main()
     Context::ellipsoidShader = std::make_shared<Shader>("src/shader/Ellipsoid/vert.glsl",
                                                             "src/shader/Ellipsoid/frag.glsl");
 
+    Context::torusShader = std::make_shared<Shader>("src/shader/Torus/vert.glsl",
+                                                        "src/shader/Torus/frag.glsl");
+
     Context::sphereShader = std::make_shared<Shader>("src/shader/Sphere/vert.glsl",
                                                         "src/shader/Sphere/ctrl.glsl",
                                                         "src/shader/Sphere/eval.glsl",
@@ -704,6 +739,7 @@ int main()
                 break;
             case STATE::F5:
                 glfwSetWindowTitle(window, "PA4 - Torus");
+                Context::displayTorus();
                 break;
             case STATE::F6:
                 glfwSetWindowTitle(window, "PA4 - Sphere, Cylinder, and Cone");
@@ -786,6 +822,7 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     Context::dodecahedron.setColor(Colors::currentColor);
     Context::icosahedron.setColor(Colors::currentColor);
     Context::ellipsoid.setColor(Colors::currentColor);
+    Context::torus.setColor(Colors::currentColor);
     Context::sphereShader->setVec3("ourFragColor", Colors::currentColor);
     Context::cylinderShader->setVec3("ourFragColor", Colors::currentColor);
     Context::coneShader->setVec3("ourFragColor", Colors::currentColor);
