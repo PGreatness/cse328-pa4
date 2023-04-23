@@ -684,6 +684,18 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
                 Context::tetrahedron.shear(Transformations::SHEAR, glm::vec3(1.0f, 1.0f, 1.0f));
                 Context::octahedron.shear(Transformations::SHEAR, glm::vec3(1.0f, 1.0f, 1.0f));
             }
+            if (STATE::CURRENT == STATE::F2)
+            {
+                Context::icosahedron.shear(Transformations::SHEAR, glm::vec3(1.0f, 1.0f, 1.0f));
+            }
+            if (STATE::CURRENT == STATE::F3)
+            {
+                Context::ellipsoid.shear(Transformations::SHEAR, glm::vec3(1.0f, 1.0f, 1.0f));
+            }
+            if (STATE::CURRENT == STATE::F4)
+            {
+                Context::dodecahedron.shear(Transformations::SHEAR, glm::vec3(1.0f, 1.0f, 1.0f));
+            }
         }
     }
 
