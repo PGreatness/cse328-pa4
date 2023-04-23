@@ -24,8 +24,8 @@ void main() {
 
     if (u == 1.0 || u == 0.0) {
         // Top vertex
-        pos = vec3(center.x, u == 1.0 ? center.y + height : center.y, center.z);
-        normal = vec3(0.0, u == 1.0 ? 1.0 : -1.0, 0.0);
+        pos = vec3(center.x, center.y + height, center.z);
+        normal = vec3(0.0, 1.0, 0.0);
     } else {
         // Base vertices
         float theta = 2.0 * PI * v;
@@ -38,4 +38,11 @@ void main() {
     gl_Position = projection * view * model * vec4(pos, 1.0);
     fragPos = pos;
     Normal = normalize(mat3(transpose(inverse(model))) * normal);
+
+    // Fix the gap by duplicating the first vertex for the last triangle
+    if (gl_TessCoord == vec3(0.0, 0.0, 1.0)) {
+        gl_Position = projection * view * model * vec4(vec3(center.x + radius, center.y, center.z), 1.0);
+        fragPos = vec3(center.x + radius, center.y, center.z);
+        Normal = normalize(mat3(transpose(inverse(model))) * vec3(0.0, -1.0, 0.0));
+    }
 }
