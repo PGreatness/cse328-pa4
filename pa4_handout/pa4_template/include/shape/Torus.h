@@ -200,12 +200,12 @@ private:
                 auto x = (radius + innerRadius * cos(v)) * cos(u);
                 auto y = (radius + innerRadius * cos(v)) * sin(u);
                 auto z = innerRadius * sin(v);
-                tmp.push_back(glm::vec3(x, y, z));
+                vertices.push_back(glm::vec3(x, y, z));
             }
         }
 
         // create triangles from vertices
-        for (int i = 0; i < INIT_NUM_VERTICES; i++)
+        /* for (int i = 0; i < INIT_NUM_VERTICES; i++)
         {
             for (int j = 0; j < INIT_NUM_VERTICES; j++)
             {
@@ -213,7 +213,7 @@ private:
                 vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + (j + 1)]);
                 vertices.push_back(tmp[i * INIT_NUM_VERTICES + (j + 1)]);
             }
-        }
+        } */
     }
 
     void initializeRender(GLuint * torusArray, GLuint * torusBuffer, GLuint * torusNormals) const
