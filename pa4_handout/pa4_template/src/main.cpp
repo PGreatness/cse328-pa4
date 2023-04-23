@@ -173,6 +173,9 @@ GLuint icosahedronVertexBuffer;
 GLuint ellipsoidVertexArray;
 GLuint ellipsoidVertexBuffer;
 
+GLuint sphereVertexArray;
+GLuint sphereVertexBuffer;
+
 }  // namespace Primitive
 
 
@@ -365,6 +368,48 @@ void displayEllipsoid()
                         Context::ellipsoidShader->getShaderProgramHandle(),
                         options);
 }
+
+void displaySphere()
+{
+    Context::sphereShader->use();
+
+    // set lighting uniforms
+    Context::sphereShader->setVec3("lightPos", Context::lightPos);
+    Context::sphereShader->setVec3("viewPos", Context::camera.position);
+    Context::sphereShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+    Context::sphereShader->setFloat("R", 1.0f);
+
+    // set options
+    Context::sphereShader->setInt("options", options);
+
+    glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
+                                            static_cast<GLfloat>(Context::kWindowWidth) /
+                                            static_cast<GLfloat>(Context::kWindowHeight),
+                                            0.01f,
+                                            100.0f);
+    Context::sphereShader->setMat4("projection", projection);
+    glm::mat4 view = Context::camera.getViewMatrix();
+    Context::sphereShader->setMat4("view", view);
+    Context::sphereShader->setMat4("model", glm::mat4(1.0f));
+
+    glGenVertexArrays(1, &Primitive::sphereVertexArray);
+    glGenBuffers(1, &Primitive::sphereVertexBuffer);
+
+    glBindVertexArray(Primitive::sphereVertexArray);
+    glBindBuffer(GL_ARRAY_BUFFER, Primitive::sphereVertexBuffer);
+
+    GLfloat null = 0.0f;
+    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(sizeof(GLfloat)), &null, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+    glEnableVertexAttribArray(0);
+
+    glPatchParameteri(GL_PATCHES, 1);
+    glDrawArrays(GL_PATCHES, 0, 1);
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
 // TODO: Add display functions for other primitives
 
 }  // namespace Context
@@ -430,6 +475,11 @@ int main()
     Context::ellipsoidShader = std::make_shared<Shader>("src/shader/Ellipsoid/vert.glsl",
                                                             "src/shader/Ellipsoid/frag.glsl");
 
+    Context::sphereShader = std::make_shared<Shader>("src/shader/Sphere/vert.glsl",
+                                                        "src/shader/Sphere/ctrl.glsl",
+                                                        "src/shader/Sphere/eval.glsl",
+                                                        "src/shader/Sphere/frag.glsl");
+
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);
@@ -469,7 +519,8 @@ int main()
             case STATE::F5:
                 // break;
             case STATE::F6:
-                // break;
+                Context::displaySphere();
+                break;
             case STATE::F7:
                 // break;
             case STATE::F8:
