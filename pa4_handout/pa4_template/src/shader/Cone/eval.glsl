@@ -24,8 +24,8 @@ void main() {
 
     if (u == 1.0 || u == 0.0) {
         // Top vertex
-        pos = vec3(center.x, center.y + height, center.z);
-        normal = vec3(0.0, 1.0, 0.0);
+        pos = vec3(center.x, u == 1.0 ? center.y + height : center.y, center.z);
+        normal = vec3(0.0, u == 1.0 ? 1.0 : -1.0, 0.0);
     } else {
         // Base vertices
         float theta = 2.0 * PI * v;
