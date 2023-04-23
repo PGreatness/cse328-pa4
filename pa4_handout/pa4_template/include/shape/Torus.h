@@ -225,6 +225,53 @@ private:
     GLfloat innerRadius;
     glm::vec3 color;
     glm::vec3 oldColor;
+    int verticesCount = INIT_NUM_VERTICES;
+    int facetsCount = INIT_NUM_FACETS;
+
+    void higherQualityTorus(int facets, int vertexCount)
+    {
+        std::vector<glm::vec3> circles;
+        float step = 2 * PI / facets;
+        // this makes the full torus
+        for (float theta = 0; theta < 2 * PI; theta += step)
+        {
+            // create a rotation matrix for each circle
+            glm::mat4 rotationMatrix = glm::mat4(1.0f);
+            // rotate the circle around the z axis
+            rotationMatrix[0][0] = cos(theta);
+            rotationMatrix[0][1] = -sin(theta);
+            rotationMatrix[1][0] = sin(theta);
+            rotationMatrix[1][1] = cos(theta);
+            // the steps to find each vertices on the circle
+            float step2 = 2 * PI / verticesCount;
+            // this makes the circles that make up the torus
+            for (float j = 0; j < 2 * PI; j += step2)
+            {
+                // find the x and z coordinates of the vertices
+                float x = 2 * innerRadius * cos(j);
+                float y = 0.0f;
+                float z = 2 * innerRadius * sin(j);
+                // create a vector for the vertex
+                glm::vec4 vertex = glm::vec4(x + (2 * this->radius), y, z, 1.0f);
+                // rotate the vertex
+                vertex = rotationMatrix * vertex;
+                // add the vertex to the circle
+                circles.push_back(glm::vec3(vertex.x, vertex.y, vertex.z));
+            }
+        }
+
+        // create triangles from vertices of the circles
+        for (int i = 0; i < circles.size(); i++)
+        {
+            vertices.push_back(circles[i]);
+            vertices.push_back(circles[(i + 1) % circles.size()]);
+            vertices.push_back(circles[(i + facets) % circles.size()]);
+
+            vertices.push_back(circles[(i + 1) % circles.size()]);
+            vertices.push_back(circles[(i + facets + 1) % circles.size()]);
+            vertices.push_back(circles[(i + facets) % circles.size()]);
+        }
+    }
 
     void initShape()
     {
@@ -256,48 +303,7 @@ private:
                 vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + j]);
             }
         } */
-        std::vector<glm::vec3> circles;
-        float step = 2 * PI / INIT_NUM_FACETS;
-        // this makes the full torus
-        for (float theta = 0; theta < 2 * PI; theta += step)
-        {
-            // create a rotation matrix for each circle
-            glm::mat4 rotationMatrix = glm::mat4(1.0f);
-            // rotate the circle around the z axis
-            rotationMatrix[0][0] = cos(theta);
-            rotationMatrix[0][1] = -sin(theta);
-            rotationMatrix[1][0] = sin(theta);
-            rotationMatrix[1][1] = cos(theta);
-            // the steps to find each vertices on the circle
-            float step2 = 2 * PI / INIT_NUM_VERTICES;
-            // this makes the circles that make up the torus
-            for (float j = 0; j < 2 * PI; j += step2)
-            {
-                // find the x and z coordinates of the vertices
-                float x = 2 * innerRadius * cos(j);
-                float y = 0.0f;
-                float z = 2 * innerRadius * sin(j);
-                // create a vector for the vertex
-                glm::vec4 vertex = glm::vec4(x + (2 * this->radius), y, z, 1.0f);
-                // rotate the vertex
-                vertex = rotationMatrix * vertex;
-                // add the vertex to the circle
-                circles.push_back(glm::vec3(vertex.x, vertex.y, vertex.z));
-            }
-        }
-
-        // create triangles from vertices of the circles
-        for (int i = 0; i < circles.size(); i++)
-        {
-            vertices.push_back(circles[i]);
-            vertices.push_back(circles[(i + 1) % circles.size()]);
-            vertices.push_back(circles[(i + INIT_NUM_VERTICES) % circles.size()]);
-
-            vertices.push_back(circles[(i + 1) % circles.size()]);
-            vertices.push_back(circles[(i + INIT_NUM_VERTICES + 1) % circles.size()]);
-            vertices.push_back(circles[(i + INIT_NUM_VERTICES) % circles.size()]);
-        }
-
+        higherQualityTorus(INIT_NUM_FACETS, INIT_NUM_VERTICES);
     }
 
     void updateTorusLocation(glm::vec3 translation)
@@ -503,50 +509,14 @@ private:
 
     void subdivideTorus()
     {
-        // get the number of vertices
-        int numVertices = this->getNumVertices();
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
 
-        // create a new vector of vertices
-        std::vector<glm::vec3> newVertices;
+        this->facetsCount *= 2;
+        this->verticesCount *= 2;
+        higherQualityTorus(this->facetsCount, this->verticesCount);
 
-        // iterate through each triangle
-        for (int i = 0; i < numVertices; i += 3) {
-            // get the three vertices of the triangle
-            glm::vec3 v1 = vertices[i];
-            glm::vec3 v2 = vertices[i + 1];
-            glm::vec3 v3 = vertices[i + 2];
-
-            // get the midpoints of the three vertices
-            glm::vec3 v12;
-            glm::vec3 v23;
-            glm::vec3 v31;
-            getHalfVertex(&v1, &v2, &v12);
-            getHalfVertex(&v2, &v3, &v23);
-            getHalfVertex(&v3, &v1, &v31);
-
-            // add the new vertices to the new vector
-            newVertices.push_back(v1);
-            newVertices.push_back(v12);
-            newVertices.push_back(v31);
-
-            newVertices.push_back(v2);
-            newVertices.push_back(v23);
-            newVertices.push_back(v12);
-
-            newVertices.push_back(v3);
-            newVertices.push_back(v31);
-            newVertices.push_back(v23);
-
-            newVertices.push_back(v12);
-            newVertices.push_back(v23);
-            newVertices.push_back(v31);
-        }
-
-        // set the vertices to the new vertices
-        this->vertices.clear();
-        for (auto & vertex : newVertices) {
-            this->vertices.push_back(vertex);
-        }
+        this->translate(tmp);
     }
 
     void getHalfVertex(glm::vec3 * v1, glm::vec3 * v2, glm::vec3 * v12)
