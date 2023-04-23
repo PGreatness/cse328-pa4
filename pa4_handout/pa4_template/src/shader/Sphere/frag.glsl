@@ -1,6 +1,5 @@
 #version 410 core
 
-in vec3 ourFragColor;
 in vec3 Normal;
 in vec3 fragPos;
 
@@ -10,6 +9,7 @@ uniform vec3 lightPos;
 uniform vec3 viewPos;
 uniform vec3 lightColor;
 uniform int options;
+uniform vec3 ourFragColor;
 
 void main()
 {
