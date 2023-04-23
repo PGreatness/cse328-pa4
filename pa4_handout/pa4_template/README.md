@@ -1,10 +1,10 @@
 # PA4
 
-Your Name
+Ahnaf Hasan
 
-Your SBU ID
+112776839
 
-Your Email
+ahnaf.hasan@stonybrook.edu
 
 ## Overview
 
@@ -21,61 +21,61 @@ for the Lecture on PA3.
 Check all features implemented with "x" in "[ ]"s. 
 Only features or parts checked here would be graded! 
 
-- [ ] **P0: Global Functionalities** (See each object for display modes)
-  - [ ] Transformations
-    - [ ] Translation
-    - [ ] Rotation
-    - [ ] Scaling
-    - [ ] Shear
-    - [ ] Reflection
-  - [x] Camera Functionalities
-    - [x] Show/hide x, y, z Axes
-    - [x] `W`/`S`/`A`/`D`/`UP`/`DOWN` Functionalities
-- [ ] **P1: Simple Polyhedral Objects**
-  - [ ] Tetrahedron
-    - [ ] Wireframe
-    - [ ] Flat
-    - [ ] Smooth
-  - [ ] Cube
-    - [ ] Wireframe
-    - [ ] Flat
-    - [ ] Smooth
-  - [ ] Octahedron
-    - [ ] Wireframe
-    - [ ] Flat
-    - [ ] Smooth
+- [X] **P0: Global Functionalities** (See each object for display modes)
+  - [X] Transformations
+    - [X] Translation
+    - [X] Rotation
+    - [X] Scaling
+    - [X] Shear
+    - [X] Reflection
+  - [X] Camera Functionalities
+    - [X] Show/hide x, y, z Axes
+    - [X] `W`/`S`/`A`/`D`/`UP`/`DOWN` Functionalities
+- [X] **P1: Simple Polyhedral Objects**
+  - [X] Tetrahedron
+    - [X] Wireframe
+    - [X] Flat
+    - [X] Smooth
+  - [X] Cube
+    - [X] Wireframe
+    - [X] Flat
+    - [X] Smooth
+  - [X] Octahedron
+    - [X] Wireframe
+    - [X] Flat
+    - [X] Smooth
 - [ ] **P2: Subdivision**
-  - [ ] Icosahedron
-    - [ ] Wireframe
-    - [ ] Flat
-    - [ ] Smooth
-    - [ ] Subdivision
-  - [ ] Ellipsoid
-    - [ ] Wireframe
-    - [ ] Flat
-    - [ ] Smooth
-    - [ ] Subdivision
-  - [ ] Dodecahedron
-    - [ ] Wireframe
-    - [ ] Flat
-    - [ ] Smooth
-    - [ ] Subdivision
+  - [X] Icosahedron
+    - [X] Wireframe
+    - [X] Flat
+    - [X] Smooth
+    - [X] Subdivision
+  - [X] Ellipsoid
+    - [X] Wireframe
+    - [X] Flat
+    - [X] Smooth
+    - [X] Subdivision
+  - [X] Dodecahedron
+    - [X] Wireframe
+    - [X] Flat
+    - [X] Smooth
+    - [X] Subdivision
   - [ ] Torus
-    - [ ] Wireframe
-    - [ ] Flat
-    - [ ] Smooth
+    - [X] Wireframe
+    - [X] Flat
+    - [X] Smooth
     - [ ] Subdivision
 - [ ] **P3: Tessellation**
-  - [ ] Simple Quadric Primitives
-    - [ ] Sphere
-      - [ ] Wireframe
-      - [ ] Flat/Smooth
-    - [ ] Cylinder
-      - [ ] Wireframe
-      - [ ] Flat/Smooth
-    - [ ] Cone
-      - [ ] Wireframe
-      - [ ] Flat/Smooth
+  - [X] Simple Quadric Primitives
+    - [X] Sphere
+      - [X] Wireframe
+      - [X] Flat/Smooth
+    - [X] Cylinder
+      - [X] Wireframe
+      - [X] Flat/Smooth
+    - [X] Cone
+      - [X] Wireframe
+      - [X] Flat/Smooth
   - [ ] Super-quadrics
     - [ ] Wireframe
     - [ ] Flat/Smooth
@@ -103,4 +103,10 @@ Only features or parts checked here would be graded!
 
 ## Appendix
 
-N/A
+Please note that the following some bugs that are known to exist in the code.
+
+- P2: Torus
+  - The torus is not properly tessellated. Center is covered by the torus and the two halves are not properly connected.
+- P3: Simple Quadric Primitives
+  - The interactivity is limited. The user can only translate the simple quadric primitives.
+  - The caps of the shapes are not done.
