@@ -483,6 +483,47 @@ void displayCylinder()
 
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    // do the cylinder bases
+    displayCylinderBases(projection, view, glm::mat4(1.0f));
+}
+
+void displayCylinderBases(glm::mat4 proj, glm::mat4 view, glm::mat4 model)
+{
+    std::shared_ptr<Shader> cylinderBaseShader = std::make_shared<Shader>("shaders/Cylinder/Bases/vert.glsl",
+                                                                            "shaders/Cylinder/Bases/ctrl.glsl",
+                                                                            "shaders/Cylinder/Bases/eval.glsl"
+                                                                            "shaders/Cylinder/Bases/frag.glsl");
+    cylinderBaseShader->use();
+    cylinderBaseShader->setMat4("projection", proj);
+    cylinderBaseShader->setMat4("view", view);
+    cylinderBaseShader->setMat4("model", model);
+    cylinderBaseShader->setFloat("centerX", Primitive::cylinderCenter.x);
+    cylinderBaseShader->setFloat("centerY", Primitive::cylinderCenter.y);
+    cylinderBaseShader->setFloat("centerZ", Primitive::cylinderCenter.z);
+    cylinderBaseShader->setFloat("radius", Primitive::cylinderRadius);
+
+    GLuint cylinderBaseVertexArray {0};
+    GLuint cylinderBaseVertexBuffer {0};
+
+    glGenVertexArrays(1, &cylinderBaseVertexArray);
+    glGenBuffers(1, &cylinderBaseVertexBuffer);
+
+    glBindVertexArray(cylinderBaseVertexArray);
+    glBindBuffer(GL_ARRAY_BUFFER, cylinderBaseVertexBuffer);
+
+    GLfloat null = 0.0f;
+    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(sizeof(GLfloat)), &null, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+    glEnableVertexAttribArray(0);
+
+    glPatchParameteri(GL_PATCH_VERTICES, 1);
+    glDrawArrays(GL_PATCHES, 0, 1);
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 }
 // TODO: Add display functions for other primitives
 
