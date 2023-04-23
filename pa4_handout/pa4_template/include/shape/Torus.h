@@ -495,6 +495,63 @@ private:
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
     }
+
+    void subdivideTorus()
+    {
+        // get the number of vertices
+        int numVertices = this->getNumVertices();
+
+        // create a new vector of vertices
+        std::vector<glm::vec3> newVertices;
+
+        // iterate through each triangle
+        for (int i = 0; i < numVertices; i += 3) {
+            // get the three vertices of the triangle
+            glm::vec3 v1 = vertices[i];
+            glm::vec3 v2 = vertices[i + 1];
+            glm::vec3 v3 = vertices[i + 2];
+
+            // get the midpoints of the three vertices
+            glm::vec3 v12;
+            glm::vec3 v23;
+            glm::vec3 v31;
+            getHalfVertex(&v1, &v2, &v12);
+            getHalfVertex(&v2, &v3, &v23);
+            getHalfVertex(&v3, &v1, &v31);
+
+            // add the new vertices to the new vector
+            newVertices.push_back(v1);
+            newVertices.push_back(v12);
+            newVertices.push_back(v31);
+
+            newVertices.push_back(v2);
+            newVertices.push_back(v23);
+            newVertices.push_back(v12);
+
+            newVertices.push_back(v3);
+            newVertices.push_back(v31);
+            newVertices.push_back(v23);
+
+            newVertices.push_back(v12);
+            newVertices.push_back(v23);
+            newVertices.push_back(v31);
+        }
+
+        // set the vertices to the new vertices
+        this->vertices.clear();
+        for (auto & vertex : newVertices) {
+            this->vertices.push_back(vertex);
+        }
+    }
+
+    void getHalfVertex(glm::vec3 * v1, glm::vec3 * v2, glm::vec3 v12)
+    {
+        // get the midpoint of the two vertices
+        glm::vec3 midpoint = glm::vec3((v1->x + v2->x) / 2.0f, (v1->y + v2->y) / 2.0f, (v1->z + v2->z) / 2.0f);
+
+        // scale the midpoint to the radius of the torus
+        midpoint = glm::normalize(midpoint) * this->radius;
+    }
 };
 
 #endif // PA4_TORUS_H

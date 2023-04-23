@@ -949,6 +949,10 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
         {
             Context::dodecahedron.subdivide();
         }
+        if (STATE::CURRENT == STATE::F5)
+        {
+            Context::torus.subdivide();
+        }
     }
 
 }
