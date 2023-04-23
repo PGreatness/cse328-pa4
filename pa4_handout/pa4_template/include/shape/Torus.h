@@ -76,7 +76,7 @@ public:
 
     virtual const glm::vec3 * getNormalData() const override
     {
-        glm::vec3 normals = new glm::vec3[vertices.size()];
+        glm::vec3 *normals = new glm::vec3[vertices.size()];
         for (int i = 0; i < vertices.size(); i += 3)
         {
             glm::vec3 v1 = glm::vec3(vertices[i][0], vertices[i][1], vertices[i][2]);
