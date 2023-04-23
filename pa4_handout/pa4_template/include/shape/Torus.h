@@ -269,11 +269,11 @@ private:
             for (float j = 0; j < 2 * PI; j += step2)
             {
                 // find the x and z coordinates of the vertices
-                float x = 2 * radius * cos(j);
+                float x = 2 * innerRadius * cos(j);
                 float y = 0.0f;
-                float z = 2 * radius * sin(j);
+                float z = 2 * innerRadius * sin(j);
                 // create a vector for the vertex
-                glm::vec4 vertex = glm::vec4(x, y, z, 1.0f);
+                glm::vec4 vertex = glm::vec4(x + radius, y, z + radius, 1.0f);
                 // rotate the vertex
                 vertex = rotationMatrix * vertex;
                 // add the vertex to the circle
