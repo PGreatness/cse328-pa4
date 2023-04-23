@@ -60,11 +60,11 @@ Only features or parts checked here would be graded!
     - [X] Flat
     - [X] Smooth
     - [X] Subdivision
-  - [ ] Torus
+  - [X] Torus
     - [X] Wireframe
     - [X] Flat
     - [X] Smooth
-    - [ ] Subdivision
+    - [X] Subdivision
 - [ ] **P3: Tessellation**
   - [X] Simple Quadric Primitives
     - [X] Sphere
@@ -106,7 +106,7 @@ Only features or parts checked here would be graded!
 Please note that the following some bugs that are known to exist in the code.
 
 - P2: Torus
-  - The torus is not properly tessellated. Center is covered by the torus and the two halves are not properly connected.
+  - The torus's subdivisions cause the torus to snap back to its original orientation.
 - P3: Simple Quadric Primitives
   - The interactivity is limited. The user can only translate the simple quadric primitives.
   - The caps of the shapes are not done.

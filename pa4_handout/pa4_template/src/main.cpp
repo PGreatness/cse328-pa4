@@ -129,7 +129,7 @@ std::shared_ptr<Shader> ellipsoidShader;       // shader for ellipsoid
 Ellipsoid ellipsoid(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor, glm::vec3(1.0f, 1.5f, 1.0f)); // default ellipsoid object
 
 std::shared_ptr<Shader> torusShader;       // shader for torus
-Torus torus(glm::vec3(0.0f,0.0f,0.0f), 1.0f, 0.5f, Colors::currentColor); // default torus object
+Torus torus(glm::vec3(0.0f,0.0f,0.0f), 1.0f, 0.8f, Colors::currentColor); // default torus object
 
 std::shared_ptr<Shader> sphereShader;       // shader for sphere
 std::shared_ptr<Shader> cylinderShader;     // shader for cylinder
