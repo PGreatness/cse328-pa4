@@ -780,7 +780,7 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     Context::ellipsoid.setColor(Colors::currentColor);
     Context::sphereShader->setVec3("ourFragColor", Colors::currentColor);
     Context::cylinderShader->setVec3("ourFragColor", Colors::currentColor);
-    Context::coneShader->setVec3("ourFragColor", Colors::currentColor);
+    // Context::coneShader->setVec3("ourFragColor", Colors::currentColor);
 
     // check if key pressed is 1
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
