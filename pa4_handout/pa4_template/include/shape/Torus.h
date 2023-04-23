@@ -226,36 +226,9 @@ private:
     glm::vec3 color;
     glm::vec3 oldColor;
 
-    void initShape()
+
+    void higherQualityTorus()
     {
-        /* std::vector<glm::vec3> tmp;
-        for (int i = 1; i < INIT_NUM_VERTICES; i++)
-        {
-            for (int j = 1; j < INIT_NUM_VERTICES; j++)
-            {
-                auto u = j / (float)INIT_NUM_VERTICES * 2 * PI;
-                auto v = i / (float)INIT_NUM_VERTICES * 2 * PI;
-                auto x = (radius + innerRadius * cos(v)) * cos(u);
-                auto y = (radius + innerRadius * cos(v)) * sin(u);
-                auto z = innerRadius * sin(v);
-                tmp.push_back(glm::vec3(x, y, z));
-            }
-        }
-
-        // create triangles from vertices
-        for (int i = 0; i < INIT_NUM_VERTICES; i++)
-        {
-            for (int j = 0; j < INIT_NUM_VERTICES; j++)
-            {
-                vertices.push_back(tmp[i * INIT_NUM_VERTICES + j]);
-                vertices.push_back(tmp[i * INIT_NUM_VERTICES + (j + 1)]);
-                vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + j]);
-
-                vertices.push_back(tmp[i * INIT_NUM_VERTICES + (j + 1)]);
-                vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + (j + 1)]);
-                vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + j]);
-            }
-        } */
         std::vector<glm::vec3> circles;
         float step = 2 * PI / INIT_NUM_FACETS;
         // this makes the full torus
@@ -297,7 +270,10 @@ private:
             vertices.push_back(circles[(i + INIT_NUM_VERTICES + 1) % circles.size()]);
             vertices.push_back(circles[(i + INIT_NUM_VERTICES) % circles.size()]);
         }
-
+    }
+    void initShape()
+    {
+        higherQualityTorus();
     }
 
     void updateTorusLocation(glm::vec3 translation)
