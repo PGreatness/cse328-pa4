@@ -485,7 +485,7 @@ void displayCylinder()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // do the cylinder bases
-    displayCylinderBases(projection, view, glm::mat4(1.0f));
+    // displayCylinderBases(projection, view, glm::mat4(1.0f));
 }
 
 void displayCylinderBases(glm::mat4 proj, glm::mat4 view, glm::mat4 model)
