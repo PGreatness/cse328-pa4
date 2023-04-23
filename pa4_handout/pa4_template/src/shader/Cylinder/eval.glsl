@@ -26,8 +26,8 @@ void main()
 
     if (u == 1.0 || u == 0.0) {
         // top or bottom face
-        pos = vec3(radius * cos(2.0 * PI * v), height * (1.0 - u), radius * sin(2.0 * PI * v));
-        normal = vec3(0.0, -1.0 + 2.0 * u, 0.0);
+        pos = vec3(radius * cos(2.0 * PI * v), height * (u - 0.5), radius * sin(2.0 * PI * v));
+        normal = vec3(0.0, sign(u - 0.5), 0.0);
     } else {
         // curved surface
         pos = vec3(radius * cos(2.0 * PI * v), height * (u - 0.5), radius * sin(2.0 * PI * v));
