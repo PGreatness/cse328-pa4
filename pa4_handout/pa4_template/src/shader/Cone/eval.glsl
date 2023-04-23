@@ -2,13 +2,13 @@
 
 layout(triangles, equal_spacing, cw) in;
 
-
 out vec3 Normal;
 out vec3 fragPos;
 
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+
 uniform vec3 center;
 uniform float radius;
 uniform float height;
@@ -19,12 +19,23 @@ void main() {
     float u = gl_TessCoord.x;
     float v = gl_TessCoord.y;
 
-    // this should end up making a cone
-    vec3 pos = vec3(center.x + radius * cos(u * 2.0 * PI), center.y + radius * sin(u * 2.0 * PI), center.z + height * v);
+    vec3 pos;
+    vec3 normal;
+
+    if (u == 1.0) {
+        // Top vertex
+        pos = vec3(center.x, center.y + height, center.z);
+        normal = vec3(0.0, 1.0, 0.0);
+    } else {
+        // Base vertices
+        float theta = 2.0 * PI * v;
+        float x = radius * cos(theta);
+        float z = radius * sin(theta);
+        pos = vec3(center.x + x, center.y, center.z + z);
+        normal = normalize(vec3(x, height, z));
+    }
 
     gl_Position = projection * view * model * vec4(pos, 1.0);
-
-    Normal = normalize(pos - center);
     fragPos = pos;
-
+    Normal = normalize(mat3(transpose(inverse(model))) * normal);
 }
