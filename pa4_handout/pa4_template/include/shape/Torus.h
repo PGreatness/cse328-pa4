@@ -223,7 +223,7 @@ private:
 
     void initShape()
     {
-        std::vector<glm::vec3> tmp;
+        /* std::vector<glm::vec3> tmp;
         for (int i = 1; i < INIT_NUM_VERTICES; i++)
         {
             for (int j = 1; j < INIT_NUM_VERTICES; j++)
@@ -250,7 +250,49 @@ private:
                 vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + (j + 1)]);
                 vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + j]);
             }
+        } */
+        std::vector<glm::vec3> circles;
+        float step = 2 * PI / INIT_NUM_FACETS;
+        // this makes the full torus
+        for (float theta = 0; theta < 2 * PI; theta += step)
+        {
+            // create a rotation matrix for each circle
+            glm::mat4 rotationMatrix = glm::mat4(1.0f);
+            // rotate the circle around the z axis
+            rotationMatrix[0][0] = cos(theta);
+            rotationMatrix[0][1] = -sin(theta);
+            rotationMatrix[1][0] = sin(theta);
+            rotationMatrix[1][1] = cos(theta);
+            // the steps to find each vertices on the circle
+            float step2 = 2 * PI / INIT_NUM_VERTICES / INIT_NUM_FACETS;
+            // this makes the circles that make up the torus
+            for (float j = 0; j < 2 * PI; j += step2)
+            {
+                // find the x and z coordinates of the vertices
+                float x = 2 * radius * cos(j);
+                float y = 0.0f;
+                float z = 2 * radius * sin(j);
+                // create a vector for the vertex
+                glm::vec4 vertex = glm::vec4(x, y, z, 1.0f);
+                // rotate the vertex
+                vertex = rotationMatrix * vertex;
+                // add the vertex to the circle
+                circles.push_back(glm::vec3(vertex.x, vertex.y, vertex.z));
+            }
         }
+
+        // create triangles from vertices of the circles
+        for (int i = 0; i < circles.size(); i++)
+        {
+            vertices.push_back(circles[i]);
+            vertices.push_back(circles[(i + 1) % circles.size()]);
+            vertices.push_back(circles[(i + INIT_NUM_VERTICES) % circles.size()]);
+
+            vertices.push_back(circles[(i + 1) % circles.size()]);
+            vertices.push_back(circles[(i + INIT_NUM_VERTICES + 1) % circles.size()]);
+            vertices.push_back(circles[(i + INIT_NUM_VERTICES) % circles.size()]);
+        }
+
     }
 
     void updateTorusLocation(glm::vec3 translation)
