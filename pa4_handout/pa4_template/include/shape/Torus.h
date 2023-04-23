@@ -180,6 +180,12 @@ public:
         GLint uniColor = glGetUniformLocation(shaderID, "torusColor");
         glUniform3f(uniColor, color.x, color.y, color.z);
 
+        GLuint flatLocation = glGetUniformLocation(shaderID, "isFlat");
+        if (options == Options::FLAT) {
+            glUniform1i(flatLocation, 1);
+        } else {
+            glUniform1i(flatLocation, 0);
+        }
         // draw
         if (options == Options::WIREFRAME)
         {
