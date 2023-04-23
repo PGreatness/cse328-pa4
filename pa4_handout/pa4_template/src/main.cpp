@@ -129,6 +129,7 @@ Ellipsoid ellipsoid(glm::vec3(0.0f,0.0f,0.0f), 1.0f, Colors::currentColor, glm::
 
 std::shared_ptr<Shader> sphereShader;       // shader for sphere
 std::shared_ptr<Shader> cylinderShader;     // shader for cylinder
+std::shared_ptr<Shader> coneShader;         // shader for cone
 
 struct cubeOptions
 {
@@ -183,6 +184,10 @@ GLfloat sphereZ = 0.0f;
 glm::vec3 cylinderCenter = glm::vec3(1.5f, 1.5f, 1.5f);
 GLfloat cylinderRadius = 1.0f;
 GLfloat cylinderHeight = 1.0f;
+
+glm::vec3 coneCenter = glm::vec3(1.5f, 1.5f, 1.5f);
+GLfloat coneRadius = 1.0f;
+GLfloat coneHeight = 1.0f;
 
 }  // namespace Primitive
 
@@ -525,6 +530,60 @@ void displayCylinderBases(glm::mat4 proj, glm::mat4 view, glm::mat4 model)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 }
+
+void displayCone()
+{
+    Context::coneShader->use();
+
+    // set lighting uniforms
+    Context::coneShader->setVec3("lightPos", Context::lightPos);
+    Context::coneShader->setVec3("viewPos", Context::camera.position);
+    Context::coneShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+    Context::coneShader->setFloat("R", 1.0f);
+    Context::coneShader->setVec3("center", Primitive::coneCenter);
+    Context::coneShader->setFloat("height", Primitive::coneHeight);
+    Context::coneShader->setFloat("radius", Primitive::coneRadius);
+
+    // set options
+    Context::coneShader->setInt("options", options);
+
+    glm::mat4 projection = glm::perspective(glm::radians(Context::camera.zoom),
+                                            static_cast<GLfloat>(Context::kWindowWidth) /
+                                            static_cast<GLfloat>(Context::kWindowHeight),
+                                            0.01f,
+                                            100.0f);
+    Context::coneShader->setMat4("projection", projection);
+    glm::mat4 view = Context::camera.getViewMatrix();
+    Context::coneShader->setMat4("view", view);
+    Context::coneShader->setMat4("model", glm::mat4(1.0f));
+
+    GLuint coneVertexArray {0};
+    GLuint coneVertexBuffer {0};
+
+    glGenVertexArrays(1, &coneVertexArray);
+    glGenBuffers(1, &coneVertexBuffer);
+
+    glBindVertexArray(coneVertexArray);
+    glBindBuffer(GL_ARRAY_BUFFER, coneVertexBuffer);
+
+    GLfloat null = 0.0f;
+    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(sizeof(GLfloat)), &null, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+    glEnableVertexAttribArray(0);
+
+    if (options == Context::cubeOptions::WIREFRAME) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    } else {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
+
+    glPatchParameteri(GL_PATCH_VERTICES, 1);
+    glDrawArrays(GL_PATCHES, 0, 1);
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
 // TODO: Add display functions for other primitives
 
 }  // namespace Context
@@ -721,6 +780,7 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     Context::ellipsoid.setColor(Colors::currentColor);
     Context::sphereShader->setVec3("ourFragColor", Colors::currentColor);
     Context::cylinderShader->setVec3("ourFragColor", Colors::currentColor);
+    Context::coneShader->setVec3("ourFragColor", Colors::currentColor);
 
     // check if key pressed is 1
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
