@@ -153,8 +153,7 @@ public:
     {
         radius += scaleFactor;
         innerRadius += scaleFactor;
-        this->vertices.clear();
-        initShape();
+        updateTorusSize(scaleFactor);
     }
 
     void reflect(glm::vec3 planeA, glm::vec3 planeB)
