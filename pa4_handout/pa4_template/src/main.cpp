@@ -659,6 +659,10 @@ int main()
                                                         "src/shader/Cylinder/eval.glsl",
                                                         "src/shader/Cylinder/frag.glsl");
 
+    Context::coneShader = std::make_shared<Shader>("src/shader/Cone/vert.glsl",
+                                                    "src/shader/Cone/ctrl.glsl",
+                                                    "src/shader/Cone/eval.glsl",
+                                                    "src/shader/Cone/frag.glsl");
     // render loop
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, Context::kWindowWidth, Context::kWindowHeight);
@@ -702,6 +706,7 @@ int main()
                 glfwSetWindowTitle(window, "PA4 - Sphere, Cylinder, and Cone");
                 // Context::displaySphere();
                 // Context::displayCylinder();
+                Context::displayCone();
                 break;
             case STATE::F7:
                 // break;
@@ -780,7 +785,7 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     Context::ellipsoid.setColor(Colors::currentColor);
     Context::sphereShader->setVec3("ourFragColor", Colors::currentColor);
     Context::cylinderShader->setVec3("ourFragColor", Colors::currentColor);
-    // Context::coneShader->setVec3("ourFragColor", Colors::currentColor);
+    Context::coneShader->setVec3("ourFragColor", Colors::currentColor);
 
     // check if key pressed is 1
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
