@@ -407,7 +407,7 @@ void displaySphere()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
     glEnableVertexAttribArray(0);
 
-    glPatchParameteri(GL_PATCHES_VERTICES, 1);
+    glPatchParameteri(GL_PATCH_VERTICES, 1);
     glDrawArrays(GL_PATCHES, 0, 1);
 
     glBindVertexArray(0);
