@@ -409,7 +409,7 @@ private:
         glm::vec3 planeNormal = glm::normalize(glm::cross(planeA, planeB));
 
         // get the reflection matrix
-        glm::mat4 P = glm::outerProduct(glm::vec4(planeNormal, 0.0f), glm::mat4(planeNormal, 0.0f));
+        glm::mat4 P = glm::outerProduct(glm::vec4(planeNormal, 0.0f), glm::vec4(planeNormal, 0.0f));
         glm::mat4 R = glm::mat4(1.0f) - 2.0f * P;
 
         // multiply the reflection matrix with each vertex
