@@ -272,14 +272,10 @@ private:
                 float x = 2 * innerRadius * cos(j);
                 float y = 0.0f;
                 float z = 2 * innerRadius * sin(j);
-
-                float x1 = 2 * radius * cos(j);
-                float y1 = 0.0f;
-                float z1 = 2 * radius * sin(j);
                 // create a vector for the vertex
-                glm::vec4 vertex = glm::vec4(x1 - x, y, z1 - z, 1.0f);
+                glm::vec4 vertex = glm::vec4(x + radius, y, z + radius, 1.0f);
                 // rotate the vertex
-                vertex = rotationMatrix * vertex;
+                // vertex = rotationMatrix * vertex;
                 // add the vertex to the circle
                 circles.push_back(glm::vec3(vertex.x, vertex.y, vertex.z));
             }
