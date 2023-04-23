@@ -133,12 +133,12 @@ public:
 
     // methods
 
-    void render(GLuint VAO, GLuint VBO, GLuint shaderID) const override
+    void render(GLuint VAO, GLuint VBO, GLuint shaderID) const
     {
         render(VAO, VBO, shaderID, Options::DEFAULT);
     }
 
-    void render(GLuint VAO, GLuint VBO, GLuint shaderID, uint options) const override
+    void render(GLuint VAO, GLuint VBO, GLuint shaderID, uint options) const
     {
         GLuint torusNormals;
         initializeRender(&VAO, &VBO, &torusNormals);
