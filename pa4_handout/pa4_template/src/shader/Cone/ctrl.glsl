@@ -29,10 +29,10 @@ void main() {
     }
 
     // Pass the positions and normals to the tessellation evaluation shader
-    gl_TessLevelOuter[0] = 1;
-    gl_TessLevelOuter[1] = 1;
-    gl_TessLevelOuter[2] = 1;
+    gl_TessLevelOuter[0] = 3;
     gl_TessLevelInner[0] = 1;
 
-    gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
+    for(int i = 0; i < 3; i++){
+        gl_out[i].gl_Position = gl_in[i].gl_Position;
+    }
 }
