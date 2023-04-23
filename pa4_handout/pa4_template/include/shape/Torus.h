@@ -191,9 +191,9 @@ private:
     void initShape()
     {
         std::vector<glm::vec3> tmp;
-        for (int i = 1; i < INIT_NUM_VERTICES / 2; i++)
+        for (int i = 1; i < INIT_NUM_VERTICES; i++)
         {
-            for (int j = 1; j < INIT_NUM_VERTICES / 2; j++)
+            for (int j = 1; j < INIT_NUM_VERTICES; j++)
             {
                 auto u = j / (float)INIT_NUM_VERTICES * 2 * PI;
                 auto v = i / (float)INIT_NUM_VERTICES * 2 * PI;
@@ -211,6 +211,11 @@ private:
             {
                 vertices.push_back(tmp[i * INIT_NUM_VERTICES + j]);
                 vertices.push_back(tmp[i * INIT_NUM_VERTICES + (j + 1)]);
+                vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + j]);
+
+                vertices.push_back(tmp[i * INIT_NUM_VERTICES + (j + 1)]);
+                vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + (j + 1)]);
+                vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + j]);
             }
         }
     }
