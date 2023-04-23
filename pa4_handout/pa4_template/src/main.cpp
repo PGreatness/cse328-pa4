@@ -678,7 +678,7 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
         Context::mousePressed = true;
         if (Context::shearKeyPressed)
         {
-            Context::cube.shear(glm::vec3(1.0f, 0.0f, 0.0f));
+            Context::cube.shear(glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 0.0f));
         }
     }
 

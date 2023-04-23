@@ -147,9 +147,9 @@ public:
         updateCubeReflection(planeA, planeB);
     }
 
-    void shear(glm::vec3 shearFactors)
+    void shear(glm::vec3 shearAxis, glm::vec3 shearFactors)
     {
-        updateCubeShear(shearFactors[0], shearFactors[1], shearFactors[2]);
+        updateCubeShear(shearAxis, shearFactors);
     }
 
 
@@ -463,16 +463,19 @@ private:
         }
     }
 
-    void updateCubeShear(float shearAmountX, float shearAmountY, float shearAmountZ)
+    void updateCubeShear(glm::vec3 axis, glm::vec3 amount)
     {
-        if (shearAmountX != 0) {
-            shearX(shearAmountY, shearAmountZ);
+        if (axis[0] != 0)
+        {
+            shearX(amount[1], amount[2]);
         }
-        if (shearAmountY != 0) {
-            shearY(shearAmountX, shearAmountZ);
+        if (axis[1] != 0)
+        {
+            shearY(amount[0], amount[2]);
         }
-        if (shearAmountZ != 0) {
-            shearZ(shearAmountX, shearAmountY);
+        if (axis[2] != 0)
+        {
+            shearZ(amount[0], amount[1]);
         }
     }
 
