@@ -25,6 +25,6 @@ void main()
     vec3 pos = vec3(R * cos(phi) * cos(theta), R * cos(phi) * sin(theta), R * sin(phi));
     gl_Position = projection * view * model * vec4(pos, 1);
 
-    FragPos = vec3(model * vec4(pos, 1));
+    fragPos = vec3(model * vec4(pos, 1));
     Normal = vec3(transpose(inverse(model)) * vec4(pos, 1));
 }
