@@ -275,7 +275,7 @@ private:
                 // create a vector for the vertex
                 glm::vec4 vertex = glm::vec4(x + 2 * radius, y, z, 1.0f);
                 // rotate the vertex
-                // vertex = rotationMatrix * vertex;
+                vertex = rotationMatrix * vertex;
                 // add the vertex to the circle
                 circles.push_back(glm::vec3(vertex.x, vertex.y, vertex.z));
             }
