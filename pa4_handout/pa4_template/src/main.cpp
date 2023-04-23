@@ -681,8 +681,8 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
             if (STATE::CURRENT == STATE::F1)
             {
                 Context::cube.shear(Transformations::SHEAR, Transformations::SHEAR);
-                Context::tetrahedron.shear(Transformations::SHEAR, Transformations::SHEAR);
-                Context::octahedron.shear(Transformations::SHEAR, Transformations::SHEAR);
+                // Context::tetrahedron.shear(Transformations::SHEAR, Transformations::SHEAR);
+                // Context::octahedron.shear(Transformations::SHEAR, Transformations::SHEAR);
             }
         }
     }
