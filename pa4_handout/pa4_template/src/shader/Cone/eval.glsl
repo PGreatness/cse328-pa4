@@ -1,6 +1,5 @@
 #version 410 core
-
-layout(triangles, equal_spacing, cw) in;
+layout (triangles, equal_spacing, cw) in;
 
 out vec3 Normal;
 out vec3 fragPos;
@@ -19,23 +18,11 @@ void main() {
     float u = gl_TessCoord.x;
     float v = gl_TessCoord.y;
 
-    vec3 pos;
-    vec3 normal;
-
-    if (u == 1.0) {
-        // Top vertex
-        pos = vec3(center.x, center.y + height, center.z);
-        normal = vec3(0.0, 1.0, 0.0);
-    } else {
-        // Base vertices
-        float theta = 2.0 * PI * v;
-        float x = radius * cos(theta);
-        float z = radius * sin(theta);
-        pos = vec3(center.x + x, center.y, center.z + z);
-        normal = normalize(vec3(x, height, z));
-    }
+    float phi = 2.0 * PI * u;
+    vec3 pos = vec3(radius * cos(phi), radius * sin(phi), height * v);
 
     gl_Position = projection * view * model * vec4(pos, 1.0);
-    fragPos = pos;
-    Normal = normalize(mat3(transpose(inverse(model))) * normal);
+
+    Normal = vec3(model * vec4(normalize(cross(vec3(-radius * sin(phi), radius * cos(phi), 0), vec3(0, 0, height))), 0));
+    fragPos = vec3(model * vec4(pos, 1.0));
 }
