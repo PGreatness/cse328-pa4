@@ -149,7 +149,7 @@ public:
 
     void shear(glm::vec3 shearFactors)
     {
-        updateCubeShear(shearFactors);
+        updateCubeShear(shearFactors[0], shearFactors[1], shearFactors[2]);
     }
 
 
