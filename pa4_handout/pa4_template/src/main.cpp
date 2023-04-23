@@ -175,8 +175,6 @@ GLuint icosahedronVertexBuffer;
 GLuint ellipsoidVertexArray;
 GLuint ellipsoidVertexBuffer;
 
-GLuint sphereVertexArray;
-GLuint sphereVertexBuffer;
 
 }  // namespace Primitive
 
@@ -394,11 +392,14 @@ void displaySphere()
     Context::sphereShader->setMat4("view", view);
     Context::sphereShader->setMat4("model", glm::mat4(1.0f));
 
-    glGenVertexArrays(1, &Primitive::sphereVertexArray);
-    glGenBuffers(1, &Primitive::sphereVertexBuffer);
+    GLuint sphereVertexArray {0};
+    GLuint sphereVertexBuffer {0};
 
-    glBindVertexArray(Primitive::sphereVertexArray);
-    glBindBuffer(GL_ARRAY_BUFFER, Primitive::sphereVertexBuffer);
+    glGenVertexArrays(1, &sphereVertexArray);
+    glGenBuffers(1, &sphereVertexBuffer);
+
+    glBindVertexArray(sphereVertexArray);
+    glBindBuffer(GL_ARRAY_BUFFER, sphereVertexBuffer);
 
     GLfloat null = 0.0f;
     glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(sizeof(GLfloat)), &null, GL_STATIC_DRAW);
@@ -406,7 +407,7 @@ void displaySphere()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
     glEnableVertexAttribArray(0);
 
-    glPatchParameteri(GL_PATCHES, 1);
+    glPatchParameteri(GL_PATCHES_VERTICES, 1);
     glDrawArrays(GL_PATCHES, 0, 1);
 
     glBindVertexArray(0);
