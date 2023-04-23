@@ -2,7 +2,7 @@
 layout (quads, equal_spacing, cw) in;
 
 out vec3 Normal;
-out vec3 FragPos;
+out vec3 fragPos;
 
 uniform mat4 model;
 uniform mat4 view;
