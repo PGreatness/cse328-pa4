@@ -10,7 +10,7 @@ out vec3 Normal;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
-uniform vec3 tetraColor;
+uniform vec3 torusColor;
 uniform int isFlat = 0;
 
 void main()
@@ -23,5 +23,5 @@ void main()
         Normal = mat3(transpose(inverse(view))) * aPos;
     }
     fragPos = vec3(model * vec4(aPos, 1.0));
-    ourFragColor = tetraColor;
+    ourFragColor = torusColor;
 }
