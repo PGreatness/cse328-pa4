@@ -243,10 +243,10 @@ private:
         glGenBuffers(1, torusBuffer);
 
         // bind VAO
-        glBindVertexArray(torusArray);
+        glBindVertexArray(*torusArray);
 
         // bind VBO
-        glBindBuffer(GL_ARRAY_BUFFER, torusBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, *torusBuffer);
 
         // copy vertex data to VBO
         const glm::vec3 * vertexData = getVertexData();
@@ -258,7 +258,7 @@ private:
 
         // do the normals
         glGenBuffers(1, torusNormals);
-        glBindBuffer(GL_ARRAY_BUFFER, torusNormals);
+        glBindBuffer(GL_ARRAY_BUFFER, *torusNormals);
         const glm::vec3 * normalData = getNormalData();
         glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * vertices.size(), normalData, GL_STATIC_DRAW);
         glEnableVertexAttribArray(1);
