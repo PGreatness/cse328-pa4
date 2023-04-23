@@ -227,10 +227,10 @@ private:
     glm::vec3 oldColor;
 
 
-    void higherQualityTorus()
+    void higherQualityTorus(int facets)
     {
         std::vector<glm::vec3> circles;
-        float step = 2 * PI / INIT_NUM_FACETS;
+        float step = 2 * PI / facets;
         // this makes the full torus
         for (float theta = 0; theta < 2 * PI; theta += step)
         {
@@ -242,7 +242,7 @@ private:
             rotationMatrix[1][0] = sin(theta);
             rotationMatrix[1][1] = cos(theta);
             // the steps to find each vertices on the circle
-            float step2 = 2 * PI / INIT_NUM_VERTICES;
+            float step2 = 2 * PI / facets;
             // this makes the circles that make up the torus
             for (float j = 0; j < 2 * PI; j += step2)
             {
@@ -264,16 +264,16 @@ private:
         {
             vertices.push_back(circles[i]);
             vertices.push_back(circles[(i + 1) % circles.size()]);
-            vertices.push_back(circles[(i + INIT_NUM_VERTICES) % circles.size()]);
+            vertices.push_back(circles[(i + facets) % circles.size()]);
 
             vertices.push_back(circles[(i + 1) % circles.size()]);
-            vertices.push_back(circles[(i + INIT_NUM_VERTICES + 1) % circles.size()]);
-            vertices.push_back(circles[(i + INIT_NUM_VERTICES) % circles.size()]);
+            vertices.push_back(circles[(i + facets + 1) % circles.size()]);
+            vertices.push_back(circles[(i + facets) % circles.size()]);
         }
     }
     void initShape()
     {
-        higherQualityTorus();
+        higherQualityTorus(INIT_NUM_FACETS);
     }
 
     void updateTorusLocation(glm::vec3 translation)
