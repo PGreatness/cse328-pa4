@@ -180,7 +180,7 @@ GLfloat sphereX = 0.0f;
 GLfloat sphereY = 0.0f;
 GLfloat sphereZ = 0.0f;
 
-glm::vec3 cylinderCenter = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 cylinderCenter = glm::vec3(1.5f, 1.5f, 1.5f);
 GLfloat cylinderRadius = 1.0f;
 GLfloat cylinderHeight = 1.0f;
 
