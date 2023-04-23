@@ -492,7 +492,7 @@ void displayCylinderBases(glm::mat4 proj, glm::mat4 view, glm::mat4 model)
 {
     std::shared_ptr<Shader> cylinderBaseShader = std::make_shared<Shader>("shaders/Cylinder/Bases/vert.glsl",
                                                                             "shaders/Cylinder/Bases/ctrl.glsl",
-                                                                            "shaders/Cylinder/Bases/eval.glsl"
+                                                                            "shaders/Cylinder/Bases/eval.glsl",
                                                                             "shaders/Cylinder/Bases/frag.glsl");
     cylinderBaseShader->use();
     cylinderBaseShader->setMat4("projection", proj);
