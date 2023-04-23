@@ -301,7 +301,7 @@ private:
         };
 
         // multiply the shear matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
+        for (int i = 0; i < this->getNumVertices(); i++) {
             glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
             vertexData = shear * vertexData;
             vertices[i][0] = vertexData.x;
@@ -321,7 +321,7 @@ private:
         };
 
         // multiply the shear matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
+        for (int i = 0; i < this->getNumVertices(); i++) {
             glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
             vertexData = shear * vertexData;
             vertices[i][0] = vertexData.x;
@@ -341,7 +341,7 @@ private:
         };
 
         // multiply the shear matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
+        for (int i = 0; i < this->getNumVertices(); i++) {
             glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
             vertexData = shear * vertexData;
             vertices[i][0] = vertexData.x;
