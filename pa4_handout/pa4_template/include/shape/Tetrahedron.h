@@ -333,7 +333,7 @@ private:
         // multiply the shear matrix with each vertex
         for (int i = 0; i < NUM_VERTICES; i++) {
             glm::vec4 vertexData = glm::vec4(vertex[i][0], vertex[i][1], vertex[i][2], 1.0f);
-            vertex = shear * vertex;
+            vertexData = shear * vertexData;
             vertex[i][0] = vertexData.x;
             vertex[i][1] = vertexData.y;
             vertex[i][2] = vertexData.z;
@@ -353,7 +353,7 @@ private:
         // multiply the shear matrix with each vertex
         for (int i = 0; i < NUM_VERTICES; i++) {
             glm::vec4 vertexData = glm::vec4(vertex[i][0], vertex[i][1], vertex[i][2], 1.0f);
-            vertex = shear * vertex;
+            vertexData = shear * vertexData;
             vertex[i][0] = vertexData.x;
             vertex[i][1] = vertexData.y;
             vertex[i][2] = vertexData.z;
@@ -373,7 +373,7 @@ private:
         // multiply the shear matrix with each vertex
         for (int i = 0; i < NUM_VERTICES; i++) {
             glm::vec4 vertexData = glm::vec4(vertex[i][0], vertex[i][1], vertex[i][2], 1.0f);
-            vertex = shear * vertex;
+            vertexData = shear * vertexData;
             vertex[i][0] = vertexData.x;
             vertex[i][1] = vertexData.y;
             vertex[i][2] = vertexData.z;
