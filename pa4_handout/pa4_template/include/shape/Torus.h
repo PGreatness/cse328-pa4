@@ -248,9 +248,9 @@ private:
             for (float j = 0; j < 2 * PI; j += step2)
             {
                 // find the x and z coordinates of the vertices
-                float x = 2 * innerRadius * cos(j);
+                float x = 2 * (radius - innerRadius) * cos(j);
                 float y = 0.0f;
-                float z = 2 * innerRadius * sin(j);
+                float z = 2 * (radius - innerRadius) * sin(j);
                 // create a vector for the vertex
                 glm::vec4 vertex = glm::vec4(x + (2 * this->radius), y, z, 1.0f);
                 // rotate the vertex
