@@ -675,9 +675,15 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
-        if (Context::shearKeyPressed)
+        Context::mousePressed = true;
+        // testing
+        if (Context::cube.isMouseOver(Context::mouseLocalPos))
         {
-            Context::cube.shear(glm::vec3(1.0f, 0.0f, 0.0f));
+            Context::cube.setColor(Colors::WIREFRAME);
+        }
+        else
+        {
+            Context::cube.setColor(Colors::currentColor);
         }
     }
 
