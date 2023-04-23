@@ -226,15 +226,15 @@ private:
                 double theta = 2 * PI * i / INIT_NUM_VERTICES;
                 double costheta = cos(theta);
                 double sintheta = sin(theta);
-                double x = (radius + innerRadius * cosphi + innerTubeRadius * cos(theta)) * costheta;
-                double y = (radius + innerRadius * cosphi + innerTubeRadius * cos(theta)) * sintheta;
-                double z = innerRadius * sinphi + innerTubeRadius * sin(theta);
+                double x = (radius + innerRadius * cosphi * cos(theta)) * costheta;
+                double y = (radius + innerRadius * cosphi * cos(theta)) * sintheta;
+                double z = innerRadius * sinphi * sin(theta);
                 vertices.push_back(glm::vec3(x, y, z));
             }
         }
     }
 
-    void initializeRender(GLuint * torusArray, GLuint * torusBuffer, GLuint * torusNormals)
+    void initializeRender(GLuint * torusArray, GLuint * torusBuffer, GLuint * torusNormals) const
     {
         // create VAO
         glGenVertexArrays(1, torusArray);
