@@ -197,6 +197,11 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
+    void subdivide()
+    {
+        this->subdivdeTorus();
+    }
+
 private:
     // fields
     static constexpr float PI = 3.14159265358979323846;
