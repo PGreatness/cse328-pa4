@@ -201,7 +201,7 @@ private:
                 auto y = (radius + innerRadius * cos(v)) * sin(u);
                 auto z = innerRadius * sin(v);
                 // remove if center in list
-                if (glm::vec3(x, y, z) != center) { tmp.push_back(glm::vec3(x, y, z)) };
+                if (glm::vec3(x, y, z) != center) { tmp.push_back(glm::vec3(x, y, z)); }
             }
         }
 
