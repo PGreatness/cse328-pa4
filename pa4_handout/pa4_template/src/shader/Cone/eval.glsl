@@ -40,9 +40,12 @@ void main() {
     Normal = normalize(mat3(transpose(inverse(model))) * normal);
 
     // Fix the gap by duplicating the first vertex for the last triangle
-    if (gl_TessCoord == vec3(0.0, 0.0, 1.0)) {
-        gl_Position = projection * view * model * vec4(vec3(center.x + radius, center.y, center.z), 1.0);
-        fragPos = vec3(center.x + radius, center.y, center.z);
-        Normal = normalize(mat3(transpose(inverse(model))) * vec3(0.0, -1.0, 0.0));
+    if (gl_TessCoord.x == 0.0 && gl_TessCoord.y == 0.0) {
+        // Add an extra vertex at the bottom center to close the gap
+        pos = center;
+        normal = vec3(0.0, -1.0, 0.0);
+        gl_Position = projection * view * model * vec4(pos, 1.0);
+        fragPos = pos;
+        Normal = normalize(mat3(transpose(inverse(model))) * normal);
     }
 }
