@@ -26,11 +26,11 @@ void main()
 
     if (u == 1.0 || u == 0.0) {
         // top or bottom face
-        pos = vec3(radius * cos(2.0 * PI * v), height * (u - 0.5), radius * sin(2.0 * PI * v));
+        pos = vec3(radius * cos(2.0 * PI * v) + xyz.x, height * (u - 0.5) + xyz.y, radius * sin(2.0 * PI * v) + xyz.z);
         normal = vec3(0.0, sign(u - 0.5), 0.0);
     } else {
         // curved surface
-        pos = vec3(radius * cos(2.0 * PI * v), height * (u - 0.5), radius * sin(2.0 * PI * v));
+        pos = vec3(radius * cos(2.0 * PI * v) + xyz.x, height * (u - 0.5) + xyz.y, radius * sin(2.0 * PI * v) + xyz.z);
         normal = vec3(pos.x, 0.0, pos.z);
     }
 
