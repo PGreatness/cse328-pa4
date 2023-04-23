@@ -979,6 +979,10 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
             {
                 Context::dodecahedron.shear(Transformations::SHEAR, glm::vec3(1.0f, 1.0f, 1.0f));
             }
+            if (STATE::CURRENT == STATE::F5)
+            {
+                Context::torus.shear(Transformations::SHEAR, glm::vec3(1.0f, 1.0f, 1.0f));
+            }
         }
     }
 
@@ -1014,6 +1018,11 @@ void mouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
             Context::dodecahedron.reflect(Transformations::REFLECTION[0],
                                         Transformations::REFLECTION[1]);
         }
+        if (STATE::CURRENT == STATE::F5)
+        {
+            Context::torus.reflect(Transformations::REFLECTION[0],
+                                    Transformations::REFLECTION[1]);
+        }
     }
 }
 
@@ -1043,6 +1052,10 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
         {
             Context::dodecahedron.rotate(static_cast<float>(yoffset), up);
         }
+        if (STATE::CURRENT == STATE::F5)
+        {
+            Context::torus.rotate(static_cast<float>(yoffset), up);
+        }
         if (STATE::CURRENT == STATE::F8)
         {
             Context::cube.rotate(static_cast<float>(yoffset), up);
@@ -1069,6 +1082,10 @@ void scrollCallback(GLFWwindow * window, double xoffset, double yoffset)
         if (STATE::CURRENT == STATE::F4)
         {
             Context::dodecahedron.scale(static_cast<float>(yoffset) * 0.01f);
+        }
+        if (STATE::CURRENT == STATE::F5)
+        {
+            Context::torus.scale(static_cast<float>(yoffset) * 0.01f);
         }
     }
     if (specialKeyPressed) { return; }
@@ -1107,6 +1124,10 @@ void perFrameKeyInput(GLFWwindow * window)
         if (STATE::CURRENT == STATE::F4)
         {
             Context::dodecahedron.translate(-left * displacement);
+        }
+        if (STATE::CURRENT == STATE::F5)
+        {
+            Context::torus.translate(-left * displacement);
         }
         if (STATE::CURRENT == STATE::F6)
         {
@@ -1149,6 +1170,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::dodecahedron.translate(left * displacement);
         }
+        if (STATE::CURRENT == STATE::F5)
+        {
+            Context::torus.translate(left * displacement);
+        }
         if (STATE::CURRENT == STATE::F6)
         {
             Primitive::sphereX += (left[0] * displacement);
@@ -1187,6 +1212,10 @@ void perFrameKeyInput(GLFWwindow * window)
         if (STATE::CURRENT == STATE::F4)
         {
             Context::dodecahedron.translate(front * displacement);
+        }
+        if (STATE::CURRENT == STATE::F5)
+        {
+            Context::torus.translate(front * displacement);
         }
         if (STATE::CURRENT == STATE::F6)
         {
@@ -1227,6 +1256,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::dodecahedron.translate(-front * displacement);
         }
+        if (STATE::CURRENT == STATE::F5)
+        {
+            Context::torus.translate(-front * displacement);
+        }
         if (STATE::CURRENT == STATE::F6)
         {
             Primitive::sphereX += (-front[0] * displacement);
@@ -1264,6 +1297,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::dodecahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
         }
+        if (STATE::CURRENT == STATE::F5)
+        {
+            Context::torus.translate(glm::vec3(0.0f, displacement, 0.0f));
+        }
         if (STATE::CURRENT == STATE::F6)
         {
             Primitive::sphereY += displacement;
@@ -1298,6 +1335,10 @@ void perFrameKeyInput(GLFWwindow * window)
         if (STATE::CURRENT == STATE::F4)
         {
             Context::dodecahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
+        }
+        if (STATE::CURRENT == STATE::F5)
+        {
+            Context::torus.translate(glm::vec3(0.0f, -displacement, 0.0f));
         }
         if (STATE::CURRENT == STATE::F6)
         {

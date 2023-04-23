@@ -32,35 +32,38 @@ public:
 
     Torus(glm::vec3 center, float radius)
     {
-        this->center = center;
+        this->center = {DEFAULT_BASE_CENTER_X, DEFAULT_BASE_CENTER_Y, DEFAULT_BASE_CENTER_Z};
         this->radius = radius;
-        this->innerRadius = radius / 2.0f;
+        this->innerRadius = DEFAULT_SIZE / 2.0f;
         this->color = {DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B};
         this->oldColor = this->color;
 
         initShape();
+        translate(center);
     }
 
     Torus(glm::vec3 center, float radius, float innerRadius)
     {
-        this->center = center;
+        this->center = {DEFAULT_BASE_CENTER_X, DEFAULT_BASE_CENTER_Y, DEFAULT_BASE_CENTER_Z};
         this->radius = radius;
         this->innerRadius = innerRadius;
         this->color = {DEFAULT_COLOR_R, DEFAULT_COLOR_G, DEFAULT_COLOR_B};
         this->oldColor = this->color;
 
         initShape();
+        translate(center);
     }
 
     Torus(glm::vec3 center, float radius, float innerRadius, glm::vec3 color)
     {
-        this->center = center;
+        this->center = {DEFAULT_BASE_CENTER_X, DEFAULT_BASE_CENTER_Y, DEFAULT_BASE_CENTER_Z};
         this->radius = radius;
         this->innerRadius = innerRadius;
         this->color = color;
         this->oldColor = this->color;
 
         initShape();
+        translate(center);
     }
 
     // getters
@@ -113,12 +116,14 @@ public:
     // setters
     void setCenter(glm::vec3 center)
     {
-        this->center = center;
+        this->translate(center - this->center);
     }
 
     void setSize(float radius)
     {
         this->radius = radius;
+        this->innerRadius = radius / 2.0f;
+        initShape();
     }
 
     void setColor(glm::vec3 color)
@@ -132,6 +137,29 @@ public:
     }
 
     // methods
+
+    void translate(glm::vec3 translation)
+    {
+        center += translation;
+        updateTorusLocation(translation);
+    }
+
+    void rotate(float angle, glm::vec3 rotation)
+    {
+        updateTorusOrientation(rotation, angle);
+    }
+
+    void scale(float scaleFactor)
+    {
+        radius += scaleFactor;
+        innerRadius += scaleFactor;
+        initShape();
+    }
+
+    void reflect(glm::vec3 planeA, glm::vec3 planeB)
+    {
+        updateTorusReflection(planeA, planeB);
+    }
 
     void render(GLuint VAO, GLuint VBO, GLuint shaderID) const
     {
@@ -191,9 +219,9 @@ private:
     void initShape()
     {
         std::vector<glm::vec3> tmp;
-        for (int i = 1; i < INIT_NUM_VERTICES / 2; i++)
+        for (int i = 1; i < INIT_NUM_VERTICES; i++)
         {
-            for (int j = 1; j < INIT_NUM_VERTICES / 2; j++)
+            for (int j = 1; j < INIT_NUM_VERTICES; j++)
             {
                 auto u = j / (float)INIT_NUM_VERTICES * 2 * PI;
                 auto v = i / (float)INIT_NUM_VERTICES * 2 * PI;
@@ -205,9 +233,9 @@ private:
         }
 
         // create triangles from vertices
-        for (int i = 0; i < INIT_NUM_VERTICES / 2; i++)
+        for (int i = 0; i < INIT_NUM_VERTICES; i++)
         {
-            for (int j = 0; j < INIT_NUM_VERTICES / 2; j++)
+            for (int j = 0; j < INIT_NUM_VERTICES; j++)
             {
                 vertices.push_back(tmp[i * INIT_NUM_VERTICES + j]);
                 vertices.push_back(tmp[i * INIT_NUM_VERTICES + (j + 1)]);
@@ -218,6 +246,176 @@ private:
                 vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + j]);
             }
         }
+    }
+
+    void updateTorusLocation(glm::vec3 translation)
+    {
+        for (int i = 0; i < vertices.size(); i++)
+        {
+            vertices[i][0] += translation[0];
+            vertices[i][1] += translation[1];
+            vertices[i][2] += translation[2];
+        }
+    }
+
+    void updateTorusSize(float scale)
+    {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
+        for (int i = 0; i < vertices.size(); i++)
+        {
+            vertices[i][0] += vertices[i][0] * scale;
+            vertices[i][1] += vertices[i][1] * scale;
+            vertices[i][2] += vertices[i][2] * scale;
+        }
+        this->translate(tmp);
+    }
+
+    void rotateX(float angle)
+    {
+        float angle_rad = glm::radians(angle);
+
+        glm::mat4 rotationMatrix = glm::mat4(1.0f);
+        rotationMatrix[1][1] = cos(angle_rad);
+        rotationMatrix[1][2] = -sin(angle_rad);
+        rotationMatrix[2][1] = sin(angle_rad);
+        rotationMatrix[2][2] = cos(angle_rad);
+
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 rotatedVertex = rotationMatrix * glm::vec4(vertices[i], 1.0f);
+            vertices[i] = glm::vec3(rotatedVertex);
+        }
+    }
+
+    void rotateY(float angle)
+    {
+        float angle_rad = glm::radians(angle);
+
+        glm::mat4 rotationMatrix = glm::mat4(1.0f);
+        rotationMatrix[0][0] = cos(angle_rad);
+        rotationMatrix[0][2] = sin(angle_rad);
+        rotationMatrix[2][0] = -sin(angle_rad);
+        rotationMatrix[2][2] = cos(angle_rad);
+
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 rotatedVertex = rotationMatrix * glm::vec4(vertices[i], 1.0f);
+            vertices[i] = glm::vec3(rotatedVertex);
+        }
+    }
+
+    void rotateZ(float angle)
+    {
+        float angle_rad = glm::radians(angle);
+
+        glm::mat4 rotationMatrix = glm::mat4(1.0f);
+        rotationMatrix[0][0] = cos(angle_rad);
+        rotationMatrix[0][1] = -sin(angle_rad);
+        rotationMatrix[1][0] = sin(angle_rad);
+        rotationMatrix[1][1] = cos(angle_rad);
+
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 rotatedVertex = rotationMatrix * glm::vec4(vertices[i], 1.0f);
+            vertices[i] = glm::vec3(rotatedVertex);
+        }
+    }
+
+    void updateTorusOrientation(glm::vec3 axis, float angle)
+    {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
+        if (axis[0] != 0) { this->rotateX(angle); }
+        if (axis[1] != 0) { this->rotateY(angle); }
+        if (axis[2] != 0) { this->rotateZ(angle); }
+        this->translate(tmp);
+    }
+
+    void shearX(float shearAmountY, float shearAmountZ)
+    {
+        // get the shear matrix
+        glm::mat4 shear = {
+            1, shearAmountY, shearAmountZ, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        };
+
+        // multiply the shear matrix with each vertex
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
+            vertexData = shear * vertexData;
+            vertices[i][0] = vertexData.x;
+            vertices[i][1] = vertexData.y;
+            vertices[i][2] = vertexData.z;
+        }
+    }
+
+    void shearY(float shearAmountX, float shearAmountZ)
+    {
+        // get the shear matrix
+        glm::mat4 shear = {
+            1, 0, 0, 0,
+            shearAmountX, 1, shearAmountZ, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        };
+
+        // multiply the shear matrix with each vertex
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
+            vertexData = shear * vertexData;
+            vertices[i][0] = vertexData.x;
+            vertices[i][1] = vertexData.y;
+            vertices[i][2] = vertexData.z;
+        }
+    }
+
+    void shearZ(float shearAmountX, float shearAmountY)
+    {
+        // get the shear matrix
+        glm::mat4 shear = {
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            shearAmountX, shearAmountY, 1, 0,
+            0, 0, 0, 1
+        };
+
+        // multiply the shear matrix with each vertex
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
+            vertexData = shear * vertexData;
+            vertices[i][0] = vertexData.x;
+            vertices[i][1] = vertexData.y;
+            vertices[i][2] = vertexData.z;
+        }
+    }
+
+    void updateTorusShear(glm::vec3 axis, float shearAmount)
+    {
+        if (axis[0] != 0) { this->shearX(shearAmount, shearAmount); }
+        if (axis[1] != 0) { this->shearY(shearAmount, shearAmount); }
+        if (axis[2] != 0) { this->shearZ(shearAmount, shearAmount); }
+    }
+
+    void updateTorusReflection(glm::vec3 planeA, glm::vec3 planeB)
+    {
+        auto tmp = this->getCenter();
+        this->translate(-tmp);
+
+        glm::vec3 planeNormal = glm::normalize(glm::cross(planeA, planeB));
+
+        // get the reflection matrix
+        glm::mat4 P = glm::outerProduct(glm::vec4(planeNormal, 0.0f), glm::mat4(planeNormal, 0.0f));
+        glm::mat4 R = glm::mat4(1.0f) - 2.0f * P;
+
+        // multiply the reflection matrix with each vertex
+        for (int i = 0; i < NUM_VERTICES; i++) {
+            glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
+            vertexData = R * vertexData;
+            vertices[i][0] = vertexData.x;
+            vertices[i][1] = vertexData.y;
+            vertices[i][2] = vertexData.z;
+        }
+        this->translate(tmp);
     }
 
     void initializeRender(GLuint * torusArray, GLuint * torusBuffer, GLuint * torusNormals) const
