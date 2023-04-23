@@ -155,11 +155,6 @@ public:
         updateIcosahedronReflection(planeA, planeB);
     }
 
-    void shear(glm::vec3 axis, glm::vec3 amount)
-    {
-        updateIcosahedronShear(axis, amount);
-    }
-
     void render(GLuint icosaArray, GLuint icosaBuffer, uint shaderID) const
     {
         GLuint vbo_normals;
@@ -330,82 +325,6 @@ private:
             this->vertexData[i][0] = tmp[0];
             this->vertexData[i][1] = tmp[1];
             this->vertexData[i][2] = tmp[2];
-        }
-    }
-
-    void shearX(float shearAmountY, float shearAmountZ)
-    {
-        // get the shear matrix
-        glm::mat4 shear = {
-            1, shearAmountY, shearAmountZ, 0,
-            0, 1, 0, 0,
-            0, 0, 1, 0,
-            0, 0, 0, 1
-        };
-
-        // multiply the shear matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
-            glm::vec4 vertex = glm::vec4(vertexData[i][0], vertexData[i][1], vertexData[i][2], 1.0f);
-            vertex = shear * vertex;
-            vertexData[i][0] = vertex.x;
-            vertexData[i][1] = vertex.y;
-            vertexData[i][2] = vertex.z;
-        }
-    }
-
-    void shearY(float shearAmountX, float shearAmountZ)
-    {
-        // get the shear matrix
-        glm::mat4 shear = {
-            1, 0, 0, 0,
-            shearAmountX, 1, shearAmountZ, 0,
-            0, 0, 1, 0,
-            0, 0, 0, 1
-        };
-
-        // multiply the shear matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
-            glm::vec4 vertex = glm::vec4(vertexData[i][0], vertexData[i][1], vertexData[i][2], 1.0f);
-            vertex = shear * vertex;
-            vertexData[i][0] = vertex.x;
-            vertexData[i][1] = vertex.y;
-            vertexData[i][2] = vertex.z;
-        }
-    }
-
-    void shearZ(float shearAmountX, float shearAmountY)
-    {
-        // get the shear matrix
-        glm::mat4 shear = {
-            1, 0, 0, 0,
-            0, 1, 0, 0,
-            shearAmountX, shearAmountY, 1, 0,
-            0, 0, 0, 1
-        };
-
-        // multiply the shear matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
-            glm::vec4 vertex = glm::vec4(vertexData[i][0], vertexData[i][1], vertexData[i][2], 1.0f);
-            vertex = shear * vertex;
-            vertexData[i][0] = vertex.x;
-            vertexData[i][1] = vertex.y;
-            vertexData[i][2] = vertex.z;
-        }
-    }
-
-    void updateIcosahedronShear(glm::vec3 axis, glm::vec3 amount)
-    {
-        if (axis[0] != 0)
-        {
-            shearX(amount[1], amount[2]);
-        }
-        if (axis[1] != 0)
-        {
-            shearY(amount[0], amount[2]);
-        }
-        if (axis[2] != 0)
-        {
-            shearZ(amount[0], amount[1]);
         }
     }
 

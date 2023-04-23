@@ -145,11 +145,6 @@ public:
         this->updateEllipsoidReflection(planeA, planeB);
     }
 
-    void shear(glm::vec3 axis, glm::vec3 amount)
-    {
-        this->updateEllipsoidShear(axis, amount);
-    }
-
     void render(GLuint ellArray, GLuint ellBuffer, uint shaderID) const
     {
         GLuint ellNormals;
@@ -288,82 +283,6 @@ private:
             vertex[2] += vertex[2] * size;
         }
         this->translate(tmp);
-    }
-
-    void shearX(float shearAmountY, float shearAmountZ)
-    {
-        // get the shear matrix
-        glm::mat4 shear = {
-            1, shearAmountY, shearAmountZ, 0,
-            0, 1, 0, 0,
-            0, 0, 1, 0,
-            0, 0, 0, 1
-        };
-
-        // multiply the shear matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
-            glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
-            vertex = shear * vertex;
-            vertices[i][0] = vertexData.x;
-            vertices[i][1] = vertexData.y;
-            vertices[i][2] = vertexData.z;
-        }
-    }
-
-    void shearY(float shearAmountX, float shearAmountZ)
-    {
-        // get the shear matrix
-        glm::mat4 shear = {
-            1, 0, 0, 0,
-            shearAmountX, 1, shearAmountZ, 0,
-            0, 0, 1, 0,
-            0, 0, 0, 1
-        };
-
-        // multiply the shear matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
-            glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
-            vertex = shear * vertex;
-            vertices[i][0] = vertexData.x;
-            vertices[i][1] = vertexData.y;
-            vertices[i][2] = vertexData.z;
-        }
-    }
-
-    void shearZ(float shearAmountX, float shearAmountY)
-    {
-        // get the shear matrix
-        glm::mat4 shear = {
-            1, 0, 0, 0,
-            0, 1, 0, 0,
-            shearAmountX, shearAmountY, 1, 0,
-            0, 0, 0, 1
-        };
-
-        // multiply the shear matrix with each vertex
-        for (int i = 0; i < NUM_VERTICES; i++) {
-            glm::vec4 vertexData = glm::vec4(vertices[i][0], vertices[i][1], vertices[i][2], 1.0f);
-            vertex = shear * vertex;
-            vertices[i][0] = vertexData.x;
-            vertices[i][1] = vertexData.y;
-            vertices[i][2] = vertexData.z;
-        }
-    }
-
-    void updateEllipsoidShear(glm::vec3 axis, glm::vec3 amount)
-    {
-        if (axis[0] != 0)
-        {
-            shearX(amount[1], amount[2]);
-        }
-        if (axis[1] != 0)
-        {
-            shearY(amount[0], amount[2]);
-        }
-        if (axis[2] != 0)
-        {
-            shearZ(amount[0], amount[1]);
-        }
     }
 
     void rotateX(GLfloat angle)
