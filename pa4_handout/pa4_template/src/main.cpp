@@ -600,7 +600,7 @@ int main()
                 break;
             case STATE::F6:
                 glfwSetWindowTitle(window, "PA4 - Sphere, Cylinder, and Cone");
-                Context::displaySphere();
+                // Context::displaySphere();
                 Context::displayCylinder();
                 break;
             case STATE::F7:
