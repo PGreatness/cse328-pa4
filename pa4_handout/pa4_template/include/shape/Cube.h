@@ -149,7 +149,7 @@ public:
 
     void shear(glm::vec3 shearFactors)
     {
-        updateCubeShear(shearFactors[0], shearFactors[1], shearFactors[2]);
+        updateCubeShear(shearFactors);
     }
 
 
@@ -465,9 +465,15 @@ private:
 
     void updateCubeShear(float shearAmountX, float shearAmountY, float shearAmountZ)
     {
-        shearX(shearAmountY, shearAmountZ);
-        shearY(shearAmountX, shearAmountZ);
-        shearZ(shearAmountX, shearAmountY);
+        if (shearAmountX != 0) {
+            shearX(shearAmountY, shearAmountZ);
+        }
+        if (shearAmountY != 0) {
+            shearY(shearAmountX, shearAmountZ);
+        }
+        if (shearAmountZ != 0) {
+            shearZ(shearAmountX, shearAmountY);
+        }
     }
 
     void updateCubeOrientation(float angle, glm::vec3 axes) {
