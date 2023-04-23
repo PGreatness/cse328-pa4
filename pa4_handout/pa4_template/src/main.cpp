@@ -175,6 +175,9 @@ GLuint icosahedronVertexBuffer;
 GLuint ellipsoidVertexArray;
 GLuint ellipsoidVertexBuffer;
 
+GLfloat sphereX = 0.0f;
+GLfloat sphereY = 0.0f;
+GLfloat sphereZ = 0.0f;
 
 }  // namespace Primitive
 
@@ -378,6 +381,9 @@ void displaySphere()
     Context::sphereShader->setVec3("viewPos", Context::camera.position);
     Context::sphereShader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
     Context::sphereShader->setFloat("R", 1.0f);
+    Context::sphereShader->setFloat("X", Primitive::sphereX);
+    Context::sphereShader->setFloat("Y", Primitive::sphereY);
+    Context::sphereShader->setFloat("Z", Primitive::sphereZ);
 
     // set options
     Context::sphereShader->setInt("options", options);
@@ -886,6 +892,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::dodecahedron.translate(-left * displacement);
         }
+        if (STATE::CURRENT == STATE::F6)
+        {
+            Primitive::sphereX -= displacement;
+        }
         if (STATE::CURRENT == STATE::F8)
         {
             Context::cube.translate(-left * displacement);
@@ -919,6 +929,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::dodecahedron.translate(left * displacement);
         }
+        if (STATE::CURRENT == STATE::F6)
+        {
+            Primitive::sphereX += displacement;
+        }
         if (STATE::CURRENT == STATE::F8)
         {
             Context::cube.translate(left * displacement);
@@ -949,6 +963,10 @@ void perFrameKeyInput(GLFWwindow * window)
         if (STATE::CURRENT == STATE::F4)
         {
             Context::dodecahedron.translate(front * displacement);
+        }
+        if (STATE::CURRENT == STATE::F6)
+        {
+            Primitive::sphereZ -= displacement;
         }
         if (STATE::CURRENT == STATE::F8)
         {
@@ -981,6 +999,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::dodecahedron.translate(-front * displacement);
         }
+        if (STATE::CURRENT == STATE::F6)
+        {
+            Primitive::sphereZ += displacement;
+        }
         if (STATE::CURRENT == STATE::F8)
         {
             Context::cube.translate(-front * displacement);
@@ -1010,6 +1032,10 @@ void perFrameKeyInput(GLFWwindow * window)
         {
             Context::dodecahedron.translate(glm::vec3(0.0f, displacement, 0.0f));
         }
+        if (STATE::CURRENT == STATE::F6)
+        {
+            Primitive::sphereY += displacement;
+        }
         if (STATE::CURRENT == STATE::F8)
         {
             Context::cube.translate(glm::vec3(0.0f, displacement, 0.0f));
@@ -1038,6 +1064,10 @@ void perFrameKeyInput(GLFWwindow * window)
         if (STATE::CURRENT == STATE::F4)
         {
             Context::dodecahedron.translate(glm::vec3(0.0f, -displacement, 0.0f));
+        }
+        if (STATE::CURRENT == STATE::F6)
+        {
+            Primitive::sphereY -= displacement;
         }
         if (STATE::CURRENT == STATE::F8)
         {

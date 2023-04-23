@@ -9,6 +9,9 @@ uniform mat4 view;
 uniform mat4 projection;
 
 uniform float R;
+uniform float X;
+uniform float Y;
+uniform float Z;
 
 const float PI = 3.14159265359;
 
@@ -22,7 +25,7 @@ void main()
     float phi = 2 * PI * u;
     float theta = PI * v;
 
-    vec3 pos = vec3(R * cos(phi) * cos(theta), R * cos(phi) * sin(theta), R * sin(phi));
+    vec3 pos = vec3(R * sin(theta) * cos(phi) + X, R * sin(theta) * sin(phi) + Y, R * cos(theta) + Z);
     gl_Position = projection * view * model * vec4(pos, 1);
 
     fragPos = vec3(model * vec4(pos, 1));
