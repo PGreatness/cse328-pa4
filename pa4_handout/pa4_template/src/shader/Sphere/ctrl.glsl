@@ -1,5 +1,6 @@
 #version 410 core
 layout (vertices = 1) out;
+out vec3 ourFragColor;
 
 void main()
 {
