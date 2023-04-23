@@ -22,7 +22,7 @@ void main() {
     vec3 pos;
     vec3 normal;
 
-    if (u == 1.0) {
+    if (u == 1.0 || u == 0.0) {
         // Top vertex
         pos = vec3(center.x, center.y + height, center.z);
         normal = vec3(0.0, 1.0, 0.0);
