@@ -181,6 +181,9 @@ GLuint icosahedronVertexBuffer;
 GLuint ellipsoidVertexArray;
 GLuint ellipsoidVertexBuffer;
 
+GLuint torusVertexArray;
+GLuint torusVertexBuffer;
+
 GLfloat sphereX = 0.0f;
 GLfloat sphereY = 0.0f;
 GLfloat sphereZ = 0.0f;
