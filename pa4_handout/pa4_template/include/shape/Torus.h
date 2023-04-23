@@ -191,9 +191,9 @@ private:
     void initShape()
     {
         std::vector<glm::vec3> tmp;
-        for (int i = 1; i < INIT_NUM_VERTICES; i++)
+        for (int i = 1; i < INIT_NUM_VERTICES / 2; i++)
         {
-            for (int j = 1; j < INIT_NUM_VERTICES; j++)
+            for (int j = 1; j < INIT_NUM_VERTICES / 2; j++)
             {
                 auto u = j / (float)INIT_NUM_VERTICES * 2 * PI;
                 auto v = i / (float)INIT_NUM_VERTICES * 2 * PI;
@@ -205,9 +205,9 @@ private:
         }
 
         // create triangles from vertices
-        for (int i = 0; i < INIT_NUM_VERTICES; i++)
+        for (int i = 0; i < INIT_NUM_VERTICES / 2; i++)
         {
-            for (int j = 0; j < INIT_NUM_VERTICES; j++)
+            for (int j = 0; j < INIT_NUM_VERTICES / 2; j++)
             {
                 vertices.push_back(tmp[i * INIT_NUM_VERTICES + j]);
                 vertices.push_back(tmp[i * INIT_NUM_VERTICES + (j + 1)]);
