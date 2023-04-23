@@ -199,7 +199,7 @@ public:
 
     void subdivide()
     {
-        this->subdivdeTorus();
+        this->subdivideTorus();
     }
 
 private:
@@ -549,13 +549,16 @@ private:
         }
     }
 
-    void getHalfVertex(glm::vec3 * v1, glm::vec3 * v2, glm::vec3 v12)
+    void getHalfVertex(glm::vec3 * v1, glm::vec3 * v2, glm::vec3 * v12)
     {
         // get the midpoint of the two vertices
-        glm::vec3 midpoint = glm::vec3((v1->x + v2->x) / 2.0f, (v1->y + v2->y) / 2.0f, (v1->z + v2->z) / 2.0f);
+        glm::vec3 midpoint = (*v1 + *v2) / 2.0f;
 
         // scale the midpoint to the radius of the torus
-        midpoint = glm::normalize(midpoint) * this->radius;
+        midpoint = glm::normalize(midpoint) * this->getSize();
+
+        // set the midpoint to the new vertex
+        *v12 = midpoint;
     }
 };
 
