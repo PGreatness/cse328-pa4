@@ -24,14 +24,10 @@ void main()
     vec3 pos;
     vec3 normal;
 
-    if (u == 1.0) {
-        // top face
-        pos = vec3(0.0, height, 0.0);
-        normal = vec3(0.0, 1.0, 0.0);
-    } else if (u == 0.0) {
-        // bottom face
-        pos = vec3(0.0, 0.0, 0.0);
-        normal = vec3(0.0, -1.0, 0.0);
+    if (u == 1.0 || u == 0.0) {
+        // top or bottom face
+        pos = vec3(radius * cos(2.0 * PI * v), height * (1.0 - u), radius * sin(2.0 * PI * v));
+        normal = vec3(0.0, -1.0 + 2.0 * u, 0.0);
     } else {
         // curved surface
         pos = vec3(radius * cos(2.0 * PI * v), height * (u - 0.5), radius * sin(2.0 * PI * v));
