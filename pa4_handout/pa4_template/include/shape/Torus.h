@@ -209,9 +209,10 @@ private:
         {
             for (int j = 0; j < INIT_NUM_VERTICES; j++)
             {
-                vertices.push_back(tmp[i * INIT_NUM_VERTICES + j]);
                 vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + j]);
+                vertices.push_back(tmp[i * INIT_NUM_VERTICES + j]);
                 vertices.push_back(tmp[i * INIT_NUM_VERTICES + (j + 1)]);
+
                 vertices.push_back(tmp[i * INIT_NUM_VERTICES + (j + 1)]);
                 vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + j]);
                 vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + (j + 1)]);
