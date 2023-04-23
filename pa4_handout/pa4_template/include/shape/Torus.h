@@ -394,11 +394,11 @@ private:
         }
     }
 
-    void updateTorusShear(glm::vec3 axis, float shearAmount)
+    void updateTorusShear(glm::vec3 axis, glm::vec3 shearAmount)
     {
-        if (axis[0] != 0) { this->shearX(shearAmount, shearAmount); }
-        if (axis[1] != 0) { this->shearY(shearAmount, shearAmount); }
-        if (axis[2] != 0) { this->shearZ(shearAmount, shearAmount); }
+        if (axis[0] != 0) { this->shearX(shearAmount[1], shearAmount[2]); }
+        if (axis[1] != 0) { this->shearY(shearAmount[0], shearAmount[2]); }
+        if (axis[2] != 0) { this->shearZ(shearAmount[0], shearAmount[1]); }
     }
 
     void updateTorusReflection(glm::vec3 planeA, glm::vec3 planeB)
