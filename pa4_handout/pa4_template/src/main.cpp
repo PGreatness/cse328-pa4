@@ -407,6 +407,12 @@ void displaySphere()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
     glEnableVertexAttribArray(0);
 
+    if (options == Context::cubeOptions::WIREFRAME) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    } else {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
+
     glPatchParameteri(GL_PATCH_VERTICES, 1);
     glDrawArrays(GL_PATCHES, 0, 1);
 
@@ -600,6 +606,7 @@ void keyCallback(GLFWwindow * window, int key, int scancode, int action, int mod
     Context::dodecahedron.setColor(Colors::currentColor);
     Context::icosahedron.setColor(Colors::currentColor);
     Context::ellipsoid.setColor(Colors::currentColor);
+    Context::sphereShader->setVec3("ourFragColor", Colors::currentColor);
 
     // check if key pressed is 1
     if (key == GLFW_KEY_1 && action == GLFW_PRESS)
