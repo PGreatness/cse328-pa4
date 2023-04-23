@@ -200,12 +200,8 @@ private:
                 auto x = (radius + innerRadius * cos(v)) * cos(u);
                 auto y = (radius + innerRadius * cos(v)) * sin(u);
                 auto z = innerRadius * sin(v);
-                // discard if point is too close to center
-                if (glm::length(glm::vec3(x, y, z)) < 0.1f)
-                {
-                    continue;
-                }
-                tmp.push_back(glm::vec3(x, y, z));
+                // remove if center in list
+                if (glm::vec3(x, y, z) != center) { tmp.push_back(glm::vec3(x, y, z)) };
             }
         }
 
