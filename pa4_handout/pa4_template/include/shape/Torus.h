@@ -243,10 +243,10 @@ private:
         glGenBuffers(1, torusBuffer);
 
         // bind VAO
-        glBindVertexArray(VAO);
+        glBindVertexArray(torusArray);
 
         // bind VBO
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, torusBuffer);
 
         // copy vertex data to VBO
         const glm::vec3 * vertexData = getVertexData();
