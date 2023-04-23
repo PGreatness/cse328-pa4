@@ -966,7 +966,7 @@ void perFrameKeyInput(GLFWwindow * window)
         }
         if (STATE::CURRENT == STATE::F6)
         {
-            Primitive::sphereZ -= displacement;
+            Primitive::sphereZ += displacement;
         }
         if (STATE::CURRENT == STATE::F8)
         {
@@ -1001,7 +1001,7 @@ void perFrameKeyInput(GLFWwindow * window)
         }
         if (STATE::CURRENT == STATE::F6)
         {
-            Primitive::sphereZ += displacement;
+            Primitive::sphereZ -= displacement;
         }
         if (STATE::CURRENT == STATE::F8)
         {
