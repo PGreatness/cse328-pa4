@@ -195,8 +195,8 @@ private:
         {
             for (int j = 1; j < INIT_NUM_VERTICES / 2; j++)
             {
-                auto u = j / (float)INIT_NUM_VERTICES / 2 * 2 * PI;
-                auto v = i / (float)INIT_NUM_VERTICES / 2 * 2 * PI;
+                auto u = j / (float)INIT_NUM_VERTICES * 2 * PI;
+                auto v = i / (float)INIT_NUM_VERTICES * 2 * PI;
                 auto x = (radius + innerRadius * cos(v)) * cos(u);
                 auto y = (radius + innerRadius * cos(v)) * sin(u);
                 auto z = innerRadius * sin(v);
