@@ -205,9 +205,9 @@ private:
         }
 
         // create triangles from vertices
-        for (int i = 0; i < INIT_NUM_VERTICES / 2; i++)
+        for (int i = 0; i < INIT_NUM_VERTICES; i++)
         {
-            for (int j = 0; j < INIT_NUM_VERTICES / 2; j++)
+            for (int j = 0; j < INIT_NUM_VERTICES; j++)
             {
                 vertices.push_back(tmp[i * INIT_NUM_VERTICES + j]);
                 vertices.push_back(tmp[i * INIT_NUM_VERTICES + (j + 1)]);
