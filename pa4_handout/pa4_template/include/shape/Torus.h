@@ -190,39 +190,28 @@ private:
 
     void initShape()
     {
-        // Generate vertices on the torus
-        for (int j = 0; j < INIT_NUM_VERTICES * 2; j++)
+        std::vector<glm::vec3> tmp;
+        for (int i = 0; i < INIT_NUM_VERTICES; i++)
         {
-            double phi = 2 * PI * j / INIT_NUM_VERTICES;
-            double cosphi = cos(phi);
-            double sinphi = sin(phi);
-            for (int i = 0; i < INIT_NUM_VERTICES * 2; i++)
+            for (int j = 0; j < INIT_NUM_VERTICES; j++)
             {
-                double theta = 2 * PI * i / INIT_NUM_VERTICES;
-                double costheta = cos(theta);
-                double sintheta = sin(theta);
-                double x = (radius + innerRadius * cosphi) * costheta;
-                double y = (radius + innerRadius * cosphi) * sintheta;
-                double z = innerRadius * sinphi;
-                vertices.push_back(glm::vec3(x, y, z));
+                auto u = j / (float)INIT_NUM_VERTICES * 2 * PI;
+                auto v = i / (float)INIT_NUM_VERTICES * 2 * PI;
+                auto x = (radius + innerRadius * cos(v)) * cos(u);
+                auto y = (radius + innerRadius * cos(v)) * sin(u);
+                auto z = innerRadius * sin(v);
+                tmp.push_back(glm::vec3(x, y, z));
             }
         }
 
-        // Generate vertices on the inner tube
-        for (int j = 0; j < INIT_NUM_VERTICES * 2; j++)
+        // create triangles from vertices
+        for (int i = 0; i < INIT_NUM_VERTICES; i++)
         {
-            double phi = 2 * PI * j / INIT_NUM_VERTICES;
-            double cosphi = cos(phi);
-            double sinphi = sin(phi);
-            for (int i = 0; i < INIT_NUM_VERTICES * 2; i++)
+            for (int j = 0; j < INIT_NUM_VERTICES; j++)
             {
-                double theta = 2 * PI * i / INIT_NUM_VERTICES;
-                double costheta = cos(theta);
-                double sintheta = sin(theta);
-                double x = (radius + innerRadius * cosphi * cos(theta)) * costheta;
-                double y = (radius + innerRadius * cosphi * cos(theta)) * sintheta;
-                double z = innerRadius * sinphi * sin(theta);
-                vertices.push_back(glm::vec3(x, y, z));
+                vertices.push_back(tmp[i * INIT_NUM_VERTICES + j]);
+                vertices.push_back(tmp[(i + 1) * INIT_NUM_VERTICES + (j + 1)]);
+                vertices.push_back(tmp[i * INIT_NUM_VERTICES + (j + 1)]);
             }
         }
     }
