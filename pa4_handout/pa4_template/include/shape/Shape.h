@@ -3,6 +3,8 @@
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <glm/ext.hpp>
+#include <iostream>
 
 
 // An abstract class to represent generic shapes,
@@ -17,6 +19,19 @@ public:
     [[nodiscard]] virtual const glm::vec3 * getVertexData() const = 0;
 
     [[nodiscard]] virtual const glm::vec3 * getNormalData() const = 0;
+
+    glm::vec3 getCenter() const;
+    GLfloat getSize() const;
+    glm::vec3 getColor() const;
+    glm::vec3 getOldColor() const;
+
+    void translate(glm::vec3 translation);
+    void scale(GLfloat scaleFactor);
+    void rotate(float angle, glm::vec3 axis);
+    void reflect(glm::vec3 planeA, glm::vec3 planeB);
+
+    void render(GLuint VAO, GLuint VBO, GLuint shaderID) const;
+    void render(GLuint VAO, GLuint VBO, GLuint shaderID, uint options) const;
 };
 
 
